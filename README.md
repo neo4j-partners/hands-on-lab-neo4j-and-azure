@@ -22,7 +22,7 @@ If you have an Azure account already, you may be able to use that.  You would ne
 
 ### Part 1
 * Introductions
-* Lecture - Introduction to Neo4j (15 min)
+* [Lecture - Introduction to Neo4j](https://docs.google.com/presentation/d/1hTBs039zcCSbNJg9VH-xzXi-4TpNLgymL2I5eaIQFyY) (15 min)
     * What is Neo4j?
     * Customer use cases
     * How is it deployed and managed on Azure?
@@ -39,7 +39,7 @@ If you have an Azure account already, you may be able to use that.  You would ne
 * Break (5 min)
 
 ### Part 2
-* Lecture - Moving Data (10 min)
+* [Lecture - Moving Data](https://docs.google.com/presentation/d/1ZDUrLuHbF6xD_6aNukw9FzeB9bjtDCdDGth0M2GgZ3w) (10 min)
     * LOAD CSV
 * [Lab 3 - Moving Data](Lab%203%20-%20Moving%20Data/README.md) (15 min)
     * A Day of Data
@@ -49,7 +49,7 @@ If you have an Azure account already, you may be able to use that.  You would ne
 * Break (5 min)
 
 ### Part 3
-* Lecture - Azure ML (10 min)
+* [Lecture - Azure ML](https://docs.google.com/presentation/d/15pn7B-B9yE0q1s_Q1U9pKOtYJR8AiHgowP27W1bFyQI) (10 min)
     * What is Azure ML?
     * Using Azure ML with Neo4j
 * [Lab 5 - AzureML](Lab%205%20-%20AzureML) (15 min)
@@ -59,7 +59,7 @@ If you have an Azure account already, you may be able to use that.  You would ne
 * Break (5 min)
 
 ### Part 4
-* Lecture - Graph Data Science (10 min)
+* [Lecture - Graph Data Science](https://docs.google.com/presentation/d/1yt3TZy86fsvhSRcduJCXpKqpenNWrwFBNTeOAsiJZJU) (10 min)
     * Why Graph Data Science
     * Similarity
     * Centrality
