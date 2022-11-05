@@ -31,7 +31,7 @@ If you have an Azure account already, you may be able to use that.  You would ne
     * Signup for Azure
 * [Lab 1 - Deploy Neo4j](Lab%201%20-%20Deploy%20Neo4j) (15 min)
     * Deploy Neo4j Enterprise Edition through the Marketplace
-    * CloudFormation Template
+    * Deployment Template
 * [Lab 2 - Connect to Neo4j](Lab%202%20-%20Connect%20to%20Neo4j/README.md) (15 min)
     * Neo4j Browser
     * Neo4j Bloom
