@@ -35,7 +35,6 @@ If you have an Azure account already, you may be able to use that.  You would ne
 * [Lab 2 - Connect to Neo4j](Lab%202%20-%20Connect%20to%20Neo4j/README.md) (15 min)
     * Neo4j Browser
     * Neo4j Bloom
-    * Interacting via Shell
 * Break (5 min)
 
 ### Part 2
