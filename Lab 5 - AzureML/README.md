@@ -58,7 +58,7 @@ We are all set to import and run Notebooks now.
 ## Import from Local computer to ML Studio
 For the rest of the labs, we're going to be working with iPython notebooks in ML Studio.  To load them into Studio, we're going to pull them from your local.
 
-- Clone this repository locally to your computer or you can download a Notebook indivudally and then upload to Azure ML Studio as below:
+- Clone this repository locally to your computer or you can download a Notebook individually and then upload to Azure ML Studio as below:
 
 ![](images/12-azure-ml.png)
 
