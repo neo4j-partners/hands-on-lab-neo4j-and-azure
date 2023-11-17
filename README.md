@@ -44,7 +44,7 @@ You'll need a laptop with a web browser.  Your browser will need to be able to a
 * [Lecture - Azure OpenAI Service](https://docs.google.com/presentation/d/15pn7B-B9yE0q1s_Q1U9pKOtYJR8AiHgowP27W1bFyQI/edit?usp=sharing) (15 min)
     * What is Azure OpenAI Service?
     * Generative AI
-* [Lecture - Neo4j and Generative AI](to do) (15 min)
+* [Lecture - Neo4j and Generative AI](https://docs.google.com/presentation/d/1iHu9vgEG0s6yjKMLUw9XqWGiJrY7Z1oNv0QPa75BCtc/edit?usp=sharing) (15 min)
     * Generating Knowledge Graphs
     * Retrieval Augmented Generation
     * Semantic Search
