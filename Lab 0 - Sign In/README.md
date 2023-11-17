@@ -1,5 +1,27 @@
-# Lab 0 - Signup for Azure Account
+# Lab 0 - Sign In
+At the start of this lab you should have been handed credentials for AWS.  In this first section, we're going to use those to sign in.
 
-In order to benefit from this lab, you will need:
-- A basic understanding of Machine Learning
-- An Azure account with an active subscription. [Create an account for free](https://azure.microsoft.com/free/?WT.mc_id=A261C142F)
+## Improving the Labs
+As you work through these labs, we'd really appreciate your feedback.  One way to help us improve is to open an issue by going [here](https://github.com/neo4j-partners/hands-on-lab-neo4j-and-sagemaker/issues).  Outright bugs, usability suggestions, and general comments are all appreciated.  Pull requests are great too!
+
+## Sign into Azure
+We're going to sign into a new Azure account.  You may already have other Azure accounts.  If you use Chrome, you might consider using incognito mode for these exercises.  That's not mandatory though and other browsers work fine too.
+Our next step is to open the Azure portal [here](https://portal.azure.com/). 
+
+Select "IAM User."
+
+![](images/01.png)
+
+Now enter the Account ID you were given and click "Next."
+
+![](images/02.png)
+
+Enter the IAM user name and Password you were given.  Click the check box for "Remember this account."  Click "Sign in."
+
+![](images/03.png)
+
+We're now authenticated and logged into the Azure console.
+
+![](images/04.png)
+
+In the next lab we'll deploy Neo4j.

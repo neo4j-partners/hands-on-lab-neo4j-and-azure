@@ -1,4 +1,4 @@
-# Lab 5 - Azure ML
+# Lab 5 - Parsing Data
 In this lab we're going to spin up an Azure Machine Learning service.  We'll then use it to run two notebooks.  In later a later lab, we'll use it for supervised machine learning with AutoML and MLFlow.  AutoML attempts to featurize and tune models automatically, simplifying the task of creating a machine learning model.
 
 ## Create an Azure ML service
@@ -55,22 +55,23 @@ After clicking "Create" you will see the Compute Instance in the new page
 
 We are all set to import and run Notebooks now.
 
-## Import from Local computer to ML Studio
+## Import from local computer to ML Studio
 For the rest of the labs, we're going to be working with iPython notebooks in ML Studio.  To load them into Studio, we're going to pull them from your local.
 
-- Clone this repository locally to your computer or you can download a Notebook individually and then upload to Azure ML Studio as below:
+Clone this repository locally to your computer or you can download a Notebook individually and then upload to Azure ML Studio as below:
 
 ![](images/12-azure-ml.png)
 
 Click on Notebook menu in the left menu bar
+
 ![](images/13-notebook-menu.png)
 
 Now, upload the repository folder or files like below
+
 ![](images/14-upload-folder.png)
 
 If successful, you will see the Notebooks similar to below
+
 ![](images/15-notebooks-uploaded.png)
 
-
-## Cypher
-Now we'll run a few queries using the python API.  Earlier we used the graphical interface in the Neo4j Browser.  We're going to do the same thing but in a programmatic way.  Let's start by firing up a notebook.  As you did before, find the `/Users/<YOUR_NAME>/notebooks/hands-on-lab-neo4j-and-azure-ml/Lab 5 - AzureML/1_cypher.ipynb` in the Studio menu, double-click and then run through the notebook.
+Now we'll run a few queries using the python API.  Earlier we used the graphical interface in the Neo4j Browser.  We're going to do the same thing but in a programmatic way.  Let's start by firing up a notebook.  Find the `/Users/<YOUR_NAME>/notebooks/hands-on-lab-neo4j-and-azure-ml/Lab 5 - AzureML/1_cypher.ipynb` in the Studio menu, double-click and then run through the notebook.
