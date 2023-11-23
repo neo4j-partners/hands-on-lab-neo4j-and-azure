@@ -18,7 +18,7 @@ Make sure that "Query" is selected at the top.
 
 We're going to run a Cypher statement to load the data.  Cypher is Neo4j's query language.  `LOAD CSV` is part of that and allows us to easily load CSV data.  Try copying this command into Neo4j Workspace.
 
-    LOAD CSV WITH HEADERS FROM "https://neo4j-dataset.s3.amazonaws.com/hands-on-lab/form13-2023-05-11.csv" AS row
+    LOAD CSV WITH HEADERS FROM 'https://neo4jdataset.blob.core.windows.net/public/form13-2023-05-11.csv' AS row
     MERGE (m:Manager {managerName:row.managerName})
     MERGE (c:Company {companyName:row.companyName, cusip:row.cusip})
     MERGE (m)-[r:OWNS {value:toFloat(row.value), shares:toInteger(row.shares), reportCalendarOrQuarter:date(row.reportCalendarOrQuarter)}]->(c);
@@ -96,7 +96,7 @@ Now that we have all the constraints, let's load our nodes.  We're going to do t
 
 Let's load the companies first.  We're going to have a lot of duplication, since our key is CUSIP and many different rows in our csv, each representing a filing, have the same cusip.  So, we need to enhance our LOAD CSV statement a little bit to deal with those duplicates.
 
-    LOAD CSV WITH HEADERS FROM 'https://neo4j-dataset.s3.amazonaws.com/hands-on-lab/form13-2023.csv' AS row
+    LOAD CSV WITH HEADERS FROM 'https://neo4jdataset.blob.core.windows.net/public/form13-2023.csv' AS row
     MERGE (c:Company {cusip:row.cusip})
     ON CREATE SET c.companyName=row.companyName;
 
@@ -106,7 +106,7 @@ That should give this:
 
 Now let's load the Managers:
 
-    LOAD CSV WITH HEADERS FROM 'https://neo4j-dataset.s3.amazonaws.com/hands-on-lab/form13-2023.csv' AS row
+    LOAD CSV WITH HEADERS FROM 'https://neo4jdataset.blob.core.windows.net/public/form13-2023.csv' AS row
     MERGE (m:Manager {managerName:row.managerName});
 
 That should give this:
@@ -117,7 +117,7 @@ Well, this is cool.  We've got all our nodes loaded in.  Now we need to tie them
 
 So, let's add the relationships.
 
-    LOAD CSV WITH HEADERS FROM 'https://neo4j-dataset.s3.amazonaws.com/hands-on-lab/form13-2023.csv' AS row
+    LOAD CSV WITH HEADERS FROM 'https://neo4jdataset.blob.core.windows.net/public/form13-2023.csv' AS row
     MATCH (m:Manager {managerName:row.managerName})
     MATCH (c:Company {cusip:row.cusip})
     MERGE (m)-[r:OWNS {reportCalendarOrQuarter:date(row.reportCalendarOrQuarter)}]->(c)
