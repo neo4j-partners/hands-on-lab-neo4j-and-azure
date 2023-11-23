@@ -2,6 +2,9 @@
 .ipynb_checkpoints
 __pycache__
 .env
-
+.amlignore
+.amlignore.amltmp
+.ipynb_aml_checkpoints
+*.amltmp
 # Apple Filesystem
 .DS_STORE
