@@ -28,7 +28,7 @@ Review the configuration and click "Create".
 
 ![](images/05-review.png)
 
-You will see the Dpeloyment complete screen once done.
+You will see the Deployment complete screen once done.
 You can go to the resource by clicking "Go to resource"
 
 ![](images/06-complete.png)
@@ -53,25 +53,71 @@ After clicking "Create" you will see the Compute Instance in the new page
 
 ![](images/11-compute-done.png)
 
-We are all set to import and run Notebooks now.
 
-## Import from local computer to ML Studio
-For the rest of the labs, we're going to be working with iPython notebooks in ML Studio.  To load them into Studio, we're going to pull them from your local.
+## Setup Azure OpenAI
+From the global 'search bar' on the top, search for `Azure OpenAI` and click on the service as shown below
 
-Clone this repository locally to your computer or you can download a Notebook individually and then upload to Azure ML Studio as below:
+![](images/12-oai-search.png)
 
-![](images/12-azure-ml.png)
+![](images/13-oai-page.png)
 
-Click on Notebook menu in the left menu bar
+Click on the `Create` button on the top to spin off a new Azure OpenAI service
+![](images/14-create-oai.png)
 
-![](images/13-notebook-menu.png)
+Select your subscription and resource group you created for this lab.
+For the Region - select `Australia East` and provide a unique name.
+![](images/15-create-oai-1.png)
 
-Now, upload the repository folder or files like below
+![](images/16-create-oai-2.png)
 
-![](images/14-upload-folder.png)
+![](images/17-create-oai-3.png)
 
-If successful, you will see the Notebooks similar to below
+![](images/18-create-oai-4.png)
 
-![](images/15-notebooks-uploaded.png)
+When you are done, click the `Go to resource` button
+![](images/19-create-oai-done.png)
+
+![](images/19-create-oai-done-1.png)
+
+From the left menu, click on `Keys and Endpoint` under the `Resource Management` section.
+You will find the API keys and Base URL in this page which will be used later in the lab notebooks.
+![](images/20-keys-page.png)
+
+Now, go to `Manage Deployments` page and click the button `Manage Deployments` in that page.
+![](images/21-deployments.png)
+
+You will be taken to the deployments page in Azure OpenAI Studio as below. Let us deploy some instances of the OpenAI models that will be used in this lab.
+
+Click `Create new deployment` button
+![](images/22-create-dep.png)
+
+Select `gpt-4` and enter the required information as below. Provide the model name as the deployment name as well.
+
+For the quota, pick the maximum available for your instance. In this screenshot, we went for 80K which is the maximum number.
+![](images/23-create-gpt4.png)
+
+
+After the `gpt-4` model is deployed, let us deploy the encoding model - `text-embedding-ada-002` which will be used to convert text to word embeddings.
+Similar to gpt-4, provide the model name as deployment name and go for the maximum quota.
+
+![](images/24-create-ada.png)
+
+With our models deployed, let us start using them.
+
+## Import Lab Notebooks to ML Studio
+For the rest of the labs, we're going to be working with iPython notebooks in ML Studio.
+
+Clone this repository to Azure ML Studio as below:
+
+- In the left menu bar, under `Authoring` section, click `Notebooks` menu.
+- Click on the `Terminal` icon to open a terminal where you can run the following command
+
+```
+git clone https://github.com/neo4j-partners/hands-on-lab-neo4j-and-azure
+```
+
+![](images/30-git-clone.png)
+
+Hit the refresh icon after cloning. You will see the cloned respository folder.
 
 Now we'll run a few queries using the python API.  Earlier we used the graphical interface in the Neo4j Browser.  We're going to do the same thing but in a programmatic way.  Let's start by firing up a notebook.  Find the `/Users/<YOUR_NAME>/notebooks/hands-on-lab-neo4j-and-azure-ml/Lab 5 - AzureML/1_cypher.ipynb` in the Studio menu, double-click and then run through the notebook.
