@@ -19,7 +19,7 @@ You'll need a laptop with a web browser.  Your browser will need to be able to a
 ## Agenda
 ### Part 1
 * Introductions
-* [Lecture - Introduction to Neo4j](https://docs.google.com/presentation/d/1hTBs039zcCSbNJg9VH-xzXi-4TpNLgymL2I5eaIQFyY/edit?usp=drive_link) (10 min)
+* [Lecture - Introduction to Neo4j](https://docs.google.com/presentation/d/1mEXn02TMYJ0nGFj7u5VANQBl1jBJcLGp6dYHB_xY0pQ/edit?usp=sharing) (10 min)
     * What is Neo4j?
     * How is it deployed and managed on Azure?
 * [Lab 0 - Sign In](Lab%200%20-%20Sign%20In) (5 min)
@@ -31,7 +31,7 @@ You'll need a laptop with a web browser.  Your browser will need to be able to a
 * Break (5 min)
 
 ### Part 2
-* [Lecture - Moving Data](https://docs.google.com/presentation/d/1ZDUrLuHbF6xD_6aNukw9FzeB9bjtDCdDGth0M2GgZ3w/edit?usp=drive_link) (10 min)
+* [Lecture - Moving Data](https://docs.google.com/presentation/d/1B7pyEKfDRrwKQrfdjN7udM0bWYedPXaFUBM1LKyBdEk/edit?usp=sharing) (10 min)
     * LOAD CSV
 * [Lab 3 - Moving Data](Lab%203%20-%20Moving%20Data/README.md) (15 min)
     * Simple Load Statement
@@ -41,8 +41,8 @@ You'll need a laptop with a web browser.  Your browser will need to be able to a
 * Break (5 min)
 
 ### Part 3
-* [Lecture - Azure OpenAI Service](https://docs.google.com/presentation/d/15pn7B-B9yE0q1s_Q1U9pKOtYJR8AiHgowP27W1bFyQI/edit?usp=sharing) (15 min)
-    * What is Azure OpenAI Service?
+* [Lecture - Azure OpenAI](https://docs.google.com/presentation/d/1KPHoVJivbinHg-UtrnTIUbMiFHB8mPEnDO0v0OvvcPM/edit?usp=sharing) (15 min)
+    * What is Azure OpenAI?
     * Generative AI
 * [Lecture - Neo4j and Generative AI](https://docs.google.com/presentation/d/1iHu9vgEG0s6yjKMLUw9XqWGiJrY7Z1oNv0QPa75BCtc/edit?usp=sharing) (15 min)
     * Generating Knowledge Graphs
