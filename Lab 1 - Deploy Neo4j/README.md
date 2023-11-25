@@ -89,7 +89,7 @@ You'll be redirected to the "Deployment" page in Azure Resource Manager (ARM).  
 
 When complete, you will see the nodes, vnet, NSG and deployments under "Deployment Details" section
 
-You can click on "Outputs" in the left. That gives the URI for the Neo4j Browser.  You're going to need that in the next lab.
+Click on "Outputs" in the left. That gives the URI for the Neo4j Browser.  You're going to need that in the next lab.
 
 ![](images/13.png)
 
