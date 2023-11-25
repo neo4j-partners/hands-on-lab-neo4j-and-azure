@@ -54,7 +54,7 @@ Now click "Next."
 
 In this menu we configure our Neo4j EE deployment.  Enter the following values.
 
-* Virtual Machine Size - 1x Standard E4s v5
+* Virtual Machine Size - 1x Standard E4s v3
 * Node Count - 1.  More nodes would allow for high availability.
 * Disk Size - 32GB
 * Graph Database Version - 5.  The other option is a previous version.
@@ -79,18 +79,20 @@ The Azure portal now validates the config you specificied.  Give that a minute t
 
 ![](images/10.png)
 
-When complete, you'll see a message that validation has succeeded.  Click "Create to deploy."
+When complete, you'll see a final screen.  Click "Create" to start the deployment
 
 ![](images/11.png)
 
-When all done, you'll be taken to the "Deployments" page.
+You'll be redirected to the "Deployment" page in Azure Resource Manager (ARM).  That will take XXX minutes to run.  Azure is deploying VMs, storage and network.  It's then using the Azure agent to install Neo4j on the VMs.
 
 ![](images/12.png)
 
-You will see the nodes, vnet, NSG and deployments under "Deployment Details" section
+When complete, you will see the nodes, vnet, NSG and deployments under "Deployment Details" section
 
-Once the deployment is completed, click on "Outputs" in the left. Copy the URI for the Neo4j Browser.  You're going to need that in the next lab.
+You can click on "Outputs" in the left. That gives the URI for the Neo4j Browser.  You're going to need that in the next lab.
 
 ![](images/13.png)
 
 You're now all ready for the next lab where we're going to start using the Neo4j deployment we just created.
+
+![](images/14.png)
