@@ -1,5 +1,5 @@
 # Discussion - Questions and Next Steps
-This section has some thoughts on future work, improvements and next steps.  Please feel free to [PR](https://github.com/neo4j-partners/hands-on-lab-neo4j-and-azure-ml/pulls) your ideas and suggestions.
+This section has some thoughts on future work, improvements and next steps.  Please feel free to [PR](https://github.com/neo4j-partners/hands-on-lab-neo4j-and-azure/pulls) your ideas and suggestions.
 
 ## Lab 0 - Sign In
 In previous versions of the lab we had users sign up for a new Azure account they owned.  That was kinda cool in that attendees got to see everything start from scratch.  However, the signup required a credit card number and a phone number for identity verification.  It was also a fair bit of work.  Now we're using [OneBlink.AI](https://oneblink.ai/) to provision.  We'd be curious to hear how your experience was with this approach.
