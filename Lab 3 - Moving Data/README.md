@@ -96,7 +96,7 @@ The manager is a little more difficult.  But, we're going to assume that the man
 
 That should give this:
 
-![](images/10.png)
+![](images/12.png)
 
 Now that we have all the constraints, let's load our nodes.  We're going to do that first and grab the relationships in a second pass.  While we could do it in a single Cypher statement, as we did above, it's more efficient to run them in series.
 
@@ -108,7 +108,7 @@ Let's load the companies first.  We're going to have a lot of duplication, since
 
 That should give this:
 
-![](images/11.png)
+![](images/13.png)
 
 Now let's load the Managers:
 
@@ -117,7 +117,7 @@ Now let's load the Managers:
 
 That should give this:
 
-![](images/12.png)
+![](images/14.png)
 
 Well, this is cool.  We've got all our nodes loaded in.  Now we need to tie them together with relationships.  In this case we only need one kind of relationship.  A manager "OWNS" a company.
 
@@ -131,6 +131,6 @@ So, let's add the relationships.
 
 This will run for about two minutes.  When complete, you should see this:
 
-![](images/13.png)
+![](images/15.png)
 
 You've done it!  We've loaded our data set up.  We'll explore it in the next lab.  But, feel free to poke around a bit as well.
