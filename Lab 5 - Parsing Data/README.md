@@ -125,11 +125,11 @@ Clone this repository to Azure ML Studio as below:
 * Click on the `Terminal` icon to open a terminal where you can run the following command
 
 ```
-git clone https://github.com/neo4j-partners/hands-on-lab-neo4j-and-azure
+git clone https://github.com/neo4j-partners/hands-on-lab-neo4j-and-azure.git
 ```
 
 ![](images/30-git-clone.png)
 
 Hit the refresh icon after cloning. You will see the cloned respository folder.
 
-Now we'll run a few queries using the python API.  Earlier we used the graphical interface in the Neo4j Browser.  We're going to do the same thing but in a programmatic way.  Let's start by firing up a notebook.  Find the `/Users/<YOUR_NAME>/notebooks/hands-on-lab-neo4j-and-azure-ml/Lab 5 - AzureML/1_cypher.ipynb` in the Studio menu, double-click and then run through the notebook.
+Now we'll run a few queries using the python API.  Earlier we used the graphical interface in the Neo4j Browser.  We're going to do the same thing but in a programmatic way.  Let's start by firing up a notebook.  Find the `/Users/<YOUR_NAME>/notebooks/hands-on-lab-neo4j-and-azure-ml/Lab 5 - Parsing Data/parsing-data.ipynb` in the Studio menu, double-click and then run through the notebook.
