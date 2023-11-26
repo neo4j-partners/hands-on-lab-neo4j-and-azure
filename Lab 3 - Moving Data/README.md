@@ -27,49 +27,55 @@ It should look like the following.  You can then press the blue triangle with a 
 
 ![](images/02.png)
 
-That will load the nodes and relationships from the file.
+That will load the nodes and relationships from the file.  Click on the database icon in the left to expand the data we loaded.
+
+![](images/03.png)
 
 You'll now see the nodes, relationships and properties we loaded.  We have two kinds of nodes, manager and company.  Manager nodes are asset managers.  Company nodes are the companies that those asset manages buy shares of.  Managers are related to companies by the owns relationship.  Manager, company and owns all have properties that we can inspect as well.
 
 Click on "Manager" under "Nodes" to automatically generate a new cypher query and run it.
 
-![](images/03.png)
+![](images/04.png)
 
 You'll now see a subset of the managers we have in the database.  The query returns 25 of them.  It's limited because returning too many nodes in this visualization mode can make it hard to navigate.
 
-Now, let's click on one of the managers.  Don't worry, it doesn't particularly matter which one.  Once we've clicked on it, right click and select "Expand."
-
-![](images/04.png)
-
-When it expands, we can see what companies this manager owns shares in.  In this case, "Smithfield Trust Co" seems to only have five holdings.  Note that this data set only has holdings over $10m.  Smaller holdings were filtered out in pre-processing.
-
-Try selecting a company now.
+Now, let's click on one of the managers.  Don't worry, it doesn't particularly matter which one.  
 
 ![](images/05.png)
 
-In this case, we see the company "APPLE INC" has CUSIP 037833100.
-
-We can also click on the relationship, that is the line between the nodes to see detail on the transaction.
+Click on the button at the bottom of the node to expand it.
 
 ![](images/06.png)
 
-In this case, it appears we have a report from 2023-03-31 that 164,531 shares were purchased with a value of $27,128,000.
+When it expands, we can see what companies this manager owns shares in.  In this case, "NYL Investors LLC" seems to have six holdings.  Note that this data set only has holdings over $10m.  Smaller holdings were filtered out in pre-processing.
+
+Try selecting a company now.
 
 ![](images/07.png)
+
+In this case, we see the company "CHESAPEAKE ENERGY CORPORATION" has CUSIP 165167735.
+
+We can also click on the relationship, that is the line between the nodes to see detail on the transaction.
+
+![](images/08.png)
+
+In this case, it appears we have a report from 2023-03-31 that 17,058 shares were purchased with a value of $1,297,091,000.00.
+
+![](images/09.png)
 
 At this point, take some time to poke around the graph.  You can expand it by clicking the icon with two arrows pointing away from each other in the upper right.  You may also want to click on the "Company" node label to query those.
 
 As you play around, you may start to see some of the structure in the graph with recurrent connections and interesting communities of managers who have similar holdings.
 
-![](images/08.png)
+![](images/10.png)
 
 Now that we have some understanding of this portion of the dataset, we're going to delete it.  Then we'll load the full data set.  To delete all the nodes and relationships in the database, run this command:
 
     MATCH (n) DETACH DELETE n;
 
-Now, all your data should be deleted.  Note that Workspace is still caching some property keys.
+Now, all your data should be deleted.  Note that Browser is still caching some property keys.
 
-![](images/09.png)
+![](images/11.png)
 
 In the next section, we'll load more data.
 
