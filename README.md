@@ -50,7 +50,9 @@ You'll need a laptop with a web browser.  Your browser will need to be able to a
     * Semantic Search
     * Using Azure OpenAI Service with Neo4j
 * [Lab 5 - Parsing Data](Lab%205%20-%20Parsing%20Data/README.md) (20 min)
-    * Setup Azure ML Notebooks
+    * Create an Azure ML Service
+    * Setup Azure OpenAI
+    * Import Lab Notebooks to ML Studio
     * Parsing Data
 * [Lab 6 - Chatbot](Lab%206%20-%20Chatbot/README.md) (20 min)
     * Prompt Engineering 
