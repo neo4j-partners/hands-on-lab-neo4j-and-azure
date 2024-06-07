@@ -20,14 +20,15 @@ Click on "Create" and select "New workspace"
 
 ![](images/03-new-ws.png)
 
-Provide the required configuration to create a new Workspace.
+Provide the required configuration to create a new Workspace:
 
 * Resource Group - select the pre created resource group
+* Name - neo4j
 * Region - Austrailia East
 
 ![](images/04-ws-config.png)
 
-Click on "Review + create." 
+The other cells will then autopopulate.  Click on "Review + create." 
 
 Review the configuration and click "Create."
 
