@@ -10,9 +10,10 @@ Enter "neo4j" in the search bar and press enter.
 
 You'll see a variety of results.  Some are "By Neo4j."  That means they're official listings published by Neo4j.  Others are from companies like Bitnami who take the community versions of software like Neo4j and publish them themselves.
 
-Neo4j has three listings:
+Neo4j has four listings:
 
 * Neo4j Aura - Our SaaS.  This is currently only available through Azure Marketplace as an annual license, so won't work well for this lab.
+Neo4j Aura Professional - A click to deploy, pay as you go version of our SaaS.  This does not currently support Graph Data Science (GDS), which we're going to use in our lab.
 * Neo4j Community Edition - This is the free and fully open source version of Neo4j.  It's a great way to get started but is missing some features we'd like to use in the lab.
 * Neo4j Enterprise Edition - The commercial version of our self managed, installable product.
 
@@ -45,7 +46,7 @@ When done, you're at the authenticated marketplace page.  Leave the plan as "BYO
 Now we need to enter a few values.
 
 * Resource Group - Select the existing resource group in your subscription.
-* Region - Select Australia East
+* Region - keep the default
 * Password - The password should be 12 characters or longer.  A possible throw away password is "Foo12345678!"
 
 Now click "Next."
@@ -54,7 +55,7 @@ Now click "Next."
 
 In this menu we configure our Neo4j EE deployment.  Enter the following values.
 
-* Virtual Machine Size - 1x Standard E4s v3
+* Virtual Machine Size - 1x Standard E4s v5
 * Node Count - 1.  More nodes would allow for high availability.
 * Disk Size - 32GB
 * Graph Database Version - 5.  The other option is a previous version.
