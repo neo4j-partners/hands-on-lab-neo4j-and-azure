@@ -56,81 +56,28 @@ Provide the compute name and select "Standard_DS11_v2" for the compute VM Size.
 
 ![](images/10-new-compute.png)
 
+Click "Review + Create" 
 After clicking "Create" you will see the compute instance in the new page.
 
 ![](images/11-compute-done.png)
 
-## Setup Azure OpenAI
-From the global 'search bar' on the top, search for `Azure OpenAI` and click on the service as shown below.
+Click "JupyterLab". You will see a new window of JupyterLab.
 
-![](images/12-oai-search.png)
+## Import Lab Notebooks to JupyterLab
+For the rest of the labs, we're going to be working with JupyterLab.
 
-![](images/13-oai-page.png)
+![](images/12-launcher-terminal.png)
 
-Click on the `Create` button on the top to spin off a new Azure OpenAI service.
-![](images/14-create-oai.png)
+Clone this repository to JupyterLab as below:
 
-Select your subscription and resource group you created for this lab.
-
-For the Region - select `Australia East` and provide a unique name.
-
-![](images/15-create-oai-1.png)
-
-![](images/16-create-oai-2.png)
-
-![](images/17-create-oai-3.png)
-
-![](images/18-create-oai-4.png)
-
-When you are done, click the `Go to resource` button.
-
-![](images/19-create-oai-done.png)
-
-![](images/19-create-oai-done-1.png)
-
-From the left menu, click on `Keys and Endpoint` under the `Resource Management` section.
-You will find the API keys and Base URL in this page which will be used later in the lab notebooks.
-
-![](images/20-keys-page.png)
-
-Now, go to `Manage Deployments` page and click the button `Manage Deployments` in that page.
-
-![](images/21-deployments.png)
-
-You will be taken to the deployments page in Azure OpenAI Studio as below. Let us deploy some instances of the OpenAI models that will be used in this lab.
-
-Click `Create new deployment` button.
-
-![](images/22-create-dep.png)
-
-Select `gpt-4` and enter the required information as below. Provide the model name as the deployment name as well.
-
-For the quota, pick the maximum available for your instance. In this screenshot, we went for 80K which is the maximum number.
-
-![](images/23-create-gpt4.png)
-
-After the `gpt-4` model is deployed, let us deploy the encoding model - `text-embedding-ada-002` which will be used to convert text to word embeddings.
-
-Similar to gpt-4, provide the model name as deployment name and go for the maximum quota.
-
-![](images/24-create-ada.png)
-
-With our models deployed, let us start using them.
-
-## Import Lab Notebooks to ML Studio
-For the rest of the labs, we're going to be working with iPython notebooks in ML Studio.
-
-Clone this repository to Azure ML Studio as below:
-
-* In the left menu bar, under `Authoring` section, click `Notebooks` menu.
-* Click on the `Terminal` icon to open a terminal where you can run the following command
+* Click on the `Terminal` icon in the Launcher window to open a terminal where you can run the following command
 
 ```
 git clone https://github.com/neo4j-partners/hands-on-lab-neo4j-and-azure.git
 ```
 
-![](images/30-git-clone.png)
+![](images/13-git-clone.png)
 
 Hit the refresh icon after cloning. You will see the cloned respository folder.
 
-Now we'll run a few queries using the python API.  Earlier we used the graphical interface in the Neo4j Browser.  We're going to do the same thing but in a programmatic way.  Let's start by firing up a notebook.  Find the `/Users/<YOUR_NAME>/notebooks/hands-on-lab-neo4j-and-azure-ml/Lab 5 - Parsing Data/parsing-data.ipynb` in the Studio menu, double-click and then run through the notebook.
+Now we'll run a few queries using the python API.  Earlier we used the graphical interface in the Neo4j Browser.  We're going to do the same thing but in a programmatic way.  Let's start by firing up a notebook.  Find the `/hands-on-lab-neo4j-and-azure-ml/Lab 5 - Parsing Data/parsing-data.ipynb` in the left navigation bar, double-click and then run through the notebook.
