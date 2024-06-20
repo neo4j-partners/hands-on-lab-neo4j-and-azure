@@ -10,8 +10,6 @@ When open Bloom, you should see the login screen.  Use the same credentials we u
 
 That should take you to the home screen.  A perspective is a specific visualization on your data.  To get started, click "Create Perspective."
 
-![](images/02-home.png)
-
 Now click "Generate Perspective."
 
 ![](images/03-generate.png)
