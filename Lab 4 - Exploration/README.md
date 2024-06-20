@@ -18,21 +18,9 @@ Mouse over the perspective you just generated and click on "Use Perspective" to 
 
 ![](images/04-newperspective.png)
 
-Click in the search bar and then click on "Manager."
+Click in the search bar and then click on "Manager", then click on the link for Manager - OWNS and click on the link to add Manager-OWNS-Company and hit enter to run the query.
 
 ![](images/05-perspective.gif)
-
-Then click on the link for Manager - OWNS.
-
-![](images/06-manager.png)
-
-Then click on the link to add Manager-OWNS-Company.
-
-![](images/07-holding.png)
-
-And now hit enter to run the query.
-
-![](images/08-company.png)
 
 That will give you a view with many nodes.  The result here shows all paths from a manager to a holding to a company.  If we'd searched paths for say company to company we wouldn't have gotten any results since there are no such paths in our graph.
 
