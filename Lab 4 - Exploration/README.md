@@ -20,7 +20,7 @@ Mouse over the perspective you just generated and click on "Use Perspective" to 
 
 Click in the search bar and then click on "Manager."
 
-![](images/05-perspective.png)
+![](images/05-perspective.gif)
 
 Then click on the link for Manager - OWNS.
 
