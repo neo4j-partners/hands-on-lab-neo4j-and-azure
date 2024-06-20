@@ -22,11 +22,11 @@ Click in the search bar and then click on "Manager."
 
 ![](images/05-perspective.png)
 
-Then click on the link for manager-holding.
+Then click on the link for Manager - OWNS.
 
 ![](images/06-manager.png)
 
-Then click on the link to add manager-holding-company.
+Then click on the link to add Manager-OWNS-Company.
 
 ![](images/07-holding.png)
 
