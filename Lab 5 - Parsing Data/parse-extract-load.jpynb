@@ -1,0 +1,167 @@
+The following is a working module. there are no changes required in the following code.however, I want to split the code into smaller chunks of code to make it easy to understsnd and follow during a hands-on workshop. convert the following into a jpynb cells with instructions to replace placeholder variables like neo4j url, password,  azure openai url api keys, etc.
+Also add pip install instructions as the first code cell 
+
+
+import os
+from xml.etree import ElementTree as ET
+from neo4j import GraphDatabase
+import json
+from azure.storage.blob import BlobServiceClient
+import openai
+from openai import AzureOpenAI
+
+# Azure Blob Storage setup
+account_url = "https://neo4jdataset.blob.core.windows.net/"
+container_name = "form13-raw"
+blob_service_client = BlobServiceClient(account_url=account_url)
+
+
+# OpenAI setup
+API_ENDPOINT = "https://oneblinkopenaigenericservice.openai.azure.com/"
+API_VERSION = "2024-02-01"
+API_KEY = "8191daa13e01408887fcd362364937bb"
+deployment_name = "oneblink-gp4ouseast"
+
+openai.api_type = "azure"
+openai.api_base = API_ENDPOINT
+openai.api_version = API_VERSION
+openai.api_key = API_KEY
+
+# OpenAI setup - Updated configuration
+client = AzureOpenAI(
+    api_key=API_KEY,
+    api_version=API_VERSION,
+    azure_endpoint=API_ENDPOINT
+)
+
+# Neo4j setup
+NEO4J_URI = 'neo4j+s://neo4j-partners.com:443'
+NEO4J_USERNAME = 'neo4j'
+NEO4J_PASSWORD = 'FabricNeo@2024'
+driver = GraphDatabase.driver(NEO4J_URI, auth=(NEO4J_USERNAME, NEO4J_PASSWORD))
+
+def read_xml_from_azure(filename):
+    try:
+        blob_client = blob_service_client.get_blob_client(container=container_name, blob=filename)
+        content = blob_client.download_blob(max_concurrency=1, encoding='UTF-8').readall()
+        xml_start = content.find('<edgarSubmission')
+        return content[xml_start:] if xml_start != -1 else None
+    except Exception as e:
+        print(f"Error reading file {filename}: {e}")
+        return None
+
+def read_xml_from_azure(filename):
+    try:
+        blob_client = blob_service_client.get_blob_client(container=container_name, blob=filename)
+        content = blob_client.download_blob(max_concurrency=1, encoding='UTF-8').readall()
+        
+        # Find the actual XML content
+        xml_start = content.find('<?xml version="1.0"')
+        xml_end = content.find('</XML>')
+        
+        if xml_start != -1 and xml_end != -1:
+            xml_content = content[xml_start:xml_end + 6]  # Include the closing </XML> tag
+            return xml_content
+        else:
+            print(f"Could not find XML content in {filename}")
+            return None
+            
+    except Exception as e:
+        print(f"Error reading file {filename}: {e}")
+        return None
+
+def extract_entities(xml_content):
+    if not xml_content:
+        return None
+        
+    prompt = """
+    Extract the following information from the XML content and return it as a JSON object:
+    * "managerName": The text content of the <name> tag under <filingManager>
+    * "street1": The text content of the <com:street1> tag under <address>
+    * "street2": The text content of the <com:street2> tag under <address> (if present)
+    * "city": The text content of the <com:city> tag under <address>
+    * "stateOrCounty": The text content of the <com:stateOrCountry> tag under <address>
+    * "zipCode": The text content of the <com:zipCode> tag under <address>
+
+    Return the JSON object without any markdown formatting or code block indicators.
+    
+    XML Content:
+    {xml_text}
+    """.format(xml_text=xml_content)
+
+    try:
+        response = client.chat.completions.create(
+            model=deployment_name,
+            messages=[{"role": "user", "content": prompt}],
+            max_tokens=300
+        )
+        
+        result = response.choices[0].message.content
+        print("OpenAI Response:", result)  # Debug print
+        
+        # Clean up the response
+        # Remove markdown code block indicators and any leading/trailing whitespace
+        cleaned_result = result.replace('```json', '').replace('```', '').strip()
+        
+        return json.loads(cleaned_result)
+        
+    except Exception as e:
+        print(f"Error extracting entities: {e}")
+        print(f"Response content: {response.choices[0].message.content if 'response' in locals() else 'No response'}")
+        return None
+
+
+def create_nodes(tx, data):
+    if not data:
+        return
+    
+    # Create Manager node
+    if data.get("managerName"):
+        tx.run("MERGE (m:Manager {name: $name})", 
+               name=data["managerName"])
+
+    # Filter out None values from address properties
+    address_props = {k: v for k, v in data.items() 
+                    if k in ["street1", "street2", "city", "stateOrCounty", "zipCode"] 
+                    and v is not None}  # Only include non-None values
+    
+    if address_props.get("street1"):  # Only create address if at least street1 exists
+        # Dynamically build the Cypher query based on available properties
+        props_string = ", ".join(f"{k}: ${k}" for k in address_props.keys())
+        address_query = f"""
+            MERGE (a:Address {{{props_string}}})
+        """
+        tx.run(address_query, **address_props)
+
+        # Create relationship between Manager and Address
+        if data.get("managerName"):
+            tx.run("""
+                MATCH (m:Manager {name: $name})
+                MATCH (a:Address {street1: $street1})
+                MERGE (m)-[:HAS_ADDRESS]->(a)
+            """, name=data["managerName"], street1=address_props["street1"])
+
+
+def process_files(file_names):
+    for file_name in file_names:
+        print(f"Processing {file_name}")
+        xml_content = read_xml_from_azure(file_name)
+        
+        if xml_content:
+            entities = extract_entities(xml_content)
+            if entities:
+                with driver.session() as session:
+                    session.execute_write(create_nodes, entities)
+                print(f"Processed entities for {file_name}")
+
+# Main execution
+if __name__ == "__main__":
+    sample_files = [
+        'raw_2023-07-18_archives_edgar_data_1108893_0001108893-23-000005.txt',
+        'raw_2023-07-18_archives_edgar_data_1488921_0001085146-23-002736.txt',
+        'raw_2023-07-18_archives_edgar_data_1163165_0001104659-23-081874.txt',
+        'raw_2023-07-18_archives_edgar_data_1567459_0000950123-23-006124.txt'
+    ]
+    
+    process_files(sample_files)
+    driver.close()
