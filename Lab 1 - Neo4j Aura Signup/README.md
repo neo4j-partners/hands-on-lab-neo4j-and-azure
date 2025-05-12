@@ -58,7 +58,7 @@ In the popup, find your workshop instance and click the 'v' button next to "Conn
 
 **Step 9: Choose HTTPS Connection**
 
-Click the 'v' dropdown under "Connection Method" and select "https".
+Click the 'v' dropdown under "Connection Method" and select "https://".
 
 ![](images/30.png)
 
