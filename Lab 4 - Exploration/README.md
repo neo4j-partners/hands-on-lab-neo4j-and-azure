@@ -70,4 +70,3 @@ Follow these steps to import the data into your Neo4j Aura database. Lets' use t
 You've done it!  We've loaded our data set up.  We'll explore it in the next lab.  But, feel free to poke around a bit as well.
 ![](https://github.com/neo4j-partners/hands-on-lab-neo4j-and-bedrock/blob/main/Lab%203%20-%20Moving%20Data/images/13.png)
 
-#### Progress:  ███░░░░ 3/7 Labs Completed!
