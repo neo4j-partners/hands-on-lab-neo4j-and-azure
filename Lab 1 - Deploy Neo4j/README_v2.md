@@ -1,4 +1,4 @@
-# Get Started with Neo4j Aura! 🚀
+# Get Started with Neo4j Aura! 
 
 Ready to connect to your Neo4j Aura database? Follow these straightforward steps to jump in.
 
