@@ -66,8 +66,8 @@ Click the 'v' dropdown under "Connection Method" and select "https://".
 
 Enter the password provided during the workshop.
 
-![](images/31.png)
-
 **Step 11: Welcome to Neo4j!**
+
+![](images/31.png)
 
 You are now connected to your Neo4j Aura database. Your graph journey begins here. Let's explore!
