@@ -58,7 +58,7 @@ In the popup, find your workshop instance and click the 'v' button next to "Conn
 
 **Step 9: Choose HTTPS Connection**
 
-Click the 'v' dropdown under "Connection Method" and select "https://".
+First, try connecting using the 'neo4j+s' protocol, which typically offers better performance. If the system doesn't respond for an extended period or errors out, click the 'v' dropdown under 'Connection Method' and select 'https://'. The HTTPS option uses port 443 and can help if other port (7687) are blocked by your corporate network security policies.  
 
 ![](images/30.png)
 
