@@ -27,7 +27,7 @@ For this guide, we'll use pre-filtered Form 13 data that includes filings with o
 You will need the following files:
 
 1.  **Neo4j Graph Data Model:** This JSON file defines the structure of your graph, specifying the nodes, relationships, and their properties.
-    * Download from: <a href="https://neo4jdataset.blob.core.windows.net/hands-on-lab/neo4j_importer_model_sec-edgar-forms13.json" download>Download Neo4j Graph Data model JSON File</a>
+    * Download from (Right-click the link and choose "Save link as…" if the file opens in your browser.): <a href="https://neo4jdataset.blob.core.windows.net/hands-on-lab/neo4j_importer_model_sec-edgar-forms13.json" download>Download Neo4j Graph Data model JSON File</a>
 
 
 2.  **Form 13 Data:** This CSV file contains the actual data to be imported.
