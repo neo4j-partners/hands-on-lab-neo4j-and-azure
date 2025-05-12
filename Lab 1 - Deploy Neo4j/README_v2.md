@@ -42,7 +42,7 @@ Click the "New Organization" dropdown (next to "Neo4j Aura"), select the "Market
 
 ![](images/26.png)
 
-choose the "Azure Marketplace tenant".
+Choose the "Azure Marketplace tenant".
 
 ![](images/27.png)
 
