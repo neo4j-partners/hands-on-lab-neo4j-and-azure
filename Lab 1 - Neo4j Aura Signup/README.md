@@ -36,7 +36,7 @@ Click "Sign up". This is your Neo4j Console.
 
 ![](images/25.png)
 
-**Step 7: Access the Workshop Instance**
+**Step 7: Access the Marketplace tenant**
 
 Click the "New Organization" dropdown (next to "Neo4j Aura"), select the "Marketplace Organization".
 
