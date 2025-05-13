@@ -1,5 +1,7 @@
 # Lab 0 - Sign In
-At the start of this lab, you should have received an information sheet. To begin, visit https://events.oneblink.ai and input the email you used to register for the lab, along with the event code (a 7-digit number) from the information sheet. Check the box to agree to the Terms and Conditions, and then click on Register.
+
+At the end of the first presentation, you will receive an event code. To begin the lab, visit [https://events.oneblink.ai](https://events.oneblink.ai) and enter the email you used to register along with the 7-digit event code. Check the box to agree to the Terms and Conditions, then click on Register.
+
 
 ![](images/05.png)
 
