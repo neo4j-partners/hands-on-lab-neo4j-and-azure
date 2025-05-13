@@ -38,4 +38,6 @@ We're now authenticated and logged into the Azure portal.  Click "Maybe later" t
 
 ![](images/04.png)
 
-In the next lab we'll deploy Neo4j.
+Here's the revised version:
+
+In the next lab, we'll sign up for Neo4j AuraDS (Aura Data Science).
