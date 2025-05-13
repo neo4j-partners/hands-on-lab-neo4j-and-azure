@@ -1,74 +1,83 @@
-# Lab 3 - Importing Data
+# Lab 4 - Exploration
+In this lab, we'll use Explore, Neo4j's business intelligence (BI) tool, to explore our data.
 
-In this lab, we're going to take data from an Azure Blob Storage and import it into Neo4j. There are a few different ways to do this. Let's import data from SEC EDGAR Form 13 filings into a Neo4j database using the data importer tool within the Neo4j Aura console.
+## Exploration with Neo4j Bloom
+The Explore tool, powered by Neo4j Bloom, is a graph exploration tool for visually interacting with graph data.
 
-## Introduction
+A graph puts information into context. People, places, and things. Products, services, and accounts. Transactions, identities, and events. Explore shows the patterns you intuitively know are there in your data, and reveals new patterns you may not have expected.
 
-The Neo4j Aura console offers a convenient data importer tool that allows you to import data from various sources, including CSV files, into your Neo4j database. This guide will walk you through the process of importing Form 13 data, which represents holdings of large asset managers.
+Click on the 'Explore' option under Tools.
 
-### Graph Data Modeling Overview
+![](images/01.png)
 
-Before diving into the import process, let's briefly touch on graph data modeling. Graph databases, like Neo4j, store data as nodes and relationships. In this example, we'll model:
+Now click on "Show me a graph."  Hit enter.
 
-* **Managers:** Entities that manage assets.
-* **Companies:** Entities that are held as investments.
-* **OWNS:** Relationships connecting Managers to Companies, representing ownership.
+![](images/11.png)
 
-This structure allows us to easily query and analyze relationships between asset managers and their investments.
+In this case, we got a view with a two company nodes at the center and 100+ managers that own shares of that company.
 
-## About the Data
+![](images/12.png)
 
-The dataset used in this guide comes from the U.S. Securities and Exchange Commission's (SEC) EDGAR database. Form 13 filings are quarterly reports that asset managers with over $100 million in assets under management (AUM) are required to submit, detailing their equity holdings. These filings are publicly available.
+We can click on the company to see its name.
 
-For this guide, we'll use pre-filtered Form 13 data that includes filings with over $10 million in value.
+Now let's try finding a new graph.  Click on the X in the search bar to clear the contents of it.  
 
-## Data Files
+![](images/13.png)
 
-You will need the following files:
+Then click in the search bar
 
-1.  **Neo4j Graph Data Model:** This JSON file defines the structure of your graph, specifying the nodes, relationships, and their properties.
-    * Download from (Right-click the link and choose "Save link as…" if the file opens in your browser.): <a href="https://neo4jdataset.blob.core.windows.net/hands-on-lab/neo4j_importer_model_sec-edgar-forms13.json" download>Download Neo4j Graph Data model JSON File</a>
+![](images/14.png)
 
+Select "Manager."
 
-2.  **Form 13 Data:** This CSV file contains the actual data to be imported.
-    * Download from: <a href="https://neo4jdataset.blob.core.windows.net/hands-on-lab/form13-2023.csv" download>Download SEC Data (CSV File)</a>
+![](images/15.png)
 
+Now select "OWNS."
 
-## Import Instructions
+![](images/16.png)
 
-1.  **Open Neo4j Aura Console:**
-Follow these steps to import the data into your Neo4j Aura database. Lets' use the Import tool. 
-    * In the data services section, click on "Import"
-    * in the Import section, select the "Graph models" tab.
-    * Click on the "New graph model" button.
-![](https://github.com/neo4j-partners/hands-on-lab-neo4j-and-bedrock/blob/main/Lab%203%20-%20Moving%20Data/images/01.png)
-2. **Open Graph Model:**
-    * Locate the "Run import" button in the top right corner and click the three dots next to it.
-    * Select "Open model" from the menu.
-    * Browse and select the `neo4j_importer_model_sec-edgar-forms13.json` file that you downloaded.
-![](https://github.com/neo4j-partners/hands-on-lab-neo4j-and-bedrock/blob/main/Lab%203%20-%20Moving%20Data/images/02.png)
-![](https://github.com/neo4j-partners/hands-on-lab-neo4j-and-bedrock/blob/main/Lab%203%20-%20Moving%20Data/images/03.png)
-7.  **Review Graph Model:**
-    * The graph model should now be displayed on the canvas in the middle of the screen.
-![](https://github.com/neo4j-partners/hands-on-lab-neo4j-and-bedrock/blob/main/Lab%203%20-%20Moving%20Data/images/04.png)
-8.  **Inspect Nodes and Relationships:**
-    * Click on the "Manager" node to view its properties and keys.
-![](https://github.com/neo4j-partners/hands-on-lab-neo4j-and-bedrock/blob/main/Lab%203%20-%20Moving%20Data/images/05.png)
-    * Click on the "OWNS" relationship type to view its Node ID Mapping and properties.
-![](https://github.com/neo4j-partners/hands-on-lab-neo4j-and-bedrock/blob/main/Lab%203%20-%20Moving%20Data/images/06.png)
-6.  **Select Data Source:**
-    * On the left-hand side, next to "Data source," click the "Browse" button.
-![](https://github.com/neo4j-partners/hands-on-lab-neo4j-and-bedrock/blob/main/Lab%203%20-%20Moving%20Data/images/07.png)
-    * Select the `form13-2023.csv` file that you downloaded.
-![](https://github.com/neo4j-partners/hands-on-lab-neo4j-and-bedrock/blob/main/Lab%203%20-%20Moving%20Data/images/08.png)
-![](https://github.com/neo4j-partners/hands-on-lab-neo4j-and-bedrock/blob/main/Lab%203%20-%20Moving%20Data/images/09.png)
-9.  **Run Import:**
-    * Click on "Run import."
-![](https://github.com/neo4j-partners/hands-on-lab-neo4j-and-bedrock/blob/main/Lab%203%20-%20Moving%20Data/images/10.png)
-    * Wait for the import process to complete (approximately 5 minutes or less).
-![](https://github.com/neo4j-partners/hands-on-lab-neo4j-and-bedrock/blob/main/Lab%203%20-%20Moving%20Data/images/11.png)
-![](https://github.com/neo4j-partners/hands-on-lab-neo4j-and-bedrock/blob/main/Lab%203%20-%20Moving%20Data/images/12.png)
+Now select "Company" 
+ 
+[](images/17.png)
 
-You've done it!  We've loaded our data set up.  We'll explore it in the next lab.  But, feel free to poke around a bit as well.
-![](https://github.com/neo4j-partners/hands-on-lab-neo4j-and-bedrock/blob/main/Lab%203%20-%20Moving%20Data/images/13.png)
+Now hit either hit enter or press the play button.
 
+![](images/18.png)
+
+That gives us search results for paths that go from Manager to Company.  We hit a limit of 1000, so it's not visualizing everything.
+
+Next, we will apply some point-and-click data science to our graph.  Click on the atom icon to open the data science menu.
+
+![](images/19.png)
+
+Click "Add algorithm."
+
+![](images/20.png)
+
+Open the drop down menu.
+
+![](images/21.png)
+
+Select "Degree Centrality."
+
+![](images/22.png)
+
+Click "Apply."
+
+![](images/23.png)
+
+That gives us this.
+
+Now that we've run the algorithm, we can choose how we want to visualize the results in the graph.  
+
+Choose "Size scaling."
+
+![](images/24.png)
+
+The more central nodes in our graph are now shown as larger. 
+
+![](images/25.png)
+
+These are just a few examples of what you can do with Bloom.  Feel free to explore!
+
+#### Progress:  ████░░░ 4/7 Labs Completed!
