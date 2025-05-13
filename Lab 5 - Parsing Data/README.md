@@ -1,5 +1,5 @@
 # Lab 5 - Parsing Data
-In this lab we're going to parse data with generative AI to create a knowledge graph. We'll use the generative AI functionality in Azuure Machine Learning.
+In this lab we're going to parse data with generative AI to create a knowledge graph. We'll use the generative AI functionality in Azure Machine Learning.
 
 We'll be using some of the same data we loaded from a CSV earlier. However, this time, we'll parse the raw files from the SEC. This is really neat as we're using generative AI to parse something that required complex python scripts. Essentially we're trading generative AI compute time for developer time. Making this sort of trade possible is exactly why computers were invented! In this case, we're sidestepping scripts that took months of effort to harden, so it's an excellent trade.
 
