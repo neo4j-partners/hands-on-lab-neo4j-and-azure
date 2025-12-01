@@ -2,10 +2,6 @@
 
 > **Note:** The Codespace/Dev Container prepopulates the `.env` file in the project root with Neo4j connection settings. Review these values to ensure they are accurate for your environment. If running outside of a Codespace or Dev Container, you must manually set the Neo4j environment variables (`NEO4J_URI`, `NEO4J_USERNAME`, `NEO4J_PASSWORD`) in your `.env` file.
 
-## GitHub Codespaces (Cloud) or Local Dev Container (Local Setup)
-
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/neo4j-partners/neo4j-azure-workshop)
-
 ### Setup Steps
 
 1. **Click the badge above** (or go to repo → Code → Codespaces → New)

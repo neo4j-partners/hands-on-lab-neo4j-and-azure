@@ -1,73 +1,76 @@
-# Get Started with Neo4j Aura! 
+# Get Started with Neo4j Aura on Azure Marketplace
 
-Ready to connect to your Neo4j Aura database? Follow these straightforward steps to jump in.
+Follow these steps to subscribe to Neo4j Aura through the Azure Marketplace and create your first instance.
 
-**Step 1: The Invitation Email**
+## Step 1: Access the Azure Marketplace
 
-Watch for an email from Neo4j titled "Join the Azure Marketplace tenant team in Neo4j Aura".
+Log in to the Azure Portal at [portal.azure.com](https://portal.azure.com). In the search bar at the top, type "marketplace" and select **Marketplace** from the results.
 
-![](images/21.png)
+![](images/Find_AMP.png)
 
-**Step 2: Join the Team**
+## Step 2: Find Neo4j Aura Pay-as-You-Go
 
-Open the email and click on "Join the Team".
+In the Marketplace, search for "neo4j". From the results, locate and select **Neo4j AuraDB Professional (pay-as-you-go)**.
 
-**Step 3: Neo4j Console Access**
+![](images/AMP_AURA_PAY_GO.png)
 
-You'll be directed to the Neo4j console in your browser.
+## Step 3: Subscribe to Neo4j AuraDB Professional
 
-![](images/22.png)
+Click **Subscribe** on the Neo4j AuraDB Professional (pay-as-you-go) listing. Fill out the subscription form:
 
-**Step 4: Your Login Email**
+- **Subscription**: Select your Azure subscription
+- **Resource group**: Select the resource group from the previous lab (it will match your username)
+- **Name**: Enter a name for your SaaS resource
+- **Plan**: Neo4j Aura Professional - 1-month subscription
 
-Enter the email address provided to the Neo4j team and click "Login".
+![](images/Neo4j_Paygo.png)
 
-![](images/23.png)
+## Step 4: Configure Your Account
 
-**Step 5: Set Your Password**
+After the subscription is created, click **Configure account now** to set up your Neo4j Aura account.
 
-If it's your first time, create a new password according to the policy.
+![](images/ConfigureAccount.png)
 
-![](images/24.png)
+## Step 5: Create Your Neo4j Aura Account
 
-**Step 6: Sign Up Complete**
+You will be redirected to the Neo4j Aura login page. **Important: Do NOT use the "Continue with Microsoft" option!**
 
-Click "Sign up". This is your Neo4j Console.
+Instead, click **Sign up** and create a new account using your work email address. This ensures proper account linking with the Azure Marketplace subscription.
 
-![](images/25.png)
+![](images/sign-up-aura.png)
 
-**Step 7: Access the Marketplace tenant**
+## Step 6: Select the Marketplace Organization
 
-Click the "New Organization" dropdown (next to "Neo4j Aura"), select the "Marketplace Organization".
+Once logged into Neo4j Aura, click on the organization dropdown (shows "New Organization") and select the **Marketplace Organization** that is linked to your Azure subscription.
 
-![](images/26.png)
+![](images/select_marketplace.png)
 
-Choose the "Azure Marketplace tenant".
+## Step 7: Create an Instance
 
-![](images/27.png)
+In the Aura console, navigate to **Instances** in the left sidebar. Click the **Create instance** button to start configuring your Neo4j database.
 
-**Step 8: Connect with Credentials**
+![](images/create_instance.png)
 
-In the left menu, click "Explore". 
+## Step 8: Configure Your Instance
 
-![](images/28.png)
+Configure your Neo4j Aura instance with the following settings:
 
-In the popup, find your workshop instance and click the 'v' button next to "Connect", then select "Connect with Credentials".
+- **Tier**: Professional
+- **Instance name**: Choose a descriptive name (e.g., "Aura-Azure-Finance-Workshop")
+- **Cloud provider**: Azure
+- **Region**: Select your preferred region (e.g., US West, Arizona)
+- **Memory & CPU**: Select **4GB Memory | 1 CPU**
+- **Graph Analytics**: Select **Plugin** (enables graph algorithms sharing memory with the database)
+- **Additional settings**: Check **Vector-optimized configuration** for GraphRAG and semantic search applications
 
-![](images/29.png)
+Click **Create** to provision your instance.
 
-**Step 9: Choose HTTPS Connection (if the default connection method fails)**
+![](images/Aura_Create_Instance.png)
 
-First, try connecting using the 'neo4j+s' protocol, which typically offers better performance. If the system doesn't respond for an extended period or errors out, click the 'v' dropdown under 'Connection Method' and select 'https://'. The HTTPS option uses port 443 and can help if other port (7687) are blocked by your corporate network security policies.  
+**Important: Save Your Credentials!**
 
-![](images/30.png)
+After clicking Create, a credentials dialog will appear containing your connection URI, username, and password. **Save this information immediately** - the password will not be available after you close this dialog. Click **Download and continue** to save the credentials file. You will need these credentials in later labs.
 
-**Step 10: Enter the Instance Password**
+![](images/Save_Credentials.png)
 
-Enter the password provided during the workshop.
-
-**Step 11: Welcome to Neo4j!**
-
-![](images/31.png)
-
-You are now connected to your Neo4j Aura database. Your graph journey begins here. Let's explore!
+Your Neo4j Aura database is now ready to use!
