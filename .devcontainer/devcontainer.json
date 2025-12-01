@@ -1,0 +1,52 @@
+{
+    "name": "hands-on-lab-neo4j-and-azure",
+    "image": "mcr.microsoft.com/devcontainers/python:3.12-bookworm",
+    "forwardPorts": [8000],
+    "features": {
+        "ghcr.io/devcontainers/features/azure-cli:1": {
+            "installBicep": true
+        },
+        "ghcr.io/azure/azure-dev/azd:latest": {},
+        "ghcr.io/devcontainers/features/github-cli:1": {}
+    },
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "ms-azuretools.azure-dev",
+                "ms-azuretools.vscode-bicep",
+                "ms-python.python",
+                "ms-toolsai.jupyter",
+                "github.copilot"
+            ],
+            "settings": {
+                "python.defaultInterpreterPath": "/usr/local/bin/python",
+                "python.terminal.activateEnvironment": true
+            }
+        },
+        "codespaces": {
+            "openFiles": [
+                "GUIDE_DEV_CONTAINERS.md"
+            ]
+        }
+    },
+    "postCreateCommand": "bash scripts/start_dev_container_post_create.sh",
+    "postStartCommand": "bash scripts/start_dev_container.sh",
+    "remoteUser": "vscode",
+    "hostRequirements": {
+        "memory": "8gb"
+    },
+    "secrets": {
+        "AZURE_RESOURCE_GROUP": {
+            "description": "Existing Azure resource group name or leave empty to create a new one during 'azd up'"
+        },
+        "NEO4J_URI": {
+            "description": "Neo4j connection URI (e.g., neo4j+s://xxx.databases.neo4j.io)"
+        },
+        "NEO4J_USERNAME": {
+            "description": "Neo4j username"
+        },
+        "NEO4J_PASSWORD": {
+            "description": "Neo4j password"
+        }
+    }
+}

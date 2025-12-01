@@ -1,0 +1,51 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "environmentName": {
+      "value": "${AZURE_ENV_NAME}"
+    },
+    "principalId": {
+      "value": "${AZURE_PRINCIPAL_ID}"
+    },
+    "skipRoleAssignments": {
+      "value": "${SKIP_ROLE_ASSIGNMENTS=false}"
+    },
+    "agentModelFormat": {
+      "value": "${AZURE_AI_MODEL_FORMAT=OpenAI}"
+    },
+    "agentModelName": {
+      "value": "${AZURE_AI_MODEL_NAME=gpt-4o}"
+    },
+    "agentDeploymentName": {
+      "value": "${AZURE_AI_MODEL_NAME=gpt-4o}"
+    },
+    "agentModelVersion": {
+      "value": "${AZURE_AI_MODEL_VERSION=2024-08-06}"
+    },
+    "agentDeploymentSku": {
+      "value": "${AZURE_AI_MODEL_SKU=GlobalStandard}"
+    },
+    "agentDeploymentCapacity": {
+      "value": "${AZURE_AI_MODEL_CAPACITY=20}"
+    },
+    "embeddingModelFormat": {
+      "value": "${AZURE_AI_EMBEDDING_FORMAT=OpenAI}"
+    },
+    "embeddingModelName": {
+      "value": "${AZURE_AI_EMBEDDING_NAME=text-embedding-ada-002}"
+    },
+    "embeddingDeploymentName": {
+      "value": "${AZURE_AI_EMBEDDING_NAME=text-embedding-ada-002}"
+    },
+    "embeddingModelVersion": {
+      "value": "${AZURE_AI_EMBEDDING_VERSION=2}"
+    },
+    "embeddingDeploymentSku": {
+      "value": "${AZURE_AI_EMBEDDING_SKU=GlobalStandard}"
+    },
+    "embeddingDeploymentCapacity": {
+      "value": "${AZURE_AI_EMBEDDING_CAPACITY=120}"
+    }
+  }
+}

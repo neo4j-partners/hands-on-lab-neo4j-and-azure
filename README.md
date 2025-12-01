@@ -7,8 +7,11 @@ We’re going to analyze the quarterly filings of asset managers with $100m+ ass
 
 If you’re in the capital markets space, we think you’ll be interested in potential applications of this approach to creating new features for algorithmic trading, understanding tail risk, securities master data management and so on.  If you’re not in the capital markets space, this session will still be useful to learn about building machine learning pipelines with Neo4j and the Azure OpenAI Service.
 
-## Venue
-These workshops are organized onsite in a Microsoft office.
+## Starting the Lab
+
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/neo4j-partners/hands-on-lab-neo4j-and-azure)
+[![Open in Dev Containers](https://img.shields.io/static/v1?label=Dev%20Containers&message=Open&color=blue&logo=visualstudiocode)](https://vscode.dev/redirect?url=vscode://ms-vscode-remote.remote-containers/cloneInVolume?url=https://github.com/neo4j-partners/hands-on-lab-neo4j-and-azure)
+
 
 ## Duration
 3 hours.
