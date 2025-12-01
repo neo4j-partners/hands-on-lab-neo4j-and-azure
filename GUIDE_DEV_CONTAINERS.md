@@ -4,11 +4,7 @@
 
 ### Setup Steps
 
-1. **Click the badge above** (or go to repo → Code → Codespaces → New)
-
-2. **Wait for container to build** (~3 minutes)
-
-3. **Run in terminal:**
+1. **Run in terminal:**
    ```bash
    # Authenticate with Azure
    az login --use-device-code
@@ -25,22 +21,21 @@
 
    > **Note:** If you encounter a `RoleAssignmentExists` error on redeployment, run `azd env set SKIP_ROLE_ASSIGNMENTS true` and then `azd up` again.
 
-4. **Follow the prompts:**
-   ```
-   ? Enter a unique environment name: mydev
+2. **Follow the prompts:**
+   - **Resource group:** Select the resource group from the setup in Lab 0 and is the same as your Azure Username. 
+
+3. ```
    ? Select an Azure Subscription: 1. Your Subscription
    ? Pick a resource group to use:
      1. Create a new resource group
    > 2. your-existing-resource-group
    ```
-   - **Environment name:** Any word (e.g., `mydev`, `workshop`)
-   - **Resource group:** Workshop participants should select the resource group mentioned above. 
 
-6. **Login to the Microsoft Foundry Portal:**
+3. **Login to the Microsoft Foundry Portal:**
 
 link to ai.azure.com
 
-6. **Update Model Token Limits:**
+4. **Update Model Token Limits:**
 
    This creates an Microsoft Foundry project with two model deployments: **gpt-4o** (for chat completions) and **text-embedding-ada-002** (for vector embeddings). Open [ai.azure.com](https://ai.azure.com/) in the same browser where you're logged into Azure to view your project.
 
@@ -54,15 +49,9 @@ link to ai.azure.com
 
    See [docs/FOUNDRY_GUIDE.md](docs/FOUNDRY_GUIDE.md) for more details.
 
-7. **Restore Neo4j database :**
-   Populate the database with the sample data:
-   ```bash
-   uv run scripts/restore_neo4j.py
-   ```
-
-8. **Setup environment:**
+5. **Setup environment:**
    ```bash
    uv run setup_env.py
    ```
 
-9. Move on to Lab 3 - Explore the Data: [Lab_3_Explore_Data/README.md](Lab_3_Explore_Data/README.md)
+6. Move on to Lab 3 - Graph Building: [Lab_3_Graph_Building/README.md](Lab_3_Graph_Building/README.md)
