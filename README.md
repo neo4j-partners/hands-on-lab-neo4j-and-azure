@@ -58,4 +58,11 @@ You'll need a laptop with a web browser.  Your browser will need to be able to a
     * Vector Retriever for Semantic Search
     * Vector Cypher Retriever for Graph-Enhanced Context
     * Text2Cypher Retriever for Natural Language Queries
+* Break (5 min)
+
+### Part 4 - GraphRAG Agents
+* [Lab 6 - GraphRAG Agents](Lab_6_Agents) (30 min)
+    * Simple Schema Agent with Microsoft Agent Framework
+    * Vector + Graph Agent for Semantic Search with Context
+    * Multi-Tool Agent with Text2Cypher
 * [Questions and Next Steps](Questions%20and%20Next%20Steps.md) (5 min)
