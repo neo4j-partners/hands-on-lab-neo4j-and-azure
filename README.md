@@ -1,17 +1,24 @@
 # hands-on-lab-neo4j-and-azure
-Neo4j is the [leading graph database](https://db-engines.com/en/ranking/graph+dbms) vendor.  We’ve worked closely with Microsoft Azure engineering for years.  Our products, AuraDB and AuraDS are offered as managed services on Azure.  Neo4j Aura Professional Edition is offered in the [Azure Marketplace](https://portal.azure.com/#create/neo4j.neo4j_aura_professional).
+Neo4j is the [leading graph database](https://db-engines.com/en/ranking/graph+dbms) vendor.  We've worked closely with Microsoft Azure engineering for years.  Our products, AuraDB and AuraDS are offered as managed services on Azure.  Neo4j Aura Professional Edition is offered in the [Azure Marketplace](https://portal.azure.com/#create/neo4j.neo4j_aura_professional).
 
-In this hands on lab, you’ll get to learn about Neo4j, Azure ML and the Azure OpenAI Service.  The lab is intended for data scientists and data engineers.  We’ll walk through deploying Neo4j and Azure ML in an Azure account.  Then we’ll get hands on with a real world dataset.  First we'll use generative AI to parse and load data.  Then we'll show how to layer a chatbot powered by generative AI with LangChain over the knowledge graph.  We'll even use the new vector search and index functionality in Neo4j with Azure OpenAI Service for semantic search.  You’ll come out of this lab with enough knowledge to apply graph generative AI to your own datasets.
+In this hands-on lab, you'll learn about Neo4j, Microsoft Azure AI Foundry, and the [Microsoft Agent Framework](https://github.com/microsoft/agent-framework). The lab is designed for data scientists, data engineers, and AI developers who want to master GraphRAG (Graph Retrieval-Augmented Generation) techniques and build production-ready agentic AI applications.
 
-We’re going to analyze the quarterly filings of asset managers with $100m+ assets under management (AUM).  These are regulatory filings made to the Securities and Exchange Commission’s (SEC) EDGAR system.  We’re going to show how to load that data from Azure Blob Storage into Neo4j.  We’ll then explore the relationships of different asset managers and their holdings using the Neo4j Browser and Neo4j’s Cypher query language.
+You'll work with a real-world dataset of SEC 10-K company filings to learn fundamental GraphRAG patterns. We'll start by building a knowledge graph from unstructured text using generative AI for entity extraction. Then you'll implement multiple retrieval strategies: vector similarity search for semantic retrieval, graph-enhanced retrievers that leverage entity relationships, and natural language to Cypher query generation. Finally, you'll build intelligent agents using the Microsoft Agent Framework that can autonomously reason over your knowledge graph to answer complex questions.
 
-If you’re in the capital markets space, we think you’ll be interested in potential applications of this approach to creating new features for algorithmic trading, understanding tail risk, securities master data management and so on.  If you’re not in the capital markets space, this session will still be useful to learn about building machine learning pipelines with Neo4j and the Azure OpenAI Service.
+By the end of this lab, you'll have hands-on experience with:
+- Building knowledge graphs from unstructured documents
+- Implementing semantic search with vector embeddings
+- Creating graph-enhanced retrieval patterns for richer context
+- Developing agentic AI systems that combine multiple tools and reasoning strategies
+- Deploying GraphRAG applications on Azure infrastructure
+
+These techniques apply to any domain where you need to extract insights from documents, understand entity relationships, and build AI systems that can reason over complex information networks.
 
 ## Starting the Lab
 
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/neo4j-partners/hands-on-lab-neo4j-and-azure)
-[![Open in Dev Containers](https://img.shields.io/static/v1?label=Dev%20Containers&message=Open&color=blue&logo=visualstudiocode)](https://vscode.dev/redirect?url=vscode://ms-vscode-remote.remote-containers/cloneInVolume?url=https://github.com/neo4j-partners/hands-on-lab-neo4j-and-azure)
+To get started, follow the labs in the agenda below in order.
 
+If you already have your Azure account and Aura connection details, you can go straight to [Lab 2 - Start Codespace](Lab_2_Start_Codespace) to start the codespace and begin running the notebooks.
 
 ## Duration
 3 hours.

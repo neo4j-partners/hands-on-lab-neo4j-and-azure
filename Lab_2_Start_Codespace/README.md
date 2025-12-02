@@ -27,7 +27,9 @@ This means you don't need to install anything on your local machine—everything
 
 ## Setup
 
-Once your Codespace has started, you will be prompted to enter your secrets (Resource Group name, Neo4j credentials). After that, run the setup commands provided in the terminal to configure the Azure infrastructure for the remaining labs.
+Once your Codespace has started, it should open a file with setup instructions. You will be prompted to enter your secrets (Resource Group name, Neo4j credentials). After that, run the setup commands provided in the terminal to configure the Azure infrastructure for the remaining labs.
+
+For reference, you can also view the complete setup instructions in [GUIDE_DEV_CONTAINERS.md](../GUIDE_DEV_CONTAINERS.md).
 
 ## Viewing Your Azure AI Foundry Project
 
