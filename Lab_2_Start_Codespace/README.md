@@ -29,6 +29,18 @@ This means you don't need to install anything on your local machine—everything
 
 Once your Codespace has started, you will be prompted to enter your secrets (Resource Group name, Neo4j credentials). After that, run the setup commands provided in the terminal to configure the Azure infrastructure for the remaining labs.
 
+## Running the Notebooks
+
+To run the Jupyter notebooks in the labs, you need to select the correct Python kernel:
+
+1. Click **Select Kernel** in the top right of the notebook, then select **Python Environments...**
+
+   ![Select Kernel](images/select%20kernel.png)
+
+2. Select the **neo4j-azure-ai-workshop** environment (marked as Recommended)
+
+   ![Select neo4j-azure-ai-workshop](images/neo4j-azure-ai-workshop.png)
+
 ## Running Locally (Without a Codespace)
 
 If you prefer to run the workshop on your local machine instead of using a Codespace, you can do so by following the same setup steps outlined in [GUIDE_DEV_CONTAINERS.md](../GUIDE_DEV_CONTAINERS.md).

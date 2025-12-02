@@ -43,6 +43,20 @@ Load the complete SEC 10-K dataset and explore richer results:
 
 ## Getting Started
 
+### Select the Python Kernel
+
+Before running any notebook, make sure you have the correct Python kernel selected:
+
+1. Click **Select Kernel** in the top right of the notebook, then select **Python Environments...**
+
+   ![Select Kernel](images/select%20kernel.png)
+
+2. Select the **neo4j-azure-ai-workshop** environment (marked as Recommended)
+
+   ![Select neo4j-azure-ai-workshop](images/neo4j-azure-ai-workshop.png)
+
+### Work Through the Notebooks
+
 1. Open the first notebook: `01_01_data_loading.ipynb`
 2. Work through each notebook in order
 3. Each notebook builds on concepts from the previous one
