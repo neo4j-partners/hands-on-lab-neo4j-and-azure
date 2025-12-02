@@ -1,0 +1,157 @@
+"""
+Multi-Tool Agent with Text2Cypher
+
+This workshop demonstrates an agent with three tools: schema retrieval,
+vector search, and natural language to Cypher queries using the Microsoft
+Agent Framework with Microsoft Foundry (V2 SDK - azure-ai-projects) and
+neo4j-graphrag-python.
+
+Run with: uv run python solutions/02_03_text2cypher_agent.py
+"""
+
+import asyncio
+from typing import Annotated
+
+from neo4j_graphrag.llm import OpenAILLM
+from neo4j_graphrag.retrievers import VectorCypherRetriever, Text2CypherRetriever
+from neo4j_graphrag.schema import get_schema
+from pydantic import Field
+
+from agent_framework.azure import AzureAIClient
+from azure.identity import DefaultAzureCredential
+from azure.identity.aio import AzureCliCredential
+
+from config import get_neo4j_driver, get_agent_config, get_embedder
+
+# Retrieval query for vector search with graph context
+RETRIEVAL_QUERY = """
+MATCH (node)-[:FROM_DOCUMENT]-(doc:Document)-[:FILED]-(company:Company)
+OPTIONAL MATCH (company)-[:FACES_RISK]->(risk:RiskFactor)
+WITH node, score, company, collect(risk.name) as risks
+WHERE score IS NOT NULL
+RETURN
+    node.text as text,
+    score,
+    {company: company.name, risks: risks} AS metadata
+ORDER BY score DESC
+"""
+
+# Custom prompt for Cypher generation
+CYPHER_PROMPT = """Task: Generate a Cypher statement to query a graph database.
+Instructions:
+Use only the provided relationship types and properties in the schema.
+Do not use any other relationship types or properties that are not provided.
+
+Use `WHERE toLower(node.name) CONTAINS toLower('name')` to filter nodes by name.
+
+Schema:
+{schema}
+
+Note: Do not include any explanations or apologies in your responses.
+Do not respond to any questions that might ask anything else than for you to construct a Cypher statement.
+Do not include any text except the generated Cypher statement.
+
+The question is:
+{query_text}"""
+
+
+def create_tools(driver):
+    """Create tools with the given driver."""
+    config = get_agent_config()
+    embedder = get_embedder()
+
+    # LLM for Cypher generation uses same Microsoft Foundry endpoint
+    credential = DefaultAzureCredential()
+    token = credential.get_token("https://cognitiveservices.azure.com/.default")
+    cypher_llm = OpenAILLM(
+        model_name=config.model_name,
+        base_url=config.inference_endpoint,
+        api_key=token.token,
+    )
+
+    vector_retriever = VectorCypherRetriever(
+        driver=driver,
+        index_name="chunkEmbeddings",
+        embedder=embedder,
+        retrieval_query=RETRIEVAL_QUERY,
+    )
+
+    text2cypher_retriever = Text2CypherRetriever(
+        driver=driver,
+        llm=cypher_llm,
+        neo4j_schema=get_schema(driver),
+        custom_prompt=CYPHER_PROMPT,
+    )
+
+    def get_graph_schema() -> str:
+        """Get the schema of the graph database including node labels, relationships, and properties."""
+        return get_schema(driver)
+
+    def retrieve_financial_documents(
+        query: Annotated[str, Field(description="The search query to find relevant documents")]
+    ) -> str:
+        """Find details about companies in their financial documents using semantic search."""
+        results = vector_retriever.search(query_text=query, top_k=3)
+        if not results.items:
+            return "No documents found matching the query."
+        return "\n\n".join(item.content for item in results.items)
+
+    def query_database(
+        query: Annotated[str, Field(description="A natural language question about companies, risks, or financial metrics")]
+    ) -> str:
+        """Get answers to specific questions about companies, risks, and financial metrics by querying the database directly."""
+        results = text2cypher_retriever.search(query_text=query)
+        if not results.items:
+            return "No results found for the query."
+        return "\n\n".join(item.content for item in results.items)
+
+    return [get_graph_schema, retrieve_financial_documents, query_database]
+
+
+async def run_agent(query: str):
+    """Run the agent with the given query."""
+    config = get_agent_config()
+
+    with get_neo4j_driver() as driver:
+        tools = create_tools(driver)
+
+        async with AzureCliCredential() as credential:
+            client = AzureAIClient(
+                project_endpoint=config.project_endpoint,
+                model_deployment_name=config.model_name,
+                async_credential=credential,
+            )
+
+            async with client.create_agent(
+                name="workshop-multi-tool-agent",
+                instructions=(
+                    "You are a helpful assistant that can answer questions about "
+                    "a graph database containing financial documents. You have three tools:\n"
+                    "1. get_graph_schema - Get the database schema\n"
+                    "2. retrieve_financial_documents - Search documents semantically\n"
+                    "3. query_database - Query specific facts from the database\n\n"
+                    "Choose the appropriate tool based on the question type."
+                ),
+                tools=tools,
+            ) as agent:
+                print(f"User: {query}\n")
+                print("Assistant: ", end="", flush=True)
+
+                async for update in agent.run_stream(query):
+                    if update.text:
+                        print(update.text, end="", flush=True)
+
+                print("\n")
+
+
+if __name__ == "__main__":
+    asyncio.run(run_agent("What stock has Microsoft issued?"))
+
+
+# Example queries to try:
+# - What stock has Microsoft issued?
+# - How does the graph model relate to financial documents and risk factors?
+# - What are the top risk factors that Apple faces?
+# - Summarize what risk factors are mentioned in Apple's financial documents?
+# - How many risk facts does Apple face and what are the top ones?
+# - What products does Microsoft mention in its financial documents?
