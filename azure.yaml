@@ -1,0 +1,71 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/Azure/azure-dev/main/schemas/v1.0/azure.yaml.json
+
+name: arches-agents
+metadata:
+  template: arches-agents@0.0.1
+
+# Infrastructure configuration - deploys to existing resource group
+# User must set AZURE_RESOURCE_GROUP before running azd up
+infra:
+  provider: bicep
+  path: infra
+  module: main
+
+hooks:
+  preprovision:
+    shell: sh
+    run: |
+      # Microsoft Foundry Agent Service is only available in select regions.
+      # Limit to top recommended regions for best feature coverage.
+      ALLOWED_REGIONS="eastus2 swedencentral westus2"
+
+      if ! echo "$ALLOWED_REGIONS" | grep -qw "$AZURE_LOCATION"; then
+        echo ""
+        echo "ERROR: Region '$AZURE_LOCATION' is not supported for this workshop."
+        echo ""
+        echo "Microsoft Foundry Agent Service requires one of these regions:"
+        echo "  - eastus2       (East US 2)"
+        echo "  - swedencentral (Sweden Central)"
+        echo "  - westus2       (West US 2)"
+        echo ""
+        echo "To fix, run: azd env set AZURE_LOCATION eastus2"
+        echo "Then retry:  azd up"
+        echo ""
+        exit 1
+      fi
+      echo "Region '$AZURE_LOCATION' is supported for Microsoft Foundry Agent Service."
+  postprovision:
+    shell: sh
+    run: |
+      echo ""
+      echo "=========================================="
+      echo "  Provisioning complete!"
+      echo "=========================================="
+      echo ""
+      echo "For local development, run:"
+      echo "  uv run setup_env.py"
+      echo "  uv run uvicorn api.main:create_app --factory --reload"
+      echo ""
+
+# Services section - uncomment for Container App deployment
+# To deploy Container Apps, run: azd up --parameter deployContainerApp=true
+# and uncomment the services section below
+#
+# services:
+#   api:
+#     project: .
+#     language: py
+#     host: containerapp
+#     docker:
+#       path: ./Dockerfile
+#       image: api
+#       remoteBuild: true
+
+pipeline:
+  variables:
+    - AZURE_RESOURCE_GROUP
+    - AZURE_CONTAINER_REGISTRY_NAME
+    - AZURE_AI_AGENT_NAME
+    - AZURE_AI_PROJECT_ENDPOINT
+    - AZURE_AI_MODEL_NAME
+    - AZURE_OPENAI_ENDPOINT

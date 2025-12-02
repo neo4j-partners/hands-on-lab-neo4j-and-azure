@@ -1,0 +1,182 @@
+"""
+Fulltext Search Examples
+
+Demonstrates Neo4j fulltext search capabilities for keyword-based
+entity search across Company, Product, and RiskFactor names.
+
+Usage:
+    uv run python solutions/05_01_fulltext_search.py
+"""
+
+from neo4j import GraphDatabase
+
+from config import Neo4jConfig
+
+
+def basic_search(driver: GraphDatabase.driver, term: str) -> None:
+    """Basic keyword search."""
+    print(f"\n=== Basic Search: '{term}' ===")
+    with driver.session() as session:
+        result = session.run(
+            """
+            CALL db.index.fulltext.queryNodes('search_entities', $term)
+            YIELD node, score
+            RETURN labels(node) AS labels, node.name AS name, score
+            LIMIT 10
+            """,
+            term=term,
+        )
+        for record in result:
+            print(f"  [{record['labels'][0]}] {record['name']} (score: {record['score']:.4f})")
+
+
+def fuzzy_search(driver: GraphDatabase.driver, term: str) -> None:
+    """Fuzzy search with typo tolerance."""
+    print(f"\n=== Fuzzy Search: '{term}' ===")
+    with driver.session() as session:
+        result = session.run(
+            """
+            CALL db.index.fulltext.queryNodes('search_entities', $term)
+            YIELD node, score
+            RETURN labels(node) AS labels, node.name AS name, score
+            LIMIT 5
+            """,
+            term=term,
+        )
+        for record in result:
+            print(f"  [{record['labels'][0]}] {record['name']} (score: {record['score']:.4f})")
+
+
+def wildcard_search(driver: GraphDatabase.driver, term: str) -> None:
+    """Wildcard prefix search."""
+    print(f"\n=== Wildcard Search: '{term}' ===")
+    with driver.session() as session:
+        result = session.run(
+            """
+            CALL db.index.fulltext.queryNodes('search_entities', $term)
+            YIELD node, score
+            RETURN labels(node) AS labels, node.name AS name, score
+            LIMIT 10
+            """,
+            term=term,
+        )
+        for record in result:
+            print(f"  [{record['labels'][0]}] {record['name']} (score: {record['score']:.4f})")
+
+
+def boolean_search(driver: GraphDatabase.driver, term: str) -> None:
+    """Boolean operator search."""
+    print(f"\n=== Boolean Search: '{term}' ===")
+    with driver.session() as session:
+        result = session.run(
+            """
+            CALL db.index.fulltext.queryNodes('search_entities', $term)
+            YIELD node, score
+            RETURN labels(node) AS labels, node.name AS name, score
+            LIMIT 10
+            """,
+            term=term,
+        )
+        for record in result:
+            print(f"  [{record['labels'][0]}] {record['name']} (score: {record['score']:.4f})")
+
+
+def search_with_graph_traversal(driver: GraphDatabase.driver, company_name: str) -> None:
+    """Search company and traverse to related entities."""
+    print(f"\n=== Graph Traversal: '{company_name}' ===")
+    with driver.session() as session:
+        result = session.run(
+            """
+            CALL db.index.fulltext.queryNodes('search_entities', $term)
+            YIELD node, score
+            WHERE 'Company' IN labels(node)
+            WITH node AS company, score
+            LIMIT 1
+
+            OPTIONAL MATCH (company)-[:FILED]->(doc:Document)
+            WITH company, score, COLLECT(DISTINCT doc.path) AS documents
+
+            OPTIONAL MATCH (company)-[:FACES_RISK]->(risk:RiskFactor)
+            WITH company, score, documents, COLLECT(DISTINCT risk.name)[0..5] AS risks
+
+            RETURN company.name AS company, score, documents, risks
+            """,
+            term=company_name,
+        )
+
+        record = result.single()
+        if record:
+            print(f"Company: {record['company']} (score: {record['score']:.4f})")
+            print("Related Documents:")
+            for doc in record["documents"]:
+                print(f"  - {doc}")
+            print("Risk Factors:")
+            for risk in record["risks"]:
+                print(f"  - {risk}")
+        else:
+            print(f"No company found for '{company_name}'")
+
+
+def hybrid_search(driver: GraphDatabase.driver, keyword: str) -> None:
+    """Hybrid search combining fulltext with graph patterns."""
+    print(f"\n=== Hybrid Search: '{keyword}' ===")
+    with driver.session() as session:
+        result = session.run(
+            """
+            CALL db.index.fulltext.queryNodes('search_entities', $keyword)
+            YIELD node AS entity, score AS keyword_score
+            WHERE 'Company' IN labels(entity)
+            WITH entity, keyword_score
+            LIMIT 1
+
+            MATCH (entity)-[:FROM_CHUNK]->(chunk:Chunk)
+
+            RETURN entity.name AS company,
+                   keyword_score,
+                   chunk.text AS text
+            LIMIT 5
+            """,
+            keyword=keyword,
+        )
+
+        for record in result:
+            print(f"\n[{record['company']}] (score: {record['keyword_score']:.4f})")
+            print(f"  {record['text'][:200]}...")
+
+
+def main() -> None:
+    """Run all fulltext search examples."""
+    config = Neo4jConfig()
+    driver = GraphDatabase.driver(
+        config.uri,
+        auth=(config.username, config.password),
+    )
+
+    try:
+        driver.verify_connectivity()
+        print("Connected to Neo4j")
+
+        # Check if fulltext index exists
+        with driver.session() as session:
+            result = session.run(
+                "SHOW FULLTEXT INDEXES YIELD name WHERE name = 'search_entities' RETURN name"
+            )
+            if not result.single():
+                print("\nError: Fulltext index 'search_entities' not found.")
+                print("Run: uv run python scripts/restore_neo4j.py --full-text")
+                return
+
+        # Run examples
+        basic_search(driver, "Apple")
+        fuzzy_search(driver, "Aplle~")
+        wildcard_search(driver, "Micro*")
+        boolean_search(driver, "supply NOT chain")
+        search_with_graph_traversal(driver, "Nvidia")
+        hybrid_search(driver, "Amazon")
+
+    finally:
+        driver.close()
+
+
+if __name__ == "__main__":
+    main()
