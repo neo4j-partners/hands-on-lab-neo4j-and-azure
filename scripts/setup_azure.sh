@@ -44,24 +44,9 @@ EOF
     fi
 }
 
+REGION="eastus2"
 echo ""
-echo "Microsoft Foundry Agent Service requires one of these regions:"
-echo "  1) East US 2 (eastus2)"
-echo "  2) Sweden Central (swedencentral)"
-echo "  3) West US 2 (westus2)"
-echo ""
-read -p "Select a region [1-3] (default: 1): " choice
-choice=${choice:-1}
-
-case $choice in
-    1) REGION="eastus2" ;;
-    2) REGION="swedencentral" ;;
-    3) REGION="westus2" ;;
-    *)
-        echo "Invalid choice. Please enter 1, 2, or 3."
-        exit 1
-        ;;
-esac
+echo "Using Azure region: $REGION"
 
 # Clean stale Azure config from .env before azd init
 clean_env_file

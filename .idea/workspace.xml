@@ -5,30 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="51c3cc09-73ac-4699-b59d-4e0eb9443f99" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Lab_3_Graph_Building/01_data_loading.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/Lab_3_Graph_Building/01_data_loading.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Lab_3_Graph_Building/02_embeddings.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/Lab_3_Graph_Building/02_embeddings.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Lab_3_Graph_Building/03_entity_extraction.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/Lab_3_Graph_Building/03_entity_extraction.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Lab_3_Graph_Building/04_full_dataset.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/Lab_3_Graph_Building/04_full_dataset.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Lab_5_RAG_Retrievers/01_vector_retriever.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/Lab_5_RAG_Retrievers/01_vector_retriever.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Lab_5_RAG_Retrievers/02_vector_cypher_retriever.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/Lab_5_RAG_Retrievers/02_vector_cypher_retriever.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Lab_5_RAG_Retrievers/03_text2cypher_retriever.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/Lab_5_RAG_Retrievers/03_text2cypher_retriever.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Lab_6_Agents/01_simple_agent.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/Lab_6_Agents/01_simple_agent.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Lab_6_Agents/02_vector_graph_agent.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/Lab_6_Agents/02_vector_graph_agent.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Lab_6_Agents/03_text2cypher_agent.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/Lab_6_Agents/03_text2cypher_agent.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Lab_7_Hybrid_Search/01_fulltext_search.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/Lab_7_Hybrid_Search/01_fulltext_search.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Lab_7_Hybrid_Search/02_hybrid_search.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/Lab_7_Hybrid_Search/02_hybrid_search.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/new-workshops/notebooks/01_01_data_loading.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/new-workshops/notebooks/01_01_data_loading.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/new-workshops/notebooks/01_02_embeddings.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/new-workshops/notebooks/01_02_embeddings.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/new-workshops/notebooks/01_03_entity_extraction.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/new-workshops/notebooks/01_03_entity_extraction.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/new-workshops/notebooks/01_04_full_dataset.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/new-workshops/notebooks/01_04_full_dataset.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/new-workshops/notebooks/02_01_vector_retriever.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/new-workshops/notebooks/02_01_vector_retriever.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/new-workshops/notebooks/02_02_vector_cypher_retriever.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/new-workshops/notebooks/02_02_vector_cypher_retriever.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/new-workshops/notebooks/02_03_text2cypher_retriever.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/new-workshops/notebooks/02_03_text2cypher_retriever.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/new-workshops/notebooks/03_01_simple_agent.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/new-workshops/notebooks/03_01_simple_agent.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/new-workshops/notebooks/03_02_vector_graph_agent.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/new-workshops/notebooks/03_02_vector_graph_agent.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/new-workshops/notebooks/03_03_text2cypher_agent.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/new-workshops/notebooks/03_03_text2cypher_agent.ipynb" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
