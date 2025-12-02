@@ -5,7 +5,7 @@ This workshop demonstrates a basic agent using the Microsoft Agent Framework
 with Microsoft Foundry (V2 SDK - azure-ai-projects) and neo4j-graphrag-python
 for schema retrieval.
 
-Run with: uv run python solutions/02_01_simple_agent.py
+Run with: uv run python solutions/03_01_simple_agent.py
 """
 
 import asyncio
@@ -16,6 +16,7 @@ from agent_framework.azure import AzureAIClient
 from azure.identity.aio import AzureCliCredential
 
 from config import get_neo4j_driver, get_agent_config
+from token_tracker import TokenUsage
 
 
 def create_schema_tool(driver):
@@ -28,7 +29,7 @@ def create_schema_tool(driver):
     return get_graph_schema
 
 
-async def run_agent(query: str):
+async def run_agent(query: str, tracker: TokenUsage | None = None):
     """Run the agent with the given query."""
     config = get_agent_config()
 
@@ -48,17 +49,28 @@ async def run_agent(query: str):
                 tools=[get_graph_schema],
             ) as agent:
                 print(f"User: {query}\n")
-                print("Assistant: ", end="", flush=True)
 
-                async for update in agent.run_stream(query):
-                    if update.text:
-                        print(update.text, end="", flush=True)
+                # Use non-streaming run() to get token usage
+                response = await agent.run(query)
+                print(f"Assistant: {response.text}\n")
 
-                print("\n")
+                # Track token usage if tracker provided
+                if tracker:
+                    tracker.add_from_agent_response(response, label=query[:30])
+
+
+async def main():
+    """Run demo with token tracking."""
+    tracker = TokenUsage()
+
+    await run_agent("Summarise the schema of the graph database.", tracker)
+
+    # Print token usage summary
+    tracker.print_summary()
 
 
 if __name__ == "__main__":
-    asyncio.run(run_agent("Summarise the schema of the graph database."))
+    asyncio.run(main())
 
 
 # Example queries to try:

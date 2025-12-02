@@ -37,7 +37,7 @@ link to ai.azure.com
 
 4. **Update Model Token Limits:**
 
-   This creates an Microsoft Foundry project with two model deployments: **gpt-4o** (for chat completions) and **text-embedding-ada-002** (for vector embeddings). Open [ai.azure.com](https://ai.azure.com/) in the same browser where you're logged into Azure to view your project.
+   This creates an Microsoft Foundry project with two model deployments: **gpt-4o-mini** (for chat completions) and **text-embedding-ada-002** (for vector embeddings). Open [ai.azure.com](https://ai.azure.com/) in the same browser where you're logged into Azure to view your project.
 
    Click **Models** in the left sidebar to see your deployments:
 

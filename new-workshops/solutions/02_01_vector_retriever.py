@@ -4,13 +4,27 @@ Vector Retriever Demo
 This workshop demonstrates basic semantic search using VectorRetriever
 and GraphRAG from neo4j-graphrag-python.
 
-Run with: uv run python solutions/01_01_vector_retriever.py
+Run with: uv run python solutions/02_01_vector_retriever.py
 """
 
 from neo4j_graphrag.generation import GraphRAG
 from neo4j_graphrag.retrievers import VectorRetriever
 
-from config import get_embedder, get_llm, get_neo4j_driver
+from config import get_embedder, get_neo4j_driver, get_agent_config, _get_azure_token
+from token_tracker import TokenUsage, TrackedLLM
+
+
+def get_tracked_llm(tracker: TokenUsage) -> TrackedLLM:
+    """Get a TrackedLLM that captures token usage."""
+    config = get_agent_config()
+    token = _get_azure_token()
+
+    return TrackedLLM(
+        tracker=tracker,
+        model_name=config.model_name,
+        base_url=config.inference_endpoint,
+        api_key=token,
+    )
 
 
 def create_vector_retriever(driver, embedder) -> VectorRetriever:
@@ -47,19 +61,22 @@ def demo_rag_search(llm, retriever: VectorRetriever, query: str) -> None:
 
 def main():
     """Run vector retriever demos."""
+    # Create token tracker
+    tracker = TokenUsage()
+
     with get_neo4j_driver() as driver:
         embedder = get_embedder()
-        llm = get_llm()
+        llm = get_tracked_llm(tracker)
         retriever = create_vector_retriever(driver, embedder)
 
-        # Demo 1: Direct vector search
-        demo_vector_search(retriever, "What are the risks that Apple faces?")
-
-        # Demo 2: RAG search with LLM
+        # Demo 1: RAG search with LLM
         demo_rag_search(llm, retriever, "What companies mention AI in their filings?")
 
-        # Demo 3: Another RAG example
+        # Demo 2: Another RAG example
         demo_rag_search(llm, retriever, "What products does Microsoft reference?")
+
+    # Print token usage summary
+    tracker.print_summary()
 
 
 if __name__ == "__main__":
