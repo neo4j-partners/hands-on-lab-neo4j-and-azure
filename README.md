@@ -73,3 +73,241 @@ You'll need a laptop with a web browser.  Your browser will need to be able to a
     * Vector + Graph Agent for Semantic Search with Context
     * Multi-Tool Agent with Text2Cypher
 * [Questions and Next Steps](Questions%20and%20Next%20Steps.md) (5 min)
+
+## Windows Setup Guide for VS Code
+
+This guide will help you set up your Windows machine with VS Code to run this project locally.
+
+### Prerequisites
+
+Before starting, ensure you have:
+- Windows 10 or Windows 11
+- Administrator access on your machine
+- An active Azure subscription
+- Neo4j Aura credentials (see [Lab 1 - Neo4j Aura Signup](Lab_1_Neo4j_Aura_Signup))
+
+### Step 1: Download the Project
+
+1. Go to https://github.com/neo4j-partners/hands-on-lab-neo4j-and-azure
+2. Click the green "Code" button
+3. Select "Download ZIP"
+4. Extract the ZIP file to a location on your computer (e.g., `C:\Projects\hands-on-lab-neo4j-and-azure`)
+
+### Step 2: Install Python 3.12
+
+This project requires Python 3.12 (not 3.13 or later).
+
+1. Download Python 3.12 from https://www.python.org/downloads/
+   - Select a **3.12.x** version (e.g., 3.12.7)
+   - Do NOT install Python 3.13 or later as this project requires Python 3.12
+2. Run the installer:
+   - Check "Add Python 3.12 to PATH"
+   - Click "Install Now"
+   - Note: pip (Python package installer) is included automatically with Python
+3. Verify installation:
+   ```powershell
+   python --version
+   ```
+   Should output: `Python 3.12.x`
+4. Verify pip is installed:
+   ```powershell
+   pip --version
+   ```
+
+### Step 3: Install uv (Python Package Manager)
+
+uv is a fast Python package installer and resolver used by this project.
+
+1. Open PowerShell as Administrator
+2. Install uv using pip:
+   ```powershell
+   pip install uv
+   ```
+3. Verify installation:
+   ```powershell
+   uv --version
+   ```
+
+### Step 4: Install Azure CLI
+
+The Azure CLI (az) is required for authenticating with Azure and managing resources.
+
+1. Download the Azure CLI installer from https://aka.ms/installazurecliwindows
+2. Run the MSI installer and follow the prompts
+3. Restart your terminal (close and reopen PowerShell)
+4. Verify installation:
+   ```powershell
+   az --version
+   ```
+5. Sign in to Azure:
+   ```powershell
+   az login
+   ```
+   This will open a browser window for authentication
+
+   **Note:** If you already have Azure CLI installed and are logged in with different credentials, you must log out first and then log in with your workshop credentials:
+   ```powershell
+   az logout
+   az login
+   ```
+   Verify you're logged in with the correct account:
+   ```powershell
+   az account show
+   ```
+
+### Step 5: Install Azure Developer CLI (azd)
+
+The Azure Developer CLI (azd) simplifies deploying and managing Azure resources.
+
+1. Open PowerShell as Administrator
+2. Install azd using the following command:
+   ```powershell
+   winget install microsoft.azd
+   ```
+   If `winget` is not available, download the installer from https://aka.ms/azure-dev/install
+3. Restart your terminal
+4. Verify installation:
+   ```powershell
+   azd version
+   ```
+5. Sign in to Azure Developer CLI:
+   ```powershell
+   azd auth login
+   ```
+
+   **Note:** If you already have Azure Developer CLI installed and are logged in with different credentials, log out first and then log in with your workshop credentials:
+   ```powershell
+   azd auth logout
+   azd auth login
+   ```
+
+### Step 6: Install Visual Studio Code
+
+1. Download VS Code from https://code.visualstudio.com/
+2. Run the installer with default settings
+3. Launch VS Code
+
+### Step 7: Install VS Code Extensions
+
+Install the following extensions for an optimal development experience:
+
+1. **Python Extension**
+   - Open VS Code
+   - Click the Extensions icon (or press `Ctrl+Shift+X`)
+   - Search for "Python" by Microsoft
+   - Click Install
+
+2. **Jupyter Extension**
+   - Search for "Jupyter" by Microsoft
+   - Click Install
+
+3. **Azure Account Extension** (optional but recommended)
+   - Search for "Azure Account"
+   - Click Install
+
+### Step 8: Open the Project in VS Code
+
+1. Open VS Code
+2. Click "File" > "Open Folder"
+3. Navigate to where you extracted the project (e.g., `C:\Projects\hands-on-lab-neo4j-and-azure`)
+4. Click "Select Folder"
+
+### Step 9: Set Up Python Environment
+
+1. Open a terminal in VS Code (`Ctrl+``)
+2. Create the Python environment and install dependencies:
+   ```powershell
+   uv sync
+   ```
+   This will create a virtual environment and install all required dependencies
+
+3. Select the Python interpreter:
+   - Press `Ctrl+Shift+P`
+   - Type "Python: Select Interpreter"
+   - Choose the interpreter from `.venv` folder (e.g., `.venv\Scripts\python.exe`)
+
+### Step 10: Configure Environment Variables
+
+1. Copy the sample environment file:
+   ```powershell
+   copy .env.sample .env
+   ```
+
+2. Edit `.env` file and add your Neo4j credentials:
+   - Open `.env` in VS Code
+   - Fill in the following values:
+     ```
+     NEO4J_URI=neo4j+s://xxxxx.databases.neo4j.io
+     NEO4J_USERNAME=neo4j
+     NEO4J_PASSWORD=your-password-here
+     ```
+
+### Step 11: Deploy Azure Infrastructure
+
+1. Initialize the Azure Developer environment:
+   ```powershell
+   azd env new
+   ```
+   - Enter an environment name (e.g., "dev")
+
+2. Set your Azure location (must be one of: eastus2, swedencentral, or westus2):
+   ```powershell
+   azd env set AZURE_LOCATION eastus2
+   ```
+
+3. Set your Azure resource group name:
+   ```powershell
+   azd env set AZURE_RESOURCE_GROUP your-resource-group-name
+   ```
+
+4. Deploy the Azure infrastructure:
+   ```powershell
+   azd up
+   ```
+   This will provision:
+   - Azure AI Foundry project
+   - Azure OpenAI with gpt-4o-mini and text-embedding-ada-002 models
+   - Azure Container Registry
+   - Azure Monitor and Application Insights
+
+5. Sync Azure configuration to your `.env` file:
+   ```powershell
+   uv run setup_env.py
+   ```
+
+### Step 12: Run the Notebooks
+
+1. In VS Code, navigate to a lab folder (e.g., `Lab_3_Graph_Building`)
+2. Open a notebook file (e.g., `01_data_loading.ipynb`)
+3. When prompted to select a kernel:
+   - Click "Select Kernel" in the top right
+   - Choose "Python Environments..."
+   - Select the "neo4j-azure-ai-workshop" environment (.venv)
+4. Run the notebook cells using `Shift+Enter` or the Run button
+
+### Troubleshooting
+
+**Problem: Python version is not 3.12**
+- Solution: Uninstall other Python versions and ensure 3.12.x is installed and in your PATH
+
+**Problem: `uv` command not found**
+- Solution: Close and reopen your terminal, or add Python Scripts folder to PATH manually
+
+**Problem: Azure CLI authentication fails**
+- Solution: Run `az logout` then `az login` again
+
+**Problem: `azd up` fails with region error**
+- Solution: Ensure you set AZURE_LOCATION to one of the supported regions (eastus2, swedencentral, westus2)
+
+**Problem: Jupyter kernel not found**
+- Solution: Run `uv sync` again and restart VS Code
+
+**Problem: Import errors in notebooks**
+- Solution: Ensure you've selected the correct Python interpreter from the `.venv` folder
+
+### Additional Resources
+
+- [Azure CLI Documentation](https://docs.microsoft.com/en-us/cli/azure/)
+- [Azure Developer CLI Documentation](https://learn.microsoft.com/en-us/azure/developer/azure-developer-cli/)
+- [uv Documentation](https://github.com/astral-sh/uv)
+- [VS Code Python Documentation](https://code.visualstudio.com/docs/python/python-tutorial)
