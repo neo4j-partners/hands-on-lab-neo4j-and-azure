@@ -41,7 +41,8 @@ def demo_vector_search(retriever: VectorRetriever, query: str) -> None:
     print(f"\n--- Direct Vector Search ---")
     print(f"Query: {query}\n")
 
-    results = retriever.search(query_text=query, top_k=10)
+    results = retriever.search(query_text=query, top_k=5)
+    print(f"Number of results returned: {len(results.items)}\n")
     for item in results.items:
         score = item.metadata.get("score", 0)
         content = item.content[:200] + "..." if item.content and len(item.content) > 200 else (item.content or "")
@@ -54,7 +55,8 @@ def demo_rag_search(llm, retriever: VectorRetriever, query: str) -> None:
     print(f"Query: {query}\n")
 
     rag = GraphRAG(llm=llm, retriever=retriever)
-    response = rag.search(query)
+    response = rag.search(query, retriever_config={"top_k": 5}, return_context=True)
+    print(f"Number of results returned: {len(response.retriever_result.items)}\n")
     print(f"Answer: {response.answer}")
 
 
