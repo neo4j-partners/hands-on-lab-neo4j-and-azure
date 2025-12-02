@@ -24,7 +24,7 @@
       "value": "${AZURE_AI_MODEL_VERSION=2024-07-18}"
     },
     "agentDeploymentSku": {
-      "value": "${AZURE_AI_MODEL_SKU=GlobalStandard}"
+      "value": "${AZURE_AI_MODEL_SKU=Standard}"
     },
     "agentDeploymentCapacity": {
       "value": "${AZURE_AI_MODEL_CAPACITY=20}"
@@ -42,7 +42,7 @@
       "value": "${AZURE_AI_EMBEDDING_VERSION=2}"
     },
     "embeddingDeploymentSku": {
-      "value": "${AZURE_AI_EMBEDDING_SKU=GlobalStandard}"
+      "value": "${AZURE_AI_EMBEDDING_SKU=Standard}"
     },
     "embeddingDeploymentCapacity": {
       "value": "${AZURE_AI_EMBEDDING_CAPACITY=5}"

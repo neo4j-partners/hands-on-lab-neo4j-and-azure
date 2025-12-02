@@ -33,7 +33,7 @@ param agentDeploymentName string = 'gpt-4o-mini'
 param agentModelVersion string = '2024-07-18'
 
 @description('Sku of the chat deployment')
-param agentDeploymentSku string = 'GlobalStandard'
+param agentDeploymentSku string = 'Standard'
 
 @description('Capacity of the chat deployment (TPM in thousands)')
 param agentDeploymentCapacity int = 20
@@ -49,7 +49,7 @@ param embeddingDeploymentName string = 'text-embedding-ada-002'
 @description('Version of the embedding model to deploy')
 param embeddingModelVersion string = '2'
 @description('Sku of the embedding deployment')
-param embeddingDeploymentSku string = 'GlobalStandard'
+param embeddingDeploymentSku string = 'Standard'
 @description('Capacity of the embedding deployment')
 param embeddingDeploymentCapacity int = 5
 
