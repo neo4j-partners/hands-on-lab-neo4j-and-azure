@@ -51,6 +51,9 @@ async def run_agent(query: str):
                     response = await agent.run(query)
                     print(f"Assistant: {response.text}\n")
 
+    # Allow background tasks to complete before event loop closes
+    await asyncio.sleep(0.1)
+
 
 async def main():
     """Run demo."""

@@ -118,6 +118,9 @@ async def run_agent(query: str):
 
                     print("\n")
 
+    # Allow background tasks to complete before event loop closes
+    await asyncio.sleep(0.1)
+
 
 if __name__ == "__main__":
     asyncio.run(run_agent("Summarise what risk factors are mentioned in Apple's financial documents?"))
