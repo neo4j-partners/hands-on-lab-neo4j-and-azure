@@ -77,7 +77,7 @@ def create_vector_cypher_retriever(
 def demo_retriever(
     llm: OpenAILLM, retriever: VectorCypherRetriever, query: str, description: str
 ) -> None:
-    """Demo a retriever with RAG.
+    """Demo a retriever with GraphRAG.
 
     Args:
         llm: Language model for answer generation.

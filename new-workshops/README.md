@@ -30,7 +30,7 @@ Interactive notebooks are available in the `notebooks/` directory for hands-on l
 
 ### Retriever Workshops (01_xx)
 
-These notebooks demonstrate RAG patterns using neo4j-graphrag with Microsoft Foundry:
+These notebooks demonstrate GraphRAG patterns using neo4j-graphrag with Microsoft Foundry:
 
 - **01_01_vector_retriever.ipynb** - Basic vector search and GraphRAG pipeline
 - **01_02_vector_cypher_retriever.ipynb** - Vector search with custom Cypher for richer context

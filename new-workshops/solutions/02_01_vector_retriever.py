@@ -15,7 +15,7 @@ from config import get_embedder, get_neo4j_driver, get_agent_config, _get_azure_
 
 
 def get_llm() -> OpenAILLM:
-    """Get an OpenAILLM for RAG generation."""
+    """Get an OpenAILLM for GraphRAG generation."""
     config = get_agent_config()
     token = _get_azure_token()
 
@@ -50,8 +50,8 @@ def demo_vector_search(retriever: VectorRetriever, query: str) -> None:
 
 
 def demo_rag_search(llm, retriever: VectorRetriever, query: str) -> None:
-    """Demo RAG search with LLM answer generation."""
-    print(f"\n--- RAG Search ---")
+    """Demo GraphRAG search with LLM answer generation."""
+    print(f"\n--- GraphRAG Search ---")
     print(f"Query: {query}\n")
 
     rag = GraphRAG(llm=llm, retriever=retriever)
@@ -67,10 +67,10 @@ def main():
         llm = get_llm()
         retriever = create_vector_retriever(driver, embedder)
 
-        # Demo 1: RAG search with LLM
+        # Demo 1: GraphRAG search with LLM
         demo_rag_search(llm, retriever, "What companies mention AI in their filings?")
 
-        # Demo 2: Another RAG example
+        # Demo 2: Another GraphRAG example
         demo_rag_search(llm, retriever, "What products does Microsoft reference?")
 
 

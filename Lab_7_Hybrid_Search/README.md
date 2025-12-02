@@ -9,7 +9,7 @@ Before starting, make sure you have:
 - Completed **Lab 1** (Neo4j Aura setup)
 - Completed **Lab 2** (Codespace setup with environment variables configured)
 - Completed **Lab 3** (Knowledge graph built with embeddings)
-- Completed **Lab 5** (Understanding of RAG retrievers)
+- Completed **Lab 5** (Understanding of GraphRAG retrievers)
 
 ## Lab Overview
 

@@ -2,6 +2,8 @@
 
 Follow these steps to subscribe to Neo4j Aura through the Azure Marketplace and create your first instance.
 
+**Important:** Be sure to create your Aura instance in **US West** as shown in the configuration steps below.
+
 ## Step 1: Access the Azure Marketplace
 
 Log in to the Azure Portal at [portal.azure.com](https://portal.azure.com). In the search bar at the top, type "marketplace" and select **Marketplace** from the results.
@@ -58,7 +60,7 @@ Configure your Neo4j Aura instance with the following settings:
 - **Tier**: Professional
 - **Instance name**: Choose a descriptive name (e.g., "Aura-Azure-Finance-Workshop")
 - **Cloud provider**: Azure
-- **Region**: Select your preferred region (e.g., US West, Arizona)
+- **Region**: **US West, Arizona** (required for this workshop)
 - **Memory & CPU**: Select **4GB Memory | 1 CPU**
 - **Graph Analytics**: Select **Plugin** (enables graph algorithms sharing memory with the database)
 - **Additional settings**: Check **Vector-optimized configuration** for GraphRAG and semantic search applications

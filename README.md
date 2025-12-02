@@ -50,11 +50,11 @@ You'll need a laptop with a web browser.  Your browser will need to be able to a
     * Graph Data Science Algorithms
 * Break (5 min)
 
-### Part 3 - RAG Retrievers
+### Part 3 - GraphRAG Retrievers
 * [Lecture - Azure OpenAI](https://docs.google.com/presentation/d/1KPHoVJivbinHg-UtrnTIUbMiFHB8mPEnDO0v0OvvcPM/edit?usp=sharing) (15 min)
     * What is Azure OpenAI?
     * Generative AI
-* [Lab 5 - RAG Retrievers](Lab_5_RAG_Retrievers) (30 min)
+* [Lab 5 - GraphRAG Retrievers](Lab_5_GraphRAG_Retrievers) (30 min)
     * Vector Retriever for Semantic Search
     * Vector Cypher Retriever for Graph-Enhanced Context
     * Text2Cypher Retriever for Natural Language Queries

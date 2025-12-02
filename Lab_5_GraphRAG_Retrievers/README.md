@@ -1,6 +1,6 @@
-# Lab 5 - RAG Retrievers
+# Lab 5 - GraphRAG Retrievers
 
-In this lab, you'll learn how to implement Retrieval-Augmented Generation (RAG) using different retriever strategies with the Neo4j GraphRAG Python package. You'll explore vector search, combine vector search with Cypher queries for richer context, and use natural language to generate Cypher queries automatically.
+In this lab, you'll learn how to implement Graph Retrieval-Augmented Generation (GraphRAG) using different retriever strategies with the Neo4j GraphRAG Python package. You'll explore vector search, combine vector search with Cypher queries for richer context, and use natural language to generate Cypher queries automatically.
 
 ## Prerequisites
 

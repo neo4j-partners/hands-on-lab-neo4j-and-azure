@@ -73,9 +73,9 @@ def demo_cypher_generation(retriever: Text2CypherRetriever, query: str) -> None:
 
 
 def demo_rag_search(llm, retriever: Text2CypherRetriever, query: str) -> None:
-    """Demo RAG with text2cypher."""
+    """Demo GraphRAG with text2cypher."""
     print(f"\n{'=' * 60}")
-    print(f"--- RAG with Text2Cypher Demo ---")
+    print(f"--- GraphRAG with Text2Cypher Demo ---")
     print(f"Query: {query}\n")
 
     rag = GraphRAG(llm=llm, retriever=retriever)
@@ -97,10 +97,10 @@ def main():
         # Demo 1: Direct Cypher generation
         demo_cypher_generation(retriever, "What companies are owned by BlackRock Inc.")
 
-        # Demo 2: RAG search
+        # Demo 2: GraphRAG search
         demo_rag_search(llm, retriever, "Who are the asset managers?")
 
-        # Demo 3: Another RAG example
+        # Demo 3: Another GraphRAG example
         demo_rag_search(llm, retriever, "Summarise the products mentioned in the company filings.")
 
 
