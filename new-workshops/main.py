@@ -70,7 +70,7 @@ def print_menu():
     print(" 11. Fulltext Search")
     print(" 12. Hybrid Search")
 
-    print("\n  A. Run all (from 02_01 onward)")
+    print("\n  A. Run all (from option 4 onwards)")
     print("  0. Exit")
     print("=" * 50)
 
@@ -113,11 +113,11 @@ def run_solution(choice: int) -> bool:
 
 
 def run_all_from_02():
-    """Run all solutions from 02_01 onward."""
-    print("\n>>> Running all solutions from 02_01 onward...")
-    # Solutions 5-12 correspond to indices 4-11 (02_01 onward)
+    """Run all solutions from option 4 onward."""
+    print("\n>>> Running all solutions from option 4 onwards...")
+    # Solutions 4-12 correspond to indices 3-11 (from Full Dataset Queries onward)
     try:
-        for i in range(5, len(SOLUTIONS) + 1):
+        for i in range(4, len(SOLUTIONS) + 1):
             run_solution(i)
         print("\n>>> All solutions completed!")
     except KeyboardInterrupt:

@@ -98,7 +98,7 @@ def find_chunks_for_entity(driver, entity_name: str, limit: int = 5):
     with driver.session() as session:
         result = session.run("""
             MATCH (e)-[:FROM_CHUNK]->(c:Chunk)
-            WHERE e.name CONTAINS $name
+            WHERE toUpper(e.name) CONTAINS toUpper($name)
             RETURN e.name as entity, labels(e)[0] as type, c.text as chunk_text
             LIMIT $limit
         """, name=entity_name, limit=limit)
@@ -114,11 +114,11 @@ def find_chunks_for_entity(driver, entity_name: str, limit: int = 5):
 
 
 def show_company_products(driver, company_name: str):
-    """Show products offered by a company."""
+    """Show products mentioned by a company."""
     with driver.session() as session:
         result = session.run("""
-            MATCH (c:Company)-[:OFFERS_PRODUCT]->(p:Product)
-            WHERE c.name CONTAINS $name
+            MATCH (c:Company)-[:MENTIONS]->(p:Product)
+            WHERE toUpper(c.name) CONTAINS toUpper($name)
               AND p.name IS NOT NULL
             RETURN c.name as company, p.name as product
             ORDER BY p.name
