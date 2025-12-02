@@ -31,25 +31,15 @@
    > 2. your-existing-resource-group
    ```
 
-3. **Login to the Microsoft Foundry Portal:**
+3. **View Deployed Models in Microsoft Foundry Portal:**
 
-link to ai.azure.com
-
-4. **Update Model Token Limits:**
-
-   This creates an Microsoft Foundry project with two model deployments: **gpt-4o-mini** (for chat completions) and **text-embedding-ada-002** (for vector embeddings). Open [ai.azure.com](https://ai.azure.com/) in the same browser where you're logged into Azure to view your project.
+   This creates a Microsoft Foundry project with two model deployments: **gpt-4o-mini** (for chat completions) and **text-embedding-ada-002** (for vector embeddings). Open [ai.azure.com](https://ai.azure.com/) in the same browser where you're logged into Azure to view your project.
 
    Click **Models** in the left sidebar to see your deployments:
 
    ![Models Section](images/models_section.png)
 
-   Click on each model and update the **Tokens per Minute Rate Limit** to increase throughput for the workshop:
-
-   ![Token Limits](images/token_limits.png)
-
-   See [docs/FOUNDRY_GUIDE.md](docs/FOUNDRY_GUIDE.md) for more details.
-
-5. **Setup environment:**
+4. **Setup environment:**
    ```bash
    uv run setup_env.py
    ```

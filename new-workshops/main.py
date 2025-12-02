@@ -7,6 +7,7 @@ Interactive menu to run workshop solutions.
 Usage from root directory:
     uv run python new-workshop/main.py          # Interactive menu
     uv run python new-workshop/main.py 4        # Run solution 4 directly
+    uv run python new-workshop/main.py A        # Run all from 02_01 onward
 """
 
 import asyncio
@@ -65,7 +66,8 @@ def print_menu():
     print(" 10. Fulltext Search")
     print(" 11. Hybrid Search")
 
-    print("\n  0. Exit")
+    print("\n  A. Run all (from 02_01 onward)")
+    print("  0. Exit")
     print("=" * 50)
 
 
@@ -98,6 +100,7 @@ def run_solution(choice: int) -> bool:
 
     except KeyboardInterrupt:
         print("\n\nInterrupted.")
+        raise
     except Exception as e:
         print(f"Error: {e}")
 
@@ -105,17 +108,34 @@ def run_solution(choice: int) -> bool:
     return True
 
 
+def run_all_from_02():
+    """Run all solutions from 02_01 onward."""
+    print("\n>>> Running all solutions from 02_01 onward...")
+    # Solutions 4-11 correspond to indices 3-10 (02_01 onward)
+    try:
+        for i in range(4, len(SOLUTIONS) + 1):
+            run_solution(i)
+        print("\n>>> All solutions completed!")
+    except KeyboardInterrupt:
+        print("\n\nExiting.")
+        sys.exit(0)
+
+
 def main():
     """Main menu loop."""
     # Check for command-line argument
     if len(sys.argv) > 1:
+        arg = sys.argv[1]
+        if arg.upper() == "A":
+            run_all_from_02()
+            return
         try:
-            choice = int(sys.argv[1])
+            choice = int(arg)
             run_solution(choice)
             return
         except ValueError:
-            print(f"Invalid argument: {sys.argv[1]}")
-            print("Usage: uv run python main.py [1-11]")
+            print(f"Invalid argument: {arg}")
+            print("Usage: uv run python main.py [1-11|A]")
             return
 
     print("Workshop Solution Runner")
@@ -123,19 +143,26 @@ def main():
     while True:
         print_menu()
         try:
-            choice = input("\nSelect solution (0-11): ").strip()
+            choice = input("\nSelect solution (0-11, A): ").strip()
             if not choice:
+                continue
+            if choice.upper() == "A":
+                run_all_from_02()
                 continue
             choice = int(choice)
         except ValueError:
-            print("Please enter a number.")
+            print("Please enter a number or 'A'.")
             continue
         except (KeyboardInterrupt, EOFError):
             print("\nExiting.")
             break
 
-        if not run_solution(choice):
-            print("Goodbye!")
+        try:
+            if not run_solution(choice):
+                print("Goodbye!")
+                break
+        except KeyboardInterrupt:
+            print("\n\nExiting.")
             break
 
 

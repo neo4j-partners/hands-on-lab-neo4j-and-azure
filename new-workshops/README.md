@@ -24,10 +24,6 @@ uv run python new-workshops/solutions/test_connection.py
 
 > **Important (Codespaces/Dev Containers):** After registering the kernel, you must **refresh your browser** (or run "Developer: Reload Window" from the command palette) for VS Code to detect the new Jupyter kernel.
 
-## CRITICAL: Increase Microsoft Foundry Token Quota
-
-Before running the workshops, you **must** increase the token rate limits for your Microsoft Foundry model deployments. See **[FOUNDRY_GUIDE.md](../docs/FOUNDRY_GUIDE.md)** for detailed instructions.
-
 ## Jupyter Notebooks
 
 Interactive notebooks are available in the `notebooks/` directory for hands-on learning:
