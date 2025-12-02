@@ -5,7 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="51c3cc09-73ac-4699-b59d-4e0eb9443f99" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Lab_5_RAG_Retrievers/02_vector_cypher_retriever.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/Lab_5_RAG_Retrievers/02_vector_cypher_retriever.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Lab_5_RAG_Retrievers/03_text2cypher_retriever.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/Lab_5_RAG_Retrievers/03_text2cypher_retriever.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/new-workshops/notebooks/02_02_vector_cypher_retriever.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/new-workshops/notebooks/02_02_vector_cypher_retriever.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/new-workshops/solutions/02_02_vector_cypher_retriever.py" beforeDir="false" afterPath="$PROJECT_DIR$/new-workshops/solutions/02_02_vector_cypher_retriever.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/new-workshops/solutions/02_03_text2cypher_retriever.py" beforeDir="false" afterPath="$PROJECT_DIR$/new-workshops/solutions/02_03_text2cypher_retriever.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

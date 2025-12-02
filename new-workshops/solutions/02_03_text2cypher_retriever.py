@@ -7,11 +7,31 @@ using Text2CypherRetriever from neo4j-graphrag-python.
 Run with: uv run python solutions/01_03_text2cypher_retriever.py
 """
 
+from typing import Final
+
 from neo4j_graphrag.generation import GraphRAG
 from neo4j_graphrag.retrievers import Text2CypherRetriever
 from neo4j_graphrag.schema import get_schema
 
 from config import get_llm, get_neo4j_driver
+
+# Custom prompt to ensure generated Cypher queries are limited
+TEXT2CYPHER_PROMPT: Final[str] = """Task: Generate a Cypher statement to query a graph database.
+
+Instructions:
+- Use only the provided relationship types and properties in the schema.
+- Do not use any other relationship types or properties that are not provided.
+- Always add LIMIT 20 to the end of your query to restrict results.
+
+Schema:
+{schema}
+
+Note: Do not include any explanations or apologies in your responses.
+Do not respond to any questions that might ask anything else than for you to construct a Cypher statement.
+Do not include any text except the generated Cypher statement.
+
+The question is:
+{query_text}"""
 
 
 def create_text2cypher_retriever(driver, llm) -> Text2CypherRetriever:
@@ -25,6 +45,7 @@ def create_text2cypher_retriever(driver, llm) -> Text2CypherRetriever:
         driver=driver,
         llm=llm,
         neo4j_schema=schema,
+        custom_prompt=TEXT2CYPHER_PROMPT,
     )
 
 

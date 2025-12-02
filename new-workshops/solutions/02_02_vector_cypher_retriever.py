@@ -24,9 +24,17 @@ RETURN company.name AS company, collect(DISTINCT risk.name)[0..20] AS risks, nod
 """
 
 # Retrieval query 2: Asset Manager context
+# Using COLLECT subquery to limit asset managers per company.
+# This ensures top_k controls the final result count, not just vector search nodes.
+# Without this, graph traversal can expand 5 nodes into many more rows (one per manager).
 ASSET_MANAGER_QUERY: Final[str] = """
-MATCH (node)-[:FROM_DOCUMENT]-(doc:Document)-[:FILED]-(company:Company)-[:OWNS]-(manager:AssetManager)
-RETURN company.name AS company, manager.managerName AS AssetManagerWithSharesInCompany, node.text AS context
+MATCH (node)-[:FROM_DOCUMENT]-(doc:Document)-[:FILED]-(company:Company)
+WITH node, company, COLLECT {
+  MATCH (company)-[:OWNS]-(manager:AssetManager)
+  RETURN manager.managerName
+  LIMIT 5
+} AS managers
+RETURN company.name AS company, managers AS AssetManagersWithSharesInCompany, node.text AS context
 """
 
 # Retrieval query 3: Shared Risks between companies
