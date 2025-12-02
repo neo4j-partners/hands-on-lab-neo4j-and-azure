@@ -125,7 +125,7 @@ resource aiServicesDeployments 'Microsoft.CognitiveServices/accounts/deployments
   }
   sku: contains(deployment, 'sku') ? deployment.sku : {
     name: 'Standard'
-    capacity: 5
+    capacity: 20
   }
 }]
 

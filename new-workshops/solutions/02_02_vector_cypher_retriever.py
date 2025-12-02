@@ -15,7 +15,7 @@ from config import get_embedder, get_llm, get_neo4j_driver
 # Retrieval query 1: Company + Risk context
 COMPANY_RISK_QUERY = """
 MATCH (node)-[:FROM_DOCUMENT]-(doc:Document)-[:FILED]-(company:Company)-[:FACES_RISK]->(risk:RiskFactor)
-RETURN company.name AS company, collect(DISTINCT risk.name) AS risks, node.text AS context
+RETURN company.name AS company, collect(DISTINCT risk.name)[0..20] AS risks, node.text AS context
 """
 
 # Retrieval query 2: Asset Manager context

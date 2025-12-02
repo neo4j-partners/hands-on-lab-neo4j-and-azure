@@ -10,11 +10,9 @@ Before starting, make sure you have:
 
 ## Launch the Codespace
 
-Click one of the buttons below to start your development environment:
+Click the buttons below to start your development environment:
 
 [![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/neo4j-partners/hands-on-lab-neo4j-and-azure)
-
-[![Open in Dev Containers](https://img.shields.io/static/v1?label=Dev%20Containers&message=Open&color=blue&logo=visualstudiocode)](https://vscode.dev/redirect?url=vscode://ms-vscode-remote.remote-containers/cloneInVolume?url=https://github.com/neo4j-partners/hands-on-lab-neo4j-and-azure)
 
 ## What is a GitHub Codespace?
 
