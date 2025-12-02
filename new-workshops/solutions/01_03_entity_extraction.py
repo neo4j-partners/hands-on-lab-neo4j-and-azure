@@ -116,10 +116,11 @@ def show_relationships(driver) -> None:
 def show_graph_summary(driver) -> None:
     """Show a summary of the complete graph."""
     with driver.session() as session:
-        # Count all node types
+        # Count all node types - with explicit grouping
         result = session.run("""
             MATCH (n)
             UNWIND labels(n) as label
+            WITH label
             RETURN label, count(*) as count
             ORDER BY count DESC
         """)
@@ -127,10 +128,11 @@ def show_graph_summary(driver) -> None:
         for record in result:
             print(f"  {record['label']}: {record['count']}")
 
-        # Count relationship types
+        # Count relationship types - with explicit grouping
         result = session.run("""
             MATCH ()-[r]->()
-            RETURN type(r) as type, count(*) as count
+            WITH type(r) as type
+            RETURN type, count(*) as count
             ORDER BY count DESC
         """)
         print("\n=== Relationship Counts ===")

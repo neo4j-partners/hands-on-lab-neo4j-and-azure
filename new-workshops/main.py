@@ -23,6 +23,7 @@ SOLUTIONS = [
     ("solutions.01_01_data_loading", "Data Loading Fundamentals", False, "main"),
     ("solutions.01_02_embeddings", "Embeddings", True, "main"),
     ("solutions.01_03_entity_extraction", "Entity Extraction", True, "main"),
+    ("solutions.01_04_full_dataset_queries", "Full Dataset Queries", False, "main"),
     ("solutions.02_01_vector_retriever", "Vector Retriever", False, "main"),
     ("solutions.02_02_vector_cypher_retriever", "Vector Cypher Retriever", False, "main"),
     ("solutions.02_03_text2cypher_retriever", "Text2Cypher Retriever", False, "main"),
@@ -52,19 +53,22 @@ def print_menu():
     print("  2. Embeddings")
     print("  3. Entity Extraction")
 
+    print("\nExploration:")
+    print("  4. Full Dataset Queries")
+
     print("\nRetrievers:")
-    print("  4. Vector Retriever")
-    print("  5. Vector Cypher Retriever")
-    print("  6. Text2Cypher Retriever")
+    print("  5. Vector Retriever")
+    print("  6. Vector Cypher Retriever")
+    print("  7. Text2Cypher Retriever")
 
     print("\nAgents:")
-    print("  7. Simple Agent")
-    print("  8. Vector Graph Agent")
-    print("  9. Text2Cypher Agent")
+    print("  8. Simple Agent")
+    print("  9. Vector Graph Agent")
+    print(" 10. Text2Cypher Agent")
 
     print("\nSearch:")
-    print(" 10. Fulltext Search")
-    print(" 11. Hybrid Search")
+    print(" 11. Fulltext Search")
+    print(" 12. Hybrid Search")
 
     print("\n  A. Run all (from 02_01 onward)")
     print("  0. Exit")
@@ -111,9 +115,9 @@ def run_solution(choice: int) -> bool:
 def run_all_from_02():
     """Run all solutions from 02_01 onward."""
     print("\n>>> Running all solutions from 02_01 onward...")
-    # Solutions 4-11 correspond to indices 3-10 (02_01 onward)
+    # Solutions 5-12 correspond to indices 4-11 (02_01 onward)
     try:
-        for i in range(4, len(SOLUTIONS) + 1):
+        for i in range(5, len(SOLUTIONS) + 1):
             run_solution(i)
         print("\n>>> All solutions completed!")
     except KeyboardInterrupt:
@@ -135,7 +139,7 @@ def main():
             return
         except ValueError:
             print(f"Invalid argument: {arg}")
-            print("Usage: uv run python main.py [1-11|A]")
+            print("Usage: uv run python main.py [1-12|A]")
             return
 
     print("Workshop Solution Runner")
@@ -143,7 +147,7 @@ def main():
     while True:
         print_menu()
         try:
-            choice = input("\nSelect solution (0-11, A): ").strip()
+            choice = input("\nSelect solution (0-12, A): ").strip()
             if not choice:
                 continue
             if choice.upper() == "A":
