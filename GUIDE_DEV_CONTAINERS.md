@@ -2,7 +2,7 @@
 
 > **Warning:** It may take several minutes for the Codespace to start. After it starts, please wait an additional couple of minutes for all post-install scripts to finish running.  You can tell when it is finished initalizing because the .env will be created in the root directory.
 > 
-> ![Wait for Environment to Finish Initializing](images/wait_finish_env.png)
+> ![Wait for Environment to Finish Initializing](Lab_2_Start_Codespace/images/wait_finish_env.png)
 
 > **Note:** The Codespace/Dev Container prepopulates the `.env` file in the project root with Neo4j connection settings. Review these values to ensure they are accurate for your environment. If running outside of a Codespace or Dev Container, you must manually set the Neo4j environment variables (`NEO4J_URI`, `NEO4J_USERNAME`, `NEO4J_PASSWORD`) in your `.env` file.
 
