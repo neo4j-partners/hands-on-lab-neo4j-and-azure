@@ -38,6 +38,8 @@ RETURN company.name AS company, managers AS AssetManagersWithSharesInCompany, no
 """
 
 # Retrieval query 3: Shared Risks between companies
+# Using slice notation [0..10] on collect() to limit array sizes per row.
+# LIMIT 10 controls row count, but collect() could still return unbounded arrays without slicing.
 SHARED_RISKS_QUERY: Final[str] = """
 WITH node
 MATCH (node)-[:FROM_DOCUMENT]-(doc:Document)-[:FILED]-(c1:Company)
@@ -45,8 +47,8 @@ MATCH (c1)-[:FACES_RISK]->(risk:RiskFactor)<-[:FACES_RISK]-(c2:Company)
 WHERE c1 <> c2
 RETURN
   c1.name AS source_company,
-  collect(DISTINCT c2.name) AS related_companies,
-  collect(DISTINCT risk.name) AS shared_risks
+  collect(DISTINCT c2.name)[0..10] AS related_companies,
+  collect(DISTINCT risk.name)[0..10] AS shared_risks
 LIMIT 10
 """
 

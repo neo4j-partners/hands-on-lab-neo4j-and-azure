@@ -94,7 +94,7 @@ def search_with_graph_traversal(driver: GraphDatabase.driver, company_name: str)
             LIMIT 1
 
             OPTIONAL MATCH (company)-[:FILED]->(doc:Document)
-            WITH company, score, COLLECT(DISTINCT doc.path) AS documents
+            WITH company, score, COLLECT(DISTINCT doc.path)[0..10] AS documents
 
             OPTIONAL MATCH (company)-[:FACES_RISK]->(risk:RiskFactor)
             WITH company, score, documents, COLLECT(DISTINCT risk.name)[0..5] AS risks

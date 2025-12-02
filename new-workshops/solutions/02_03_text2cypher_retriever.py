@@ -15,13 +15,22 @@ from neo4j_graphrag.schema import get_schema
 
 from config import get_llm, get_neo4j_driver
 
-# Custom prompt to ensure generated Cypher queries are limited
+# Custom prompt to ensure generated Cypher queries follow modern best practices
 TEXT2CYPHER_PROMPT: Final[str] = """Task: Generate a Cypher statement to query a graph database.
 
 Instructions:
 - Use only the provided relationship types and properties in the schema.
 - Do not use any other relationship types or properties that are not provided.
+- Use `WHERE toLower(node.name) CONTAINS toLower('name')` to filter nodes by name.
 - Always add LIMIT 20 to the end of your query to restrict results.
+
+Modern Cypher Requirements:
+- Use `elementId(node)` instead of `id(node)` (id() is removed in Neo4j 5+).
+- Use `count{{pattern}}` instead of `size((pattern))` for counting patterns.
+- Use `EXISTS {{MATCH pattern}}` instead of `exists((pattern))` for existence checks.
+- When using ORDER BY, filter NULL values first: `WHERE property IS NOT NULL ORDER BY property`.
+- Use explicit grouping with WITH clauses for aggregations.
+- Limit collected results when appropriate: `collect(item)[0..20]`.
 
 Schema:
 {schema}
