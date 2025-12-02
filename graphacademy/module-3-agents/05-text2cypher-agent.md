@@ -1,0 +1,86 @@
+# Text2Cypher Agent (Multi-Tool Agent)
+
+## Introduction
+
+In this lesson, you'll complete your GraphRAG agent by adding a third tool: Text2Cypher for precise database queries. Your agent will now intelligently choose between all three tools to answer any type of question.
+
+This lesson prepares you for Lab 6 Notebook 3, where you'll build a complete multi-tool agent with Microsoft Foundry.
+
+The agent automatically chooses the best tool for each question type:
+
+**Schema Tool:**
+
+- Understanding database structure
+- _"What entities exist in the graph?"_
+
+**Document Retrieval Tool:**
+
+- Finding content with company context
+- _"What products does Microsoft mention in its documents?"_
+
+**Database Query Tool:**
+
+- Precise queries and counts
+- _"How many risk factors does Apple face?"_
+- _"What stock has Microsoft issued?"_
+
+## The Final Tool
+
+Open the notebook: `02_03_text2cypher_agent.ipynb`
+
+**Your complete agent will now have:**
+
+- **Tool 1:** Schema Tool (database structure exploration)
+- **Tool 2:** Document Retrieval Tool (vector search + graph context)
+- **Tool 3:** Database Query Tool (text-to-Cypher for precise queries) ← **NEW!**
+
+This creates a comprehensive GraphRAG agent that can handle any type of question intelligently.
+
+## Try These Questions
+
+**Try these questions to see all three tools in action:**
+
+- _"What products does Microsoft mention in its financial documents?"_
+- _"How many risk factors does Apple face and what are the top ones?"_
+- _"What stock has Microsoft issued?"_
+- _"What are the main risk factors mentioned in the documents?"_
+- _"Summarize Apple's risk factors and how they relate to other companies"_
+
+The agent will choose from the 3 tools available:
+
+- Graph Exploration (Schema Tool)
+- Contextual Search (Vector + Cypher Tool)
+- Precise Queries (Text2Cypher Tool)
+
+**Notice:** The agent intelligently selects the right tool(s) for each question type! Complex questions may invoke multiple tools.
+
+## Summary
+
+In this lesson, you completed your GraphRAG agent by adding the Text2Cypher Retriever as the third tool:
+
+**Key Concepts:**
+
+- **Complete tool suite:** All three retrievers now available as conversational tools
+- **Intelligent routing:** Agent automatically selects best tool(s) for each question
+- **Progressive capability:** From simple search to complex multi-tool reasoning
+
+**What You Built:**
+
+- Complete GraphRAG agent with three retriever tools
+- Conversational interface to all retriever capabilities from previous modules
+- Intelligent tool selection for optimal answers
+
+**Your Journey:**
+
+- ✅ **Knowledge Graph Creation:** PDF to Knowledge Graph pipeline
+- ✅ **Retriever Development:** Built three different retrievers
+- ✅ **Agent Tools:** Converted retrievers to conversational agent tools
+
+**Final Result:** A complete GraphRAG agent that can answer any question using the most appropriate retrieval strategy automatically!
+
+---
+
+**Navigation:**
+- [← Previous: Vector Graph Agent](04-vector-graph-agent.md)
+- [↑ Back to Module 3](README.md)
+- [Next: Multi-Tool Agent Design →](06-multi-tool-design.md)
