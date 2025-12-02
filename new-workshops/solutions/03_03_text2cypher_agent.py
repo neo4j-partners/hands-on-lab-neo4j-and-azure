@@ -10,8 +10,9 @@ Run with: uv run python solutions/02_03_text2cypher_agent.py
 """
 
 import asyncio
-from typing import Annotated
+from typing import Annotated, Final
 
+from neo4j import Driver
 from neo4j_graphrag.llm import OpenAILLM
 from neo4j_graphrag.retrievers import VectorCypherRetriever, Text2CypherRetriever
 from neo4j_graphrag.schema import get_schema
@@ -24,25 +25,33 @@ from azure.identity.aio import AzureCliCredential
 from config import get_neo4j_driver, get_agent_config, get_embedder
 
 # Retrieval query for vector search with graph context
-RETRIEVAL_QUERY = """
+RETRIEVAL_QUERY: Final[str] = """
 MATCH (node)-[:FROM_DOCUMENT]-(doc:Document)-[:FILED]-(company:Company)
 OPTIONAL MATCH (company)-[:FACES_RISK]->(risk:RiskFactor)
-WITH node, score, company, collect(risk.name) as risks
+WITH node, score, company, collect(risk.name)[0..20] AS risks
 WHERE score IS NOT NULL
 RETURN
-    node.text as text,
+    node.text AS text,
     score,
     {company: company.name, risks: risks} AS metadata
 ORDER BY score DESC
 """
 
-# Custom prompt for Cypher generation
-CYPHER_PROMPT = """Task: Generate a Cypher statement to query a graph database.
-Instructions:
-Use only the provided relationship types and properties in the schema.
-Do not use any other relationship types or properties that are not provided.
+# Custom prompt for Cypher generation with modern Cypher best practices
+CYPHER_PROMPT: Final[str] = """Task: Generate a Cypher statement to query a graph database.
 
-Use `WHERE toLower(node.name) CONTAINS toLower('name')` to filter nodes by name.
+Instructions:
+- Use only the provided relationship types and properties in the schema.
+- Do not use any other relationship types or properties that are not provided.
+- Use `WHERE toLower(node.name) CONTAINS toLower('name')` to filter nodes by name.
+
+Modern Cypher Requirements:
+- Use `elementId(node)` instead of `id(node)` (id() is removed in Neo4j 5+).
+- Use `count{{pattern}}` instead of `size((pattern))` for counting patterns.
+- Use `EXISTS {{MATCH pattern}}` instead of `exists((pattern))` for existence checks.
+- When using ORDER BY, filter NULL values first: `WHERE property IS NOT NULL ORDER BY property`.
+- Use explicit grouping with WITH clauses for aggregations.
+- Limit collected results when appropriate: `collect(item)[0..20]`.
 
 Schema:
 {schema}
@@ -55,8 +64,15 @@ The question is:
 {query_text}"""
 
 
-def create_tools(driver):
-    """Create tools with the given driver."""
+def create_tools(driver: Driver) -> list:
+    """Create tools with the given Neo4j driver.
+
+    Args:
+        driver: Neo4j driver instance for database connections.
+
+    Returns:
+        List of tool functions for the agent.
+    """
     config = get_agent_config()
     embedder = get_embedder()
 
@@ -91,19 +107,25 @@ def create_tools(driver):
         query: Annotated[str, Field(description="The search query to find relevant documents")]
     ) -> str:
         """Find details about companies in their financial documents using semantic search."""
-        results = vector_retriever.search(query_text=query, top_k=3)
-        if not results.items:
-            return "No documents found matching the query."
-        return "\n\n".join(item.content for item in results.items)
+        try:
+            results = vector_retriever.search(query_text=query, top_k=3)
+            if not results.items:
+                return "No documents found matching the query."
+            return "\n\n".join(item.content for item in results.items)
+        except Exception as e:
+            return f"Error searching documents: {e}"
 
     def query_database(
         query: Annotated[str, Field(description="A natural language question about companies, risks, or financial metrics")]
     ) -> str:
         """Get answers to specific questions about companies, risks, and financial metrics by querying the database directly."""
-        results = text2cypher_retriever.search(query_text=query)
-        if not results.items:
-            return "No results found for the query."
-        return "\n\n".join(item.content for item in results.items)
+        try:
+            results = text2cypher_retriever.search(query_text=query)
+            if not results.items:
+                return "No results found for the query."
+            return "\n\n".join(item.content for item in results.items)
+        except Exception as e:
+            return f"Error querying database: {e}"
 
     return [get_graph_schema, retrieve_financial_documents, query_database]
 
@@ -116,32 +138,31 @@ async def run_agent(query: str):
         tools = create_tools(driver)
 
         async with AzureCliCredential() as credential:
-            client = AzureAIClient(
+            async with AzureAIClient(
                 project_endpoint=config.project_endpoint,
                 model_deployment_name=config.model_name,
                 async_credential=credential,
-            )
+            ) as client:
+                async with client.create_agent(
+                    name="workshop-multi-tool-agent",
+                    instructions=(
+                        "You are a helpful assistant that can answer questions about "
+                        "a graph database containing financial documents. You have three tools:\n"
+                        "1. get_graph_schema - Get the database schema\n"
+                        "2. retrieve_financial_documents - Search documents semantically\n"
+                        "3. query_database - Query specific facts from the database\n\n"
+                        "Choose the appropriate tool based on the question type."
+                    ),
+                    tools=tools,
+                ) as agent:
+                    print(f"User: {query}\n")
+                    print("Assistant: ", end="", flush=True)
 
-            async with client.create_agent(
-                name="workshop-multi-tool-agent",
-                instructions=(
-                    "You are a helpful assistant that can answer questions about "
-                    "a graph database containing financial documents. You have three tools:\n"
-                    "1. get_graph_schema - Get the database schema\n"
-                    "2. retrieve_financial_documents - Search documents semantically\n"
-                    "3. query_database - Query specific facts from the database\n\n"
-                    "Choose the appropriate tool based on the question type."
-                ),
-                tools=tools,
-            ) as agent:
-                print(f"User: {query}\n")
-                print("Assistant: ", end="", flush=True)
+                    async for update in agent.run_stream(query):
+                        if update.text:
+                            print(update.text, end="", flush=True)
 
-                async for update in agent.run_stream(query):
-                    if update.text:
-                        print(update.text, end="", flush=True)
-
-                print("\n")
+                    print("\n")
 
 
 if __name__ == "__main__":

@@ -36,21 +36,20 @@ async def run_agent(query: str):
         get_graph_schema = create_schema_tool(driver)
 
         async with AzureCliCredential() as credential:
-            client = AzureAIClient(
+            async with AzureAIClient(
                 project_endpoint=config.project_endpoint,
                 model_deployment_name=config.model_name,
                 async_credential=credential,
-            )
+            ) as client:
+                async with client.create_agent(
+                    name="workshop-schema-agent",
+                    instructions="You are a helpful assistant that can answer questions about a graph database schema.",
+                    tools=[get_graph_schema],
+                ) as agent:
+                    print(f"User: {query}\n")
 
-            async with client.create_agent(
-                name="workshop-schema-agent",
-                instructions="You are a helpful assistant that can answer questions about a graph database schema.",
-                tools=[get_graph_schema],
-            ) as agent:
-                print(f"User: {query}\n")
-
-                response = await agent.run(query)
-                print(f"Assistant: {response.text}\n")
+                    response = await agent.run(query)
+                    print(f"Assistant: {response.text}\n")
 
 
 async def main():

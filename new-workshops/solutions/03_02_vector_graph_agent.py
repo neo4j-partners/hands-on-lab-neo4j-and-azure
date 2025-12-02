@@ -9,8 +9,9 @@ Run with: uv run python solutions/02_02_vector_graph_agent.py
 """
 
 import asyncio
-from typing import Annotated
+from typing import Annotated, Final
 
+from neo4j import Driver
 from neo4j_graphrag.retrievers import VectorCypherRetriever
 from neo4j_graphrag.schema import get_schema
 from pydantic import Field
@@ -36,21 +37,28 @@ YIELD node, score
 - `score`: The similarity score (0.0 to 1.0) of the vector match.
 """
 # Retrieval query that enriches vector search results with company and risk context
-RETRIEVAL_QUERY = """
+RETRIEVAL_QUERY: Final[str] = """
 MATCH (node)-[:FROM_DOCUMENT]-(doc:Document)-[:FILED]-(company:Company)
 OPTIONAL MATCH (company)-[:FACES_RISK]->(risk:RiskFactor)
-WITH node, score, company, collect(risk.name) as risks
+WITH node, score, company, collect(risk.name)[0..20] AS risks
 WHERE score IS NOT NULL
 RETURN
-    node.text as text,
+    node.text AS text,
     score,
     {company: company.name, risks: risks} AS metadata
 ORDER BY score DESC
 """
 
 
-def create_tools(driver):
-    """Create tools with the given driver."""
+def create_tools(driver: Driver) -> list:
+    """Create tools with the given Neo4j driver.
+
+    Args:
+        driver: Neo4j driver instance for database connections.
+
+    Returns:
+        List of tool functions for the agent.
+    """
     embedder = get_embedder()
 
     vector_retriever = VectorCypherRetriever(
@@ -68,10 +76,13 @@ def create_tools(driver):
         query: Annotated[str, Field(description="The search query to find relevant documents")]
     ) -> str:
         """Find details about companies in their financial documents using semantic search."""
-        results = vector_retriever.search(query_text=query, top_k=3)
-        if not results.items:
-            return "No documents found matching the query."
-        return "\n\n".join(item.content for item in results.items)
+        try:
+            results = vector_retriever.search(query_text=query, top_k=3)
+            if not results.items:
+                return "No documents found matching the query."
+            return "\n\n".join(item.content for item in results.items)
+        except Exception as e:
+            return f"Error searching documents: {e}"
 
     return [get_graph_schema, retrieve_financial_documents]
 
@@ -84,29 +95,28 @@ async def run_agent(query: str):
         tools = create_tools(driver)
 
         async with AzureCliCredential() as credential:
-            client = AzureAIClient(
+            async with AzureAIClient(
                 project_endpoint=config.project_endpoint,
                 model_deployment_name=config.model_name,
                 async_credential=credential,
-            )
+            ) as client:
+                async with client.create_agent(
+                    name="workshop-vector-graph-agent",
+                    instructions=(
+                        "You are a helpful assistant that can answer questions about "
+                        "a graph database containing financial documents. You can retrieve "
+                        "the schema and search for relevant documents."
+                    ),
+                    tools=tools,
+                ) as agent:
+                    print(f"User: {query}\n")
+                    print("Assistant: ", end="", flush=True)
 
-            async with client.create_agent(
-                name="workshop-vector-graph-agent",
-                instructions=(
-                    "You are a helpful assistant that can answer questions about "
-                    "a graph database containing financial documents. You can retrieve "
-                    "the schema and search for relevant documents."
-                ),
-                tools=tools,
-            ) as agent:
-                print(f"User: {query}\n")
-                print("Assistant: ", end="", flush=True)
+                    async for update in agent.run_stream(query):
+                        if update.text:
+                            print(update.text, end="", flush=True)
 
-                async for update in agent.run_stream(query):
-                    if update.text:
-                        print(update.text, end="", flush=True)
-
-                print("\n")
+                    print("\n")
 
 
 if __name__ == "__main__":

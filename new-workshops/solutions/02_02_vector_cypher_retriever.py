@@ -7,25 +7,30 @@ Cypher queries for enriched graph context using VectorCypherRetriever.
 Run with: uv run python solutions/01_02_vector_cypher_retriever.py
 """
 
+from typing import Final
+
+from neo4j import Driver
+from neo4j_graphrag.embeddings import OpenAIEmbeddings
 from neo4j_graphrag.generation import GraphRAG
+from neo4j_graphrag.llm import OpenAILLM
 from neo4j_graphrag.retrievers import VectorCypherRetriever
 
 from config import get_embedder, get_llm, get_neo4j_driver
 
 # Retrieval query 1: Company + Risk context
-COMPANY_RISK_QUERY = """
+COMPANY_RISK_QUERY: Final[str] = """
 MATCH (node)-[:FROM_DOCUMENT]-(doc:Document)-[:FILED]-(company:Company)-[:FACES_RISK]->(risk:RiskFactor)
 RETURN company.name AS company, collect(DISTINCT risk.name)[0..20] AS risks, node.text AS context
 """
 
 # Retrieval query 2: Asset Manager context
-ASSET_MANAGER_QUERY = """
+ASSET_MANAGER_QUERY: Final[str] = """
 MATCH (node)-[:FROM_DOCUMENT]-(doc:Document)-[:FILED]-(company:Company)-[:OWNS]-(manager:AssetManager)
 RETURN company.name AS company, manager.managerName AS AssetManagerWithSharesInCompany, node.text AS context
 """
 
 # Retrieval query 3: Shared Risks between companies
-SHARED_RISKS_QUERY = """
+SHARED_RISKS_QUERY: Final[str] = """
 WITH node
 MATCH (node)-[:FROM_DOCUMENT]-(doc:Document)-[:FILED]-(c1:Company)
 MATCH (c1)-[:FACES_RISK]->(risk:RiskFactor)<-[:FACES_RISK]-(c2:Company)
@@ -39,9 +44,18 @@ LIMIT 10
 
 
 def create_vector_cypher_retriever(
-    driver, embedder, retrieval_query: str
+    driver: Driver, embedder: OpenAIEmbeddings, retrieval_query: str
 ) -> VectorCypherRetriever:
-    """Create a VectorCypherRetriever with custom retrieval query."""
+    """Create a VectorCypherRetriever with custom retrieval query.
+
+    Args:
+        driver: Neo4j driver instance.
+        embedder: Embedder for converting queries to vectors.
+        retrieval_query: Cypher query to enrich vector search results.
+
+    Returns:
+        Configured VectorCypherRetriever instance.
+    """
     return VectorCypherRetriever(
         driver=driver,
         index_name="chunkEmbeddings",
@@ -50,8 +64,17 @@ def create_vector_cypher_retriever(
     )
 
 
-def demo_retriever(llm, retriever: VectorCypherRetriever, query: str, description: str) -> None:
-    """Demo a retriever with RAG."""
+def demo_retriever(
+    llm: OpenAILLM, retriever: VectorCypherRetriever, query: str, description: str
+) -> None:
+    """Demo a retriever with RAG.
+
+    Args:
+        llm: Language model for answer generation.
+        retriever: Configured retriever instance.
+        query: User question to answer.
+        description: Description of the demo for display.
+    """
     print(f"\n{'=' * 60}")
     print(f"--- {description} ---")
     print(f"Query: {query}\n")
