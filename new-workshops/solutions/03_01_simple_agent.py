@@ -16,7 +16,6 @@ from agent_framework.azure import AzureAIClient
 from azure.identity.aio import AzureCliCredential
 
 from config import get_neo4j_driver, get_agent_config
-from token_tracker import TokenUsage
 
 
 def create_schema_tool(driver):
@@ -29,7 +28,7 @@ def create_schema_tool(driver):
     return get_graph_schema
 
 
-async def run_agent(query: str, tracker: TokenUsage | None = None):
+async def run_agent(query: str):
     """Run the agent with the given query."""
     config = get_agent_config()
 
@@ -50,23 +49,13 @@ async def run_agent(query: str, tracker: TokenUsage | None = None):
             ) as agent:
                 print(f"User: {query}\n")
 
-                # Use non-streaming run() to get token usage
                 response = await agent.run(query)
                 print(f"Assistant: {response.text}\n")
 
-                # Track token usage if tracker provided
-                if tracker:
-                    tracker.add_from_agent_response(response, label=query[:30])
-
 
 async def main():
-    """Run demo with token tracking."""
-    tracker = TokenUsage()
-
-    await run_agent("Summarise the schema of the graph database.", tracker)
-
-    # Print token usage summary
-    tracker.print_summary()
+    """Run demo."""
+    await run_agent("Summarise the schema of the graph database.")
 
 
 if __name__ == "__main__":

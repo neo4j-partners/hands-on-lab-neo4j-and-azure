@@ -36,7 +36,7 @@ param agentModelVersion string = '2024-07-18'
 param agentDeploymentSku string = 'GlobalStandard'
 
 @description('Capacity of the chat deployment')
-param agentDeploymentCapacity int = 20
+param agentDeploymentCapacity int = 5
 
 // Embedding model
 @description('Format of the embedding model to deploy')

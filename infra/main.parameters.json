@@ -27,7 +27,7 @@
       "value": "${AZURE_AI_MODEL_SKU=GlobalStandard}"
     },
     "agentDeploymentCapacity": {
-      "value": "${AZURE_AI_MODEL_CAPACITY=20}"
+      "value": "${AZURE_AI_MODEL_CAPACITY=5}"
     },
     "embeddingModelFormat": {
       "value": "${AZURE_AI_EMBEDDING_FORMAT=OpenAI}"
