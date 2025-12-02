@@ -16,15 +16,15 @@
 
    # Select Azure region and initialize environment
    ./scripts/setup_azure.sh
-
+  
+   azd env set SKIP_ROLE_ASSIGNMENTS true
+   
    # Deploy
    azd up
    ```
 
    > **Note:** The setup script clears the `.azure/` directory and Azure-related settings from `.env` to ensure a fresh deployment. Neo4j settings in `.env` are preserved. See [docs/AZ_CLI_GUIDE.md](docs/AZ_CLI_GUIDE.md) for details.
-
-   > **Note:** If you encounter a `RoleAssignmentExists` error on redeployment, run `azd env set SKIP_ROLE_ASSIGNMENTS true` and then `azd up` again.
-
+   
 2. **Follow the prompts:**
    - **Resource group:** Select the resource group from the setup in Lab 0 and is the same as your Azure Username. 
 
