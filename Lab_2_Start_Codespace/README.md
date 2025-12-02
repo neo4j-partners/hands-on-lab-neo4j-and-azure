@@ -29,6 +29,22 @@ This means you don't need to install anything on your local machine—everything
 
 Once your Codespace has started, you will be prompted to enter your secrets (Resource Group name, Neo4j credentials). After that, run the setup commands provided in the terminal to configure the Azure infrastructure for the remaining labs.
 
+## Viewing Your Azure AI Foundry Project
+
+After running the `azd up` commands in the codespace, it created an Azure AI Foundry project for you.
+
+To view your Foundry project:
+
+1. Go to https://ai.azure.com/
+
+   ![Foundry Home Page](images/Foundry_Home_Page.png)
+
+2. The deployment created two models:
+   - **gpt-4o-mini** - for text generation
+   - **text-embedding-ada-002** - for creating embeddings
+
+   ![Foundry Models](images/Foundry_Models.png)
+
 ## Running the Notebooks
 
 To run the Jupyter notebooks in the labs, you need to select the correct Python kernel:

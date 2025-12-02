@@ -2,6 +2,15 @@
 
 In this lab, you'll learn how to build a knowledge graph in Neo4j for GraphRAG (Graph Retrieval-Augmented Generation) applications. You'll start with the fundamentals of loading text data, then progress through adding embeddings for semantic search, and finally extract entities to create a rich knowledge graph.
 
+## Verify Your Azure AI Foundry Project
+
+After having run the setup in Lab 2, you should have an Azure AI Foundry project with deployed models. If you have not already, go to https://ai.azure.com/ and verify that the following models are deployed:
+
+- **gpt-4o-mini** - for text generation
+- **text-embedding-ada-002** - for creating embeddings
+
+![Foundry Models](images/Foundry_Models.png)
+
 ## Prerequisites
 
 Before starting, make sure you have:

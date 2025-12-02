@@ -99,3 +99,6 @@ atlassian-ide-plugin.xml
 .vscode/
 *.code-workspace
 .history/
+
+# Claude Code
+.claude/
