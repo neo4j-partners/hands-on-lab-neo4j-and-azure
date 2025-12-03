@@ -141,7 +141,7 @@ GraphRAG extracts structure, creating a *knowledge graph* that preserves:
 
 ---
 
-## Neo4j Generative AI Retrievers Overview
+## Neo4j GraphRAG Retrievers Overview
 
 Neo4j GraphRAG enables three retrieval patterns:
 

@@ -28,7 +28,7 @@ ol > li {
 </style>
 
 
-# Neo4j Generative AI Retrievers Overview
+# Neo4j GraphRAG Retrievers Overview
 
 ---
 
