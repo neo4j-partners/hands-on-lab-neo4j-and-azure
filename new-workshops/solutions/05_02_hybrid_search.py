@@ -49,11 +49,14 @@ OPTIONAL MATCH (company)-[:FACES_RISK]->(risk:RiskFactor)
 // Get products mentioned
 OPTIONAL MATCH (company)-[:MENTIONS]->(product:Product)
 
+// Explicit grouping before aggregations for modern Cypher compliance
+WITH node.text AS text, score, company.name AS company, doc.path AS document, risk, product
+
 // Return enriched results
-RETURN node.text AS text,
+RETURN text,
        score,
-       company.name AS company,
-       doc.path AS document,
+       company,
+       document,
        collect(DISTINCT risk.name)[0..3] AS risks,
        collect(DISTINCT product.name)[0..3] AS products
 """

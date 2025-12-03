@@ -28,299 +28,349 @@ ol > li {
 </style>
 
 
-# All Three Tools
+# Text2Cypher Retriever (Detailed)
 
-Module 3, Lesson 4
+Module 2, Lesson 5
 
----
-
-## Introduction
-
-You will complete your agent by adding a Text2Cypher query tool as the third tool.
-
-The agent automatically chooses the best tool for each question type.
-
-This creates a comprehensive GraphRAG agent.
+**Note:** This slide will be renumbered in final sequencing
 
 ---
 
-## Three-Tool Agent Capabilities
+## From Semantic Search to Precise Queries
 
-**Schema Tool:**
-- Understanding database structure
-- "What entities exist in the graph?"
+<div style="display: flex; gap: 2rem;">
 
-**Document Retrieval Tool:**
-- Finding content with company context
-- "What products does Microsoft mention in its documents?"
+<div style="flex: 1;">
 
-**Database Query Tool:**
-- Precise queries and counts
+### Vector Retriever
+
+**Query:** "What companies are in the database?"
+
+**Returns:** Chunks mentioning company names
+
+**Nature:** Imprecise, content-based
+
+</div>
+
+<div style="flex: 1;">
+
+### Text2Cypher Retriever
+
+**Query:** "What companies are in the database?"
+
+**Generates:**
+```cypher
+MATCH (c:Company)
+RETURN c.name LIMIT 20
+```
+
+**Returns:** Actual list of company names
+
+**Nature:** Precise, fact-based
+
+</div>
+
+</div>
+
+---
+
+## What is a Text2Cypher Retriever?
+
+**Converts natural language to database queries** using an LLM.
+
+**5-Step Process:**
+1. Takes your natural language question
+2. Uses LLM to generate Cypher based on graph schema
+3. Executes the Cypher against your database
+4. Returns structured results
+5. Optionally formats as natural language answer
+
+**The Power:** Query databases without writing code!
+
+---
+
+## How Text2Cypher Works
+
+```
+User Query: "Which company faces the most risk factors?"
+    ↓
+[1. ANALYZE QUERY + SCHEMA]
+    LLM understands: count FACES_RISK relationships per Company
+    ↓
+[2. GENERATE CYPHER]
+    MATCH (c:Company)-[:FACES_RISK]->(r:RiskFactor)
+    WITH c, count(r) AS riskCount
+    RETURN c.name, riskCount
+    ORDER BY riskCount DESC LIMIT 1
+    ↓
+[3. EXECUTE QUERY]
+    Neo4j runs the generated Cypher
+    ↓
+[4. RETURN RESULTS]
+    Result: "APPLE INC", 45
+    ↓
+[5. GENERATE ANSWER]
+    "Apple Inc faces the most risk factors with 45 identified risks."
+```
+
+---
+
+## Creating a Text2Cypher Retriever
+
+```python
+from neo4j_graphrag.retrievers import Text2CypherRetriever
+from neo4j_graphrag.schema import get_schema
+
+# Get your graph schema
+schema = get_schema(driver)
+
+# Create the retriever
+text2cypher_retriever = Text2CypherRetriever(
+    driver=driver,
+    llm=llm,                       # LLM for Cypher generation
+    neo4j_schema=schema            # Graph structure
+)
+```
+
+**Key Insight:** The schema tells the LLM what's queryable!
+
+---
+
+## The Critical Role of Schema
+
+**Schema tells the LLM:**
+
+```
+Node properties:
+  Company {name: STRING, ticker: STRING}
+  RiskFactor {name: STRING}
+  AssetManager {managerName: STRING}
+
+Relationships:
+  (:Company)-[:FACES_RISK]->(:RiskFactor)
+  (:AssetManager)-[:OWNS]->(:Company)
+  (:Company)-[:FILED]->(:Document)
+```
+
+**Without schema:** LLM guesses (often wrong)
+**With schema:** LLM knows exactly what exists (accurate queries)
+
+---
+
+## Example Text2Cypher Generation
+
+**Question:** "List the top 5 asset managers by number of companies they own"
+
+**LLM Generates:**
+```cypher
+MATCH (am:AssetManager)-[:OWNS]->(c:Company)
+WITH am, count(c) AS companiesOwned
+RETURN am.managerName, companiesOwned
+ORDER BY companiesOwned DESC
+LIMIT 5
+```
+
+**Result:**
+```
+BlackRock Inc. | 12
+Vanguard Group Inc. | 11
+State Street Corporation | 10
+...
+```
+
+---
+
+## Text2Cypher Best For
+
+✅ **Precise, entity-centric questions**
+
+✅ **When you need exact data** (numbers, dates, counts, names)
+
+✅ **Aggregations and analytical questions**
+
+✅ **Direct graph queries** without semantic search
+
+**Example Queries:**
 - "How many risk factors does Apple face?"
+- "List all products by Microsoft"
+- "Which asset manager owns the most companies?"
+- "What's the average number of executives per company?"
 
 ---
 
-## The Final Tool: Text2Cypher
+## Text2Cypher Limitations
 
-Text2Cypher converts natural language to graph queries:
+❌ **Requires good graph schema** understanding
 
-**What it does:**
-- Interprets user's question intent
-- Generates Cypher query from natural language
-- Executes query against graph
-- Returns precise, structured results
+❌ **May struggle with** ambiguous natural language
 
-**When to use it:**
-- Exact counts and aggregations
-- Precise factual queries
-- Structured data retrieval
+❌ **Less effective** for open-ended or exploratory questions
 
----
+❌ **Cannot find content** beyond graph structure
 
-## Complete Tool Suite
+❌ **Needs modern Cypher syntax** knowledge in LLM
 
-Your agent now has three complementary tools:
-
-**Tool 1: Schema Tool**
-- Database structure exploration
-
-**Tool 2: Document Retrieval Tool**
-- Vector search + graph context
-
-**Tool 3: Database Query Tool** ← NEW
-- Text-to-Cypher for precise queries
+**When questions don't map to schema:** Use Vector or Vector Cypher
 
 ---
 
-## How Tool Selection Works
+## Modern Cypher Syntax Matters
 
-The agent analyzes each question:
+**LLMs may generate deprecated syntax** if not guided:
 
-**Structural question** → Schema Tool
-**Content question with relationships** → Document Retrieval Tool
-**Precise data question** → Database Query Tool
+**Old (deprecated):**
+```cypher
+MATCH (c:Company)-[:FACES_RISK]->(r)
+RETURN c.name, collect(r.name)
+```
 
-Selection happens automatically based on question characteristics.
+**Modern (correct):**
+```cypher
+MATCH (c:Company)-[:FACES_RISK]->(r)
+RETURN c.name, collect(r.name) AS risks
+```
 
----
-
-## Text2Cypher Tool Benefits
-
-**Precision:**
-- Exact answers to factual questions
-- No semantic approximation needed
-
-**Aggregation:**
-- Counts, sums, averages
-- Complex analytical queries
-
-**Structured Access:**
-- Direct graph database queries
-- Leverage full graph query power
+**Solution:** Use custom prompts to enforce modern Cypher syntax (covered in lesson)
 
 ---
 
-## Example Tool Selections
+## Customizing Text2Cypher Prompts
 
-**"What stock has Microsoft issued?"**
-- Agent selects: Database Query Tool
-- Why: Precise factual query
+**Provide specific instructions to the LLM:**
 
-**"What are the main risk factors mentioned?"**
-- Agent selects: Document Retrieval Tool
-- Why: Content search across entities
+```python
+custom_prompt = """
+Generate Cypher queries using modern syntax:
+- Always use RETURN aliases
+- Use COLLECT for aggregating lists
+- Limit results to reasonable numbers
+- No deprecated syntax
+- Use WHERE instead of filtering in MATCH when possible
+"""
 
-**"How does the schema connect companies to risks?"**
-- Agent selects: Schema Tool
-- Why: Structural question
-
----
-
-## Complex Questions
-
-Some questions require multiple tools:
-
-**"Summarize Apple's risk factors and how they relate to other companies"**
-
-**Agent Process:**
-1. Database Query Tool: Get Apple's risk factors
-2. Document Retrieval Tool: Find related company information
-3. Synthesize: Combine results into comprehensive answer
+text2cypher_retriever = Text2CypherRetriever(
+    driver=driver,
+    llm=llm,
+    neo4j_schema=schema,
+    custom_prompt=custom_prompt  # Guide LLM behavior
+)
+```
 
 ---
 
-## Intelligent Multi-Tool Reasoning
+## Handling Complex Questions
 
-The agent can:
+**Simple Question:** "What companies are in the database?"
+```cypher
+MATCH (c:Company) RETURN c.name
+```
 
-**Use tools in sequence:**
-- One tool's results inform next tool choice
+**Complex Question:** "Which companies share the most risk factors?"
+```cypher
+MATCH (c1:Company)-[:FACES_RISK]->(r:RiskFactor)
+      <-[:FACES_RISK]-(c2:Company)
+WHERE c1 <> c2
+WITH c1, c2, count(r) AS sharedRisks
+RETURN c1.name, c2.name, sharedRisks
+ORDER BY sharedRisks DESC
+LIMIT 10
+```
 
-**Combine results:**
-- Integrate information from multiple tools
-
-**Retry with different tools:**
-- If first tool doesn't satisfy query, try another
-
-This creates sophisticated question-answering capability.
-
----
-
-## Tool Complementarity
-
-Each tool serves a distinct purpose:
-
-**Schema Tool:**
-- What's possible to query
-
-**Document Retrieval Tool:**
-- What's written in documents (with context)
-
-**Database Query Tool:**
-- What's true in the structured data
-
-Together, they cover all question types.
+**LLM handles complexity** if schema is clear!
 
 ---
 
-## Progressive Capability
+## Query Validation and Error Handling
 
-Your journey building the agent:
+**Text2Cypher can generate invalid queries:**
 
-**One-Tool Agent:**
-- Schema exploration only
+**Common Issues:**
+- Syntax errors
+- Non-existent property references
+- Invalid relationship patterns
+- Incorrect aggregations
 
-**Two-Tool Agent:**
-- Schema + contextual search
-
-**Three-Tool Agent:**
-- Schema + contextual search + precise queries
-
-Each addition expands capability significantly.
-
----
-
-## The Complete GraphRAG Agent
-
-You now have:
-
-✅ Knowledge Graph Creation (PDF to graph)
-✅ Retriever Development (three retriever types)
-✅ Agent Tools (retrievers as conversational tools)
-
-**Result:** A complete GraphRAG agent that answers any question using the optimal retrieval strategy.
+**Best Practices:**
+1. Validate generated Cypher before execution
+2. Use try/catch for error handling
+3. Provide error feedback to LLM for correction
+4. Test with diverse questions to identify edge cases
 
 ---
 
-## Automatic Strategy Selection
+## Comparison: All Three Retrievers
 
-The agent handles question routing:
-
-**No user decision needed:**
-- Users ask questions naturally
-- Agent determines best approach
-
-**Optimal results:**
-- Right tool for each question
-- Better than any single retriever alone
-
-**Flexible:**
-- Can adapt to new question types
-- Combines tools as needed
+| Question Type | Best Retriever | Reason |
+|---------------|----------------|--------|
+| "What is AI safety?" | Vector | Semantic content search |
+| "What AI safety risks affect companies?" | Vector Cypher | Content + related entities |
+| "Which company has the most AI-related risks?" | Text2Cypher | Precise count/aggregation |
+| "List all companies" | Text2Cypher | Factual enumeration |
+| "Tell me about cloud computing" | Vector | Exploratory content |
 
 ---
 
-## From Retrievers to Agent
+## When Text2Cypher Fails
 
-**Module 1:** Built knowledge graph
-**Module 2:** Developed three retriever types
-**Module 3:** Wrapped retrievers as agent tools
+**Problem:** Question doesn't map to schema
 
-This progression creates a powerful, flexible system.
+**Example:**
+```
+Question: "What's the sentiment about AI regulation?"
+Schema: Has no sentiment properties
+Result: Cannot generate valid query
+```
 
----
+**Solution:** Use Vector retriever for content-based questions
 
-## Key Concepts
+**Problem:** Ambiguous questions
 
-**Complete Tool Suite:**
-- All three retrievers available as conversational tools
+**Example:**
+```
+Question: "What does Apple do?"
+Could mean: products, business strategy, recent activities...
+LLM may generate overly generic query
+```
 
-**Intelligent Routing:**
-- Agent automatically selects best tool(s)
-
-**Progressive Capability:**
-- From simple search to complex multi-tool reasoning
-
-**Conversational Interface:**
-- Natural language input
-- Sophisticated graph operations behind the scenes
-
----
-
-## Real-World Applications
-
-This agent architecture works for many domains:
-
-**Financial Services:**
-- Query filings, find risks, understand relationships
-
-**Healthcare:**
-- Patient data, treatment relationships, medical literature
-
-**E-Commerce:**
-- Product data, customer relationships, inventory queries
-
-**Any Knowledge Graph:**
-- Same pattern applies across domains
+**Solution:** Use Vector for exploratory questions
 
 ---
 
-## What Makes This Powerful
+## Combining Retrievers in Applications
 
-**Flexibility:**
-- Handles diverse question types
+**Best Practice:** Use multiple retrievers for comprehensive coverage
 
-**Accuracy:**
-- Each tool optimized for its purpose
+**Example Agent Setup:**
+1. **Schema Tool:** Understand graph structure
+2. **Text2Cypher:** Answer factual questions
+3. **Vector Cypher:** Provide content + context
+4. **Vector:** Exploratory semantic search
 
-**Usability:**
-- Simple conversational interface
-
-**Extensibility:**
-- Easy to add more tools
+**The agent chooses** the right retriever based on question type!
 
 ---
 
 ## Summary
 
-You completed your GraphRAG agent by adding the Text2Cypher Retriever:
+Text2Cypher Retriever = Natural Language → Database Query
 
-**Three Tools:**
-- Schema exploration
-- Contextual content search
-- Precise graph queries
+**Key Concepts:**
+- LLM converts questions to Cypher
+- Schema is critical for accuracy
+- Returns precise, factual results
+- Best for structured data queries
+- May need prompt customization for modern syntax
 
-**Intelligent Routing:**
-- Automatic tool selection for optimal answers
+**Best For:** Specific facts, counts, lists, aggregations
 
-**Complete System:**
-- Handles any question type effectively
+**Limitation:** Requires questions that map to graph schema
 
----
-
-## Your Journey
-
-You've built a complete GraphRAG system:
-
-**Foundation:** Knowledge graphs from documents
-**Capabilities:** Three retrieval strategies
-**Interface:** Conversational agent with automatic routing
-
-This is production-ready GraphRAG architecture.
+**Next:** Learn how to choose the right retriever for each question!
 
 ---
 
 ## Next Steps
 
-In the next lesson, you will learn about Aura Agents, a no-code interface for building GraphRAG agents.
+In the next lesson, you will learn a decision framework for choosing between Vector, Vector Cypher, and Text2Cypher retrievers based on question patterns.
 
+**Lab 5 Notebook 3:** Hands-on with Text2Cypher Retriever

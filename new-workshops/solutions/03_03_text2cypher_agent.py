@@ -43,7 +43,10 @@ CYPHER_PROMPT: Final[str] = """Task: Generate a Cypher statement to query a grap
 Instructions:
 - Use only the provided relationship types and properties in the schema.
 - Do not use any other relationship types or properties that are not provided.
-- Use `WHERE toLower(node.name) CONTAINS toLower('name')` to filter nodes by name.
+- Only filter by name when a specific entity name is mentioned in the question.
+  When filtering by name, use case-insensitive matching:
+  `WHERE toLower(node.name) CONTAINS toLower('ActualEntityName')`
+- Do NOT add name filters if no specific entity name is mentioned in the question.
 
 Modern Cypher Requirements:
 - Use `elementId(node)` instead of `id(node)` (id() is removed in Neo4j 5+).
@@ -151,7 +154,8 @@ async def run_agent(query: str):
                         "1. get_graph_schema - Get the database schema\n"
                         "2. retrieve_financial_documents - Search documents semantically\n"
                         "3. query_database - Query specific facts from the database\n\n"
-                        "Choose the appropriate tool based on the question type."
+                        "Choose the appropriate tool based on the question type. "
+                        "When a tool returns data, use that data to answer the question directly."
                     ),
                     tools=tools,
                 ) as agent:

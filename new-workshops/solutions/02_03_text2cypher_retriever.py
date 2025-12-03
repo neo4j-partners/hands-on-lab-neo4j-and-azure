@@ -21,7 +21,10 @@ TEXT2CYPHER_PROMPT: Final[str] = """Task: Generate a Cypher statement to query a
 Instructions:
 - Use only the provided relationship types and properties in the schema.
 - Do not use any other relationship types or properties that are not provided.
-- Use `WHERE toLower(node.name) CONTAINS toLower('name')` to filter nodes by name.
+- Only filter by name when a specific entity name is mentioned in the question.
+  When filtering by name, use case-insensitive matching:
+  `WHERE toLower(node.name) CONTAINS toLower('ActualEntityName')`
+- Do NOT add name filters if no specific entity name is mentioned in the question.
 - Always add LIMIT 20 to the end of your query to restrict results.
 
 Modern Cypher Requirements:
@@ -83,7 +86,11 @@ def demo_rag_search(llm, retriever: Text2CypherRetriever, query: str) -> None:
     # by the LIMIT clause in the generated Cypher query (set in the prompt).
     response = rag.search(query, return_context=True)
 
-    print(f"Number of results returned: {len(response.retriever_result.items)}\n")
+    num_results = len(response.retriever_result.items)
+    print(f"Number of results returned: {num_results}")
+    if num_results == 0:
+        print("WARNING: No results from database - answer may be based on LLM general knowledge")
+    print()
     print(f"Answer: {response.answer}")
     print(f"\nGenerated Cypher: {response.retriever_result.metadata['cypher']}")
 

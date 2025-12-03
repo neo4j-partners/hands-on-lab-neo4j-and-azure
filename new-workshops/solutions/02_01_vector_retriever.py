@@ -8,22 +8,9 @@ Run with: uv run python solutions/02_01_vector_retriever.py
 """
 
 from neo4j_graphrag.generation import GraphRAG
-from neo4j_graphrag.llm.openai_llm import OpenAILLM
 from neo4j_graphrag.retrievers import VectorRetriever
 
-from config import get_embedder, get_neo4j_driver, get_agent_config, _get_azure_token
-
-
-def get_llm() -> OpenAILLM:
-    """Get an OpenAILLM for GraphRAG generation."""
-    config = get_agent_config()
-    token = _get_azure_token()
-
-    return OpenAILLM(
-        model_name=config.model_name,
-        base_url=config.inference_endpoint,
-        api_key=token,
-    )
+from config import get_embedder, get_neo4j_driver, get_llm
 
 
 def create_vector_retriever(driver, embedder) -> VectorRetriever:

@@ -29,7 +29,7 @@ def create_schema_tool(driver):
 
 
 async def run_agent(query: str):
-    """Run the agent with the given query."""
+    """Run the agent with the given query using streaming output."""
     config = get_agent_config()
 
     with get_neo4j_driver() as driver:
@@ -47,9 +47,13 @@ async def run_agent(query: str):
                     tools=[get_graph_schema],
                 ) as agent:
                     print(f"User: {query}\n")
+                    print("Assistant: ", end="", flush=True)
 
-                    response = await agent.run(query)
-                    print(f"Assistant: {response.text}\n")
+                    async for update in agent.run_stream(query):
+                        if update.text:
+                            print(update.text, end="", flush=True)
+
+                    print("\n")
 
     # Allow background tasks to complete before event loop closes
     await asyncio.sleep(0.1)

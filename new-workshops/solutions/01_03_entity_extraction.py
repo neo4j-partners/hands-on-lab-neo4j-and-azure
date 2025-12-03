@@ -69,21 +69,22 @@ def clear_graph(driver) -> int:
 def show_entities(driver) -> None:
     """Display extracted entities by type."""
     with driver.session() as session:
-        # Get entity counts
+        # Get entity counts - using modern label expressions and explicit grouping
         result = session.run("""
-            MATCH (n)
-            WHERE n:Company OR n:Product OR n:Service
-            RETURN labels(n)[0] as label, count(n) as count
+            MATCH (n:Company|Product|Service)
+            WITH labels(n)[0] as label
+            RETURN label, count(*) as count
             ORDER BY count DESC
         """)
         print("\n=== Entity Counts ===")
         for record in result:
             print(f"  {record['label']}: {record['count']}")
 
-        # List entities by type
+        # List entities by type - with null filtering on sorted property
         for label in ["Company", "Product", "Service"]:
             result = session.run(f"""
                 MATCH (n:{label})
+                WHERE n.name IS NOT NULL
                 RETURN n.name as name
                 ORDER BY n.name
                 LIMIT 10
@@ -143,9 +144,9 @@ def show_graph_summary(driver) -> None:
 def find_chunks_for_entity(driver, entity_name: str) -> None:
     """Find chunks that mention a specific entity."""
     with driver.session() as session:
-        # Try both relationship directions since it may vary
+        # Entities point TO chunks via FROM_CHUNK (matches notebook pattern)
         result = session.run("""
-            MATCH (c:Chunk)-[:FROM_CHUNK]->(e)
+            MATCH (e)-[:FROM_CHUNK]->(c:Chunk)
             WHERE e.name CONTAINS $name
             RETURN e.name as entity, labels(e)[0] as type, c.text as chunk_text
             LIMIT 5
@@ -158,21 +159,7 @@ def find_chunks_for_entity(driver, entity_name: str) -> None:
                 print(f"  Entity: {record['entity']} ({record['type']})")
                 print(f"  Chunk: {record['chunk_text']}")
         else:
-            # Try reverse direction
-            result = session.run("""
-                MATCH (e)-[:FROM_CHUNK]->(c:Chunk)
-                WHERE e.name CONTAINS $name
-                RETURN e.name as entity, labels(e)[0] as type, c.text as chunk_text
-                LIMIT 5
-            """, name=entity_name)
-            records = list(result)
-            if records:
-                print(f"\nChunks mentioning '{entity_name}':")
-                for record in records:
-                    print(f"  Entity: {record['entity']} ({record['type']})")
-                    print(f"  Chunk: {record['chunk_text']}")
-            else:
-                print(f"\nNo chunks found mentioning '{entity_name}'")
+            print(f"\nNo chunks found mentioning '{entity_name}'")
 
 
 async def main():
