@@ -106,20 +106,6 @@ Each tool has a description that tells the agent when to use it.
 
 ---
 
-## What About Vector Cypher?
-
-You learned three retrievers in Lab 5, but agents typically use two retrieval tools.
-
-**Why?** Vector Cypher combines semantic search with graph traversal—functionality agents achieve through **tool composition**.
-
-The agent can:
-1. Call Semantic Search first
-2. Then call Database Query for related entities
-
-This two-step approach gives the agent flexibility to reason between calls.
-
----
-
 ## The ReAct Pattern
 
 Agents follow **ReAct** (Reasoning + Acting):
