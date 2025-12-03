@@ -13,7 +13,7 @@ In this lab, you will:
 
 ## The Big Picture
 
-**Where we are**: You have a knowledge graph with structured entities, relationships, and vector-enabled chunks (from Lab 3).
+**Where we are**: You have a knowledge graph with structured entities, relationships, and vector-enabled chunks (from Lab 4).
 
 **What you need**: Ways to retrieve relevant context from that graph to answer questions.
 
@@ -62,6 +62,6 @@ Understanding *why* each retriever works for different questions prepares you fo
 
 ## Navigation
 
-- [← Back to Lab 3: Building Knowledge Graphs](../lab-3-neo4j-graphrag/README.md)
+- [← Back to Lab 4: Building Knowledge Graphs](../lab-4-neo4j-graphrag/README.md)
 - [Start with Lesson 1: Retrievers Overview →](./01-retrievers-overview.md)
 - [Skip to Lab 6: Intelligent Agents →](../lab-6-agents/README.md)

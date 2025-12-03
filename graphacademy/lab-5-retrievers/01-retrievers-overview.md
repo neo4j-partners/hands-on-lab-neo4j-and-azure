@@ -105,6 +105,6 @@ In the following lessons, you'll learn each retriever in depth—when to use it,
 ---
 
 **Navigation:**
-- [← Previous: Vectors and Semantic Search](../lab-3-neo4j-graphrag/07-vectors.md)
+- [← Previous: Vectors and Semantic Search](../lab-4-neo4j-graphrag/07-vectors.md)
 - [↑ Back to Lab 5](README.md)
 - [Next: Vector Retriever →](02-vector-retriever.md)

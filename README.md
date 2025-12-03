@@ -44,19 +44,26 @@ You'll need a laptop with a web browser.  Your browser will need to be able to a
     * Configure environment variables
 * Break (5 min)
 
-### Part 2 - Building a Knowledge Graph
+### Part 2 - Azure AI Foundry Setup
+* [Lab 3 - Azure AI Foundry Setup](Lab_3_Foundry_Agents) (15 min)
+    * Access Azure AI Foundry
+    * Create a Foundry Project
+    * Deploy gpt-4o-mini and text-embedding-ada-002 models
+* Break (5 min)
+
+### Part 3 - Building a Knowledge Graph
 * [Lecture - Neo4j and Generative AI](https://docs.google.com/presentation/d/1iHu9vgEG0s6yjKMLUw9XqWGiJrY7Z1oNv0QPa75BCtc/edit?usp=sharing) (15 min)
     * Generating Knowledge Graphs
     * Retrieval Augmented Generation
     * Semantic Search
-* [Lab 3 - Building a Knowledge Graph](Lab_3_Neo4j_GraphRag) (30 min)
+* [Lab 4 - Building a Knowledge Graph](Lab_4_Neo4j_GraphRag) (30 min)
     * Data Loading Fundamentals
     * Embeddings and Vector Search
     * Entity Extraction
     * Loading the Full Dataset
 * Break (5 min)
 
-### Part 3 - GraphRAG Retrievers
+### Part 4 - GraphRAG Retrievers
 * [Lecture - Microsoft Foundry](https://docs.google.com/presentation/d/1KPHoVJivbinHg-UtrnTIUbMiFHB8mPEnDO0v0OvvcPM/edit?usp=sharing) (15 min)
     * What is Microsoft Foundry?
     * Generative AI
@@ -66,7 +73,7 @@ You'll need a laptop with a web browser.  Your browser will need to be able to a
     * Text2Cypher Retriever for Natural Language Queries
 * Break (5 min)
 
-### Part 4 - GraphRAG Agents
+### Part 5 - GraphRAG Agents
 * [Lab 6 - GraphRAG Agents](Lab_6_Agents) (30 min)
     * Simple Schema Agent with Microsoft Agent Framework
     * Vector + Graph Agent for Semantic Search with Context
@@ -276,7 +283,7 @@ Install the following extensions for an optimal development experience:
 
 ### Step 12: Run the Notebooks
 
-1. In VS Code, navigate to a lab folder (e.g., `Lab_3_Neo4j_GraphRag`)
+1. In VS Code, navigate to a lab folder (e.g., `Lab_4_Neo4j_GraphRag`)
 2. Open a notebook file (e.g., `01_data_loading.ipynb`)
 3. When prompted to select a kernel:
    - Click "Select Kernel" in the top right

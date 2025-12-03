@@ -48,7 +48,7 @@ We recommend taking the [Neo4j Fundamentals](https://graphacademy.neo4j.com/cour
 ## Workshop Modules
 
 ### [Module 1: Building Knowledge Graphs](./module-1-generative-ai/README.md)
-Learn to build knowledge graphs from unstructured documents. **Aligned with Lab 3 (4 notebooks).**
+Learn to build knowledge graphs from unstructured documents. **Aligned with Lab 4 (4 notebooks).**
 
 **Lessons:**
 1. [What is Generative AI](./module-1-generative-ai/01-what-is-genai.md) - Foundation concepts

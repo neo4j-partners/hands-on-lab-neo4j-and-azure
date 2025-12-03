@@ -51,7 +51,7 @@ All slides are organized by lab module for easy navigation.
    - Testing and Deployment
    - Bridge to Code-Based Implementation
 
-### Lab 3: Building Knowledge Graphs (Slides 1-7)
+### Lab 4: Building Knowledge Graphs (Slides 1-7)
 
 **01. The GenAI Promise and Its Limits** (4.2 KB)
    - What Generative AI Does Well
@@ -404,7 +404,7 @@ marp 01-what-is-genai-slides.md --server
 
 ### Lab Breakdown
 - **Lab 1:** 6 presentations (Neo4j Aura, GenAI Limits, Traditional RAG, GraphRAG Limits, SEC Filings Graph, Aura Agents)
-- **Lab 3:** 7 presentations (GenAI Fundamentals, Knowledge Graphs)
+- **Lab 4:** 7 presentations (GenAI Fundamentals, Knowledge Graphs)
 - **Lab 5:** 4 presentations (GraphRAG Retrievers)
 - **Lab 6:** 5 presentations (Intelligent Agents)
 

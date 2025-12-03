@@ -195,7 +195,7 @@ azd auth login
 
 ### Step 10: Run the Notebooks
 
-1. Navigate to a lab folder (e.g., `Lab_3_Neo4j_GraphRag`)
+1. Navigate to a lab folder (e.g., `Lab_4_Neo4j_GraphRag`)
 2. Open a notebook file (e.g., `01_data_loading.ipynb`)
 3. Select the **neo4j-azure-ai-workshop** kernel when prompted
 4. Run the notebook cells using `Shift+Enter`

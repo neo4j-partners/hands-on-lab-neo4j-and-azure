@@ -48,4 +48,4 @@
    uv run setup_env.py
    ```
 
-6. Move on to Lab 3 - Graph Building: [Lab_3_Neo4j_GraphRag/README.md](Lab_3_Neo4j_GraphRag/README.md)
+6. Move on to Lab 3 - Azure AI Foundry Setup: [Lab_3_Foundry_Agents/README.md](Lab_3_Foundry_Agents/README.md)
