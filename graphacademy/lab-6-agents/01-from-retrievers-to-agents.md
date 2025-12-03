@@ -39,7 +39,9 @@ In AI terms, an agent has four components:
 - Formats results as natural language
 - Maintains conversation context
 
-## How Agents Choose Tools
+## Tools: How Agents Take Action
+
+**Action** involves calling tools. Tools are capabilities the agent can use—functions it can call to get information or perform tasks. During **Perception**, the agent sees what tools are available. During **Reasoning**, it decides which tool fits the question. During **Action**, it executes the tool.
 
 The agent selects tools based on **semantic matching** between:
 - The user's question
@@ -53,7 +55,7 @@ When you ask "How many companies are there?":
 
 This is why **descriptive tool definitions matter**—they guide selection.
 
-## Tools are Retrievers
+## Retrievers as Tools
 
 Your agent's tools are based on the retrievers you learned in Lab 5:
 

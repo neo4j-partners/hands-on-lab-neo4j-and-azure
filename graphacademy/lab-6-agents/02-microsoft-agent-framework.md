@@ -16,25 +16,6 @@ In this lesson, you'll understand how the framework works and what components yo
 
 **Threads**: Conversation history for multi-turn interactions.
 
-## How Tool Selection Works
-
-Tools are defined as Python functions with descriptive docstrings:
-
-```python
-def get_graph_schema() -> str:
-    """Get the schema of the graph database including node labels,
-    relationships, and properties."""
-    return get_schema(driver)
-```
-
-The framework:
-1. Reads the function name and docstring
-2. Registers the tool with the agent
-3. When a question arrives, matches it semantically to tool descriptions
-4. Calls the best-matching tool
-
-**Why docstrings matter**: The agent reads them to decide when to use each tool. A vague docstring like "Search the database" gives poor guidance. A specific one like "Get answers to factual questions about companies, including counts, lists, and specific attributes" guides selection precisely.
-
 ## Creating an Agent
 
 Basic pattern for agent creation:
@@ -55,6 +36,25 @@ async with client.create_agent(
 - `instructions`: Tell the agent its purpose and how to behave
 - `tools`: List of functions the agent can call
 - `run_stream`: Execute and stream responses
+
+## How Tool Selection Works
+
+Tools are defined as Python functions with descriptive docstrings:
+
+```python
+def get_graph_schema() -> str:
+    """Get the schema of the graph database including node labels,
+    relationships, and properties."""
+    return get_schema(driver)
+```
+
+The framework:
+1. Reads the function name and docstring
+2. Registers the tool with the agent
+3. When a question arrives, matches it semantically to tool descriptions
+4. Calls the best-matching tool
+
+**Why docstrings matter**: The agent reads them to decide when to use each tool. A vague docstring like "Search the database" gives poor guidance. A specific one like "Get answers to factual questions about companies, including counts, lists, and specific attributes" guides selection precisely.
 
 ## The ReAct Loop
 

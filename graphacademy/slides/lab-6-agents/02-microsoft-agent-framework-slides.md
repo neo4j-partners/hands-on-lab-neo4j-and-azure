@@ -45,6 +45,27 @@ The Microsoft Agent Framework provides infrastructure for building agents:
 
 ---
 
+## Creating an Agent
+
+```python
+async with client.create_agent(
+    name="graphrag-agent",
+    instructions="You are a helpful assistant that answers questions
+                 about a knowledge graph.",
+    tools=[get_graph_schema, search_content, query_database],
+) as agent:
+    async for update in agent.run_stream(query):
+        if update.text:
+            print(update.text, end="", flush=True)
+```
+
+**Key elements:**
+- `instructions`: Agent's purpose and behavior
+- `tools`: List of callable functions
+- `run_stream`: Execute and stream responses
+
+---
+
 ## How Tool Selection Works
 
 Tools are Python functions with descriptive docstrings:
@@ -83,24 +104,23 @@ def search_content(query: str) -> str:
 
 ---
 
-## Creating an Agent
+## The ReAct Loop
 
-```python
-async with client.create_agent(
-    name="graphrag-agent",
-    instructions="You are a helpful assistant that answers questions
-                 about a knowledge graph.",
-    tools=[get_graph_schema, search_content, query_database],
-) as agent:
-    async for update in agent.run_stream(query):
-        if update.text:
-            print(update.text, end="", flush=True)
+The framework implements ReAct automatically:
+
+```
+User: "How many companies are in the database?"
+    ↓
+Agent thinks: "This asks for a count—use database query tool"
+    ↓
+Agent calls: query_database("How many companies...")
+    ↓
+Agent observes: Result = 523
+    ↓
+Agent responds: "There are 523 companies in the database."
 ```
 
-**Key elements:**
-- `instructions`: Agent's purpose and behavior
-- `tools`: List of callable functions
-- `run_stream`: Execute and stream responses
+This loop can iterate multiple times for complex questions.
 
 ---
 
@@ -124,26 +144,6 @@ graph containing SEC filings data. You have three tools:
 
 Choose the appropriate tool based on the question type."
 ```
-
----
-
-## The ReAct Loop
-
-The framework implements ReAct automatically:
-
-```
-User: "How many companies are in the database?"
-    ↓
-Agent thinks: "This asks for a count—use database query tool"
-    ↓
-Agent calls: query_database("How many companies...")
-    ↓
-Agent observes: Result = 523
-    ↓
-Agent responds: "There are 523 companies in the database."
-```
-
-This loop can iterate multiple times for complex questions.
 
 ---
 

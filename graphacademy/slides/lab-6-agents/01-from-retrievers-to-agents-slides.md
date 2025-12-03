@@ -50,21 +50,11 @@ They just ask questions:
 
 ## The Solution: Agents
 
-An **agent** automatically:
-
-1. **Receives** a user question
-2. **Analyzes** what kind of question it is
-3. **Selects** the appropriate tool(s)
-4. **Executes** the retrieval
-5. **Synthesizes** results into a coherent answer
-
-Your retrievers become **tools** the agent can use.
-
 ---
 
-## What Makes Something an "Agent"
+## What is an Agent?
 
-**Four components:**
+In AI terms, an agent has **four components**:
 
 | Component | What It Does |
 |-----------|--------------|
@@ -72,6 +62,18 @@ Your retrievers become **tools** the agent can use.
 | **Reasoning** | Analyzes the question and decides what to do |
 | **Action** | Executes the selected tool(s) |
 | **Response** | Returns output in natural language |
+
+---
+
+## Tools: How Agents Take Action
+
+**Action** involves calling tools.
+
+Tools are capabilities the agent can use—functions it can call to get information or perform tasks.
+
+- During **Perception**, the agent sees what tools are available
+- During **Reasoning**, it decides which tool fits the question
+- During **Action**, it executes the tool
 
 ---
 
@@ -88,11 +90,9 @@ The agent matches questions to tool descriptions:
 
 **Agent reasons:** "How many" → count → `query_database`
 
-**Descriptive tool definitions guide selection.**
-
 ---
 
-## Tools Are Retrievers
+## Retrievers as Tools
 
 Your retrievers become tools:
 
@@ -103,6 +103,20 @@ Your retrievers become tools:
 | Database Query | Text2Cypher | "How many...", "List all..." |
 
 Each tool has a description that tells the agent when to use it.
+
+---
+
+## What About Vector Cypher?
+
+You learned three retrievers in Lab 5, but agents typically use two retrieval tools.
+
+**Why?** Vector Cypher combines semantic search with graph traversal—functionality agents achieve through **tool composition**.
+
+The agent can:
+1. Call Semantic Search first
+2. Then call Database Query for related entities
+
+This two-step approach gives the agent flexibility to reason between calls.
 
 ---
 
@@ -151,12 +165,25 @@ For complex questions, the agent may loop through multiple cycles.
 
 ---
 
+## An Example: The GraphRAG Agent
+
+An example of an agent is a GraphRAG system that:
+
+1. **Receives** a user question
+2. **Analyzes** what kind of question it is
+3. **Selects** and executes the appropriate tool(s)
+4. **Synthesizes** results into a coherent answer
+
+Your retrievers become **tools** the agent can use.
+
+---
+
 ## Summary
 
 In this lesson, you learned:
 
-- **Agents** analyze questions and choose appropriate tools automatically
-- **Tools** are retrievers wrapped with descriptions
+- **Agents** have four components: Perception, Reasoning, Action, Response
+- **Tools** are capabilities agents use to take action
 - **Selection** happens through semantic matching to tool descriptions
 - **ReAct pattern**: Reason → Act → Observe → Respond
 - **Result**: Users ask naturally; agents figure out how to answer

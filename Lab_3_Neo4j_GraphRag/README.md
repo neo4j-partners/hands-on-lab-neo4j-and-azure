@@ -33,7 +33,7 @@ Learn the core concepts of loading text data into Neo4j:
 Add semantic search capabilities to your graph:
 - Understand what embeddings are and why they matter
 - Use `FixedSizeSplitter` to automatically chunk text
-- Generate embeddings using Azure OpenAI
+- Generate embeddings using Microsoft Foundry
 - Create a vector index in Neo4j
 - Perform similarity search to find relevant chunks
 

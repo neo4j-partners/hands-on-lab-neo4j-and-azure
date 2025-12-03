@@ -1,4 +1,4 @@
-# From Documents to Knowledge Graphs
+# From Documents to Knowledge Graphs with the Neo4j GraphRAG Package
 
 ## Introduction
 
@@ -6,41 +6,42 @@ Traditional RAG treats documents as isolated text chunks. GraphRAG transforms th
 
 In this lesson, you'll learn how the transformation works: from raw PDF documents to a queryable knowledge graph.
 
-## What is a Knowledge Graph?
-
-A knowledge graph represents information as:
-
-- **Nodes (Entities)**: Things in your domain—companies, people, products, risks, metrics
-- **Relationships**: How entities connect—OWNS, FACES_RISK, MENTIONS, WORKS_FOR
-- **Properties**: Attributes of nodes and relationships—names, values, dates
-
-Unlike flat document storage, knowledge graphs preserve the *structure* inherent in information. They capture not just what things are, but how they relate.
-
-![A graph data model showing an Asset Manager who OWNS a Company.](../images/manager-company-data-model.svg)
-
-## The SEC Filings Example
-
-![An Apple SEC EDGAR filing PDF](../images/apple-edgar-pdf.png)
-
-Throughout this workshop, you'll work with a knowledge graph built from SEC 10-K filings. These documents contain rich information:
-
-- Companies and their business descriptions
-- Risk factors they face
-- Financial metrics they report
-- Products and services they mention
-- Executives who lead them
-
-In raw PDF form, this information is locked in narrative text. In a knowledge graph, it becomes structured and queryable:
-
-```
-(Apple Inc)-[:FACES_RISK]->(Cybersecurity Threats)
-(Apple Inc)-[:MENTIONS]->(iPhone)
-(BlackRock Inc)-[:OWNS]->(Apple Inc)
-```
-
 ## The neo4j-graphrag Python Package
 
-The `neo4j-graphrag` package provides tools for building and querying knowledge graphs. The key component for graph construction is `SimpleKGPipeline`.
+The official Neo4j GenAI package for Python provides a first-party library to integrate Neo4j with generative AI applications. Available on GitHub, it offers long-term support and fast feature deployment.
+
+This package enables developers to build GraphRAG applications by combining knowledge graphs with large language models (LLMs) to reduce hallucinations and improve answer quality through domain-specific context.
+
+## Supported Providers
+
+The package supports various LLM providers:
+- **LLMs**: OpenAI, Anthropic, Cohere, Google, MistralAI, and Ollama
+- **Embeddings**: OpenAI, sentence-transformers, and provider-specific models
+
+This flexibility lets you choose the models that best fit your requirements and budget.
+
+## Building and Querying
+
+The package provides tools for both constructing and querying knowledge graphs:
+
+**Construction:**
+- `SimpleKGPipeline` for simplified workflows
+- `Pipeline` class for advanced customization
+- Both capable of processing text and PDF documents
+
+**Retrieval:**
+- `VectorRetriever` for semantic search
+- `Text2CypherRetriever` for natural language to database queries
+- Hybrid retrieval methods combining multiple approaches
+
+**Orchestration:**
+- `GraphRAG` class orchestrates the retrieval and generation pipeline
+- Query the graph using natural language
+- Combine retrieved context with LLM generation
+
+## SimpleKGPipeline
+
+The key component for graph construction is `SimpleKGPipeline`.
 
 **What SimpleKGPipeline does:**
 1. Extracts text from documents (PDFs, text files)
@@ -77,7 +78,25 @@ Entities and relationships are stored in Neo4j, creating a queryable knowledge g
 
 Chunks receive vector embeddings, enabling semantic search alongside graph traversal.
 
-![A graph data model showing the relationship between chunks that have embeddings, the documents, and the company they relate to.](../images/document-chunk-data-model.svg)
+## The SEC Filings Example
+
+![An Apple SEC EDGAR filing PDF](../images/apple-edgar-pdf.png)
+
+Throughout this workshop, you'll work with a knowledge graph built from SEC 10-K filings. These documents contain rich information:
+
+- Companies and their business descriptions
+- Risk factors they face
+- Financial metrics they report
+- Products and services they mention
+- Executives who lead them
+
+In raw PDF form, this information is locked in narrative text. In a knowledge graph, it becomes structured and queryable:
+
+```
+(Apple Inc)-[:FACES_RISK]->(Cybersecurity Threats)
+(Apple Inc)-[:MENTIONS]->(iPhone)
+(BlackRock Inc)-[:OWNS]->(Apple Inc)
+```
 
 ## The Complete Picture
 
@@ -90,6 +109,8 @@ Entities (Company, Product, RiskFactor, Executive, FinancialMetric)
     ↓
 Relationships (FACES_RISK, MENTIONS, OWNS, WORKS_FOR, HAS_METRIC)
 ```
+
+![A graph data model showing the relationship between chunks that have embeddings, the documents, and the company they relate to.](../images/document-chunk-data-model.svg)
 
 This structure enables questions that traditional RAG can't answer:
 
@@ -157,7 +178,7 @@ RETURN type(r) AS relationship, labels(related)[0] AS relatedType, count(*) AS c
 
 In this lesson, you learned:
 
-- **Knowledge graphs** represent information as entities, relationships, and properties
+- **neo4j-graphrag** is the official package for building GraphRAG applications
 - **SimpleKGPipeline** orchestrates the transformation from documents to graphs
 - **The process**: Document → Chunks → Entity Extraction → Relationship Extraction → Graph Storage → Embeddings
 - **Graph structure** enables queries that traverse relationships, not just find similar text

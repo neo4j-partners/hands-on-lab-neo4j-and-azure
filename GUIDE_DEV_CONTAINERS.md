@@ -48,4 +48,4 @@
    uv run setup_env.py
    ```
 
-6. Move on to Lab 3 - Graph Building: [Lab_3_Graph_Building/README.md](Lab_3_Graph_Building/README.md)
+6. Move on to Lab 3 - Graph Building: [Lab_3_Neo4j_GraphRag/README.md](Lab_3_Neo4j_GraphRag/README.md)

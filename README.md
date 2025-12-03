@@ -49,7 +49,7 @@ You'll need a laptop with a web browser.  Your browser will need to be able to a
     * Generating Knowledge Graphs
     * Retrieval Augmented Generation
     * Semantic Search
-* [Lab 3 - Building a Knowledge Graph](Lab_3_Graph_Building) (30 min)
+* [Lab 3 - Building a Knowledge Graph](Lab_3_Neo4j_GraphRag) (30 min)
     * Data Loading Fundamentals
     * Embeddings and Vector Search
     * Entity Extraction
@@ -60,8 +60,8 @@ You'll need a laptop with a web browser.  Your browser will need to be able to a
 * Break (5 min)
 
 ### Part 3 - GraphRAG Retrievers
-* [Lecture - Azure OpenAI](https://docs.google.com/presentation/d/1KPHoVJivbinHg-UtrnTIUbMiFHB8mPEnDO0v0OvvcPM/edit?usp=sharing) (15 min)
-    * What is Azure OpenAI?
+* [Lecture - Microsoft Foundry](https://docs.google.com/presentation/d/1KPHoVJivbinHg-UtrnTIUbMiFHB8mPEnDO0v0OvvcPM/edit?usp=sharing) (15 min)
+    * What is Microsoft Foundry?
     * Generative AI
 * [Lab 5 - GraphRAG Retrievers](Lab_5_GraphRAG_Retrievers) (30 min)
     * Vector Retriever for Semantic Search
@@ -268,7 +268,7 @@ Install the following extensions for an optimal development experience:
    ```
    This will provision:
    - Azure AI Foundry project
-   - Azure OpenAI with gpt-4o-mini and text-embedding-ada-002 models
+   - Microsoft Foundry with gpt-4o-mini and text-embedding-ada-002 models
    - Azure Container Registry
    - Azure Monitor and Application Insights
 
@@ -279,7 +279,7 @@ Install the following extensions for an optimal development experience:
 
 ### Step 12: Run the Notebooks
 
-1. In VS Code, navigate to a lab folder (e.g., `Lab_3_Graph_Building`)
+1. In VS Code, navigate to a lab folder (e.g., `Lab_3_Neo4j_GraphRag`)
 2. Open a notebook file (e.g., `01_data_loading.ipynb`)
 3. When prompted to select a kernel:
    - Click "Select Kernel" in the top right

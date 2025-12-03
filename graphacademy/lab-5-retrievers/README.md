@@ -62,6 +62,6 @@ Understanding *why* each retriever works for different questions prepares you fo
 
 ## Navigation
 
-- [← Back to Lab 3: Building Knowledge Graphs](../lab-3-generative-ai/README.md)
+- [← Back to Lab 3: Building Knowledge Graphs](../lab-3-neo4j-graphrag/README.md)
 - [Start with Lesson 1: Retrievers Overview →](./01-retrievers-overview.md)
 - [Skip to Lab 6: Intelligent Agents →](../lab-6-agents/README.md)

@@ -29,18 +29,68 @@ ol > li {
 
 
 # From Documents to Knowledge Graphs
+## with the Neo4j GraphRAG Package
 
 ---
 
-## What is a Knowledge Graph?
+## The neo4j-graphrag Python Package
 
-A knowledge graph represents information as:
+The official Neo4j GenAI package for Python provides a first-party library to integrate Neo4j with generative AI applications.
 
-- **Nodes (Entities)**: Things in your domain—companies, people, products, risks
-- **Relationships**: How entities connect—OWNS, FACES_RISK, MENTIONS, WORKS_FOR
-- **Properties**: Attributes of nodes and relationships—names, values, dates
+**Key benefits:**
+- Long-term support and fast feature deployment
+- Reduces hallucinations through domain-specific context
+- Combines knowledge graphs with LLMs for GraphRAG
 
-Unlike flat document storage, knowledge graphs preserve the *structure* inherent in information.
+---
+
+## Supported Providers
+
+**LLMs:**
+- OpenAI, Anthropic, Cohere, Google, MistralAI, Ollama
+
+**Embeddings:**
+- OpenAI, sentence-transformers, provider-specific models
+
+This flexibility lets you choose the models that best fit your requirements and budget.
+
+---
+
+## Building and Querying
+
+The package provides tools for both constructing and querying knowledge graphs:
+
+| Category | Components |
+|----------|------------|
+| **Construction** | `SimpleKGPipeline`, `Pipeline` class |
+| **Retrieval** | `VectorRetriever`, `Text2CypherRetriever`, hybrid methods |
+| **Orchestration** | `GraphRAG` class for retrieval + generation |
+
+---
+
+## SimpleKGPipeline
+
+The key component for graph construction:
+
+**What it does:**
+1. Extracts text from documents (PDFs, text files)
+2. Breaks text into manageable chunks
+3. Uses an LLM to identify entities and relationships
+4. Stores the structured data in Neo4j
+5. Creates vector embeddings for semantic search
+
+---
+
+## The Transformation Process
+
+| Step | What Happens |
+|------|--------------|
+| **Document Ingestion** | Read source documents (PDFs) |
+| **Chunking** | Break into smaller pieces for processing |
+| **Entity Extraction** | LLM identifies companies, products, risks, metrics |
+| **Relationship Extraction** | LLM finds connections between entities |
+| **Graph Storage** | Save entities and relationships to Neo4j |
+| **Vector Embeddings** | Generate embeddings for semantic search |
 
 ---
 
@@ -55,8 +105,6 @@ Throughout this workshop, you'll work with a knowledge graph built from SEC 10-K
 - Products and services they mention
 - Executives who lead them
 
-**In a knowledge graph, this becomes structured and queryable.**
-
 ---
 
 ## From PDF to Graph
@@ -69,60 +117,6 @@ Throughout this workshop, you'll work with a knowledge graph built from SEC 10-K
 (Apple Inc)-[:FACES_RISK]->(Cybersecurity Threats)
 (Apple Inc)-[:MENTIONS]->(iPhone)
 (BlackRock Inc)-[:OWNS]->(Apple Inc)
-```
-
----
-
-## The neo4j-graphrag Python Package
-
-The `neo4j-graphrag` package provides tools for building and querying knowledge graphs.
-
-**The key component: `SimpleKGPipeline`**
-
-What it does:
-1. Extracts text from documents (PDFs, text files)
-2. Breaks text into manageable chunks
-3. Uses an LLM to identify entities and relationships
-4. Stores the structured data in Neo4j
-5. Creates vector embeddings for semantic search
-
----
-
-## The Transformation Process
-
-![height:400px](images/8.png)
-
----
-
-## Step-by-Step Transformation
-
-| Step | What Happens |
-|------|--------------|
-| **Document Ingestion** | Read source documents (PDFs) |
-| **Chunking** | Break into smaller pieces for processing |
-| **Entity Extraction** | LLM identifies companies, products, risks, metrics |
-| **Relationship Extraction** | LLM finds connections between entities |
-| **Graph Storage** | Save entities and relationships to Neo4j |
-| **Vector Embeddings** | Generate embeddings for semantic search |
-
----
-
-## Using SimpleKGPipeline
-
-```python
-from neo4j_graphrag.experimental.pipeline.kg_builder import SimpleKGPipeline
-
-pipeline = SimpleKGPipeline(
-    driver=driver,           # Neo4j connection
-    llm=llm,                 # LLM for entity extraction
-    embedder=embedder,       # Embedding model for vectors
-    entities=entities,       # Schema: what entities to extract
-    relations=relations,     # Schema: what relationships to find
-    prompt_template=prompt,  # Custom extraction instructions
-)
-
-# Process a document
-await pipeline.run(file_path="apple-10K-2023.pdf")
 ```
 
 ---
@@ -171,9 +165,9 @@ The following lessons cover each of these decisions.
 
 In this lesson, you learned:
 
-- **Knowledge graphs** represent information as entities, relationships, and properties
+- **neo4j-graphrag** is the official package for building GraphRAG applications
 - **SimpleKGPipeline** orchestrates the transformation from documents to graphs
 - **The process**: Document → Chunks → Entity Extraction → Relationship Extraction → Graph Storage → Embeddings
 - **Graph structure** enables queries that traverse relationships, not just find similar text
 
-**Next:** Learn about schema design—defining what entities and relationships to extract.
+**Next:** Learn about schema design in SimpleKGPipeline.
