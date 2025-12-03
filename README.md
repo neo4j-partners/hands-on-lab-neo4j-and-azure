@@ -37,7 +37,7 @@ You'll need a laptop with a web browser.  Your browser will need to be able to a
 * [Lab 0 - Sign In](Lab_0_Sign_In) (5 min)
     * Improving the Labs
     * Sign into Azure
-* [Lab 1 - Neo4j Aura Signup](Lab_1_Neo4j_Aura_Signup) (15 min)
+* [Lab 1 - Neo4j Aura](Lab_1_Neo4j_Aura) (15 min)
     * Signing up for Neo4j Aura
 * [Lab 2 - Start Codespace](Lab_2_Start_Codespace) (10 min)
     * Launch GitHub Codespace
@@ -54,9 +54,6 @@ You'll need a laptop with a web browser.  Your browser will need to be able to a
     * Embeddings and Vector Search
     * Entity Extraction
     * Loading the Full Dataset
-* [Lab 4 - Exploring the Knowledge Graph](Lab_4_Explore_Knowledge_Graph) (15 min)
-    * Visual Graph Exploration with Neo4j Explore
-    * Graph Data Science Algorithms
 * Break (5 min)
 
 ### Part 3 - GraphRAG Retrievers
@@ -86,7 +83,7 @@ Before starting, ensure you have:
 - Windows 10 or Windows 11
 - Administrator access on your machine
 - An active Azure subscription
-- Neo4j Aura credentials (see [Lab 1 - Neo4j Aura Signup](Lab_1_Neo4j_Aura_Signup))
+- Neo4j Aura credentials (see [Lab 1 - Neo4j Aura](Lab_1_Neo4j_Aura))
 
 ### Step 1: Download the Project
 
