@@ -28,7 +28,7 @@ ol > li {
 </style>
 
 
-# Retrievers Overview
+# Neo4j Generative AI Retrievers Overview
 
 ---
 

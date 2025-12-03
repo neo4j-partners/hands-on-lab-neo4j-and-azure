@@ -4,43 +4,83 @@ This folder contains presentation-ready slides extracted from the workshop lesso
 
 ## 📊 Available Presentations
 
-All slides are sequentially numbered 01-22 for easy navigation, aligned with the 24-lesson GraphAcademy structure.
+All slides are organized by lab module for easy navigation.
 
-### Module 1: Building Knowledge Graphs (Slides 1-9)
+### Lab 1: Neo4j Aura & Aura Agents (Slides 1-6) 🆕
 
-**01. What is Generative AI** (4.2 KB)
-   - Introduction to Generative AI
-   - Large Language Models (LLMs)
-   - Knowledge Graphs & Cypher
-   - Retrieval Augmented Generation (RAG)
+**01. Neo4j Aura Overview** (3.5 KB) 🆕
+   - What is Neo4j Aura
+   - Cloud Graph Database Benefits
+   - Value for AI/GenAI Applications
+   - Getting Started
 
-**02. LLM Limitations** (4.0 KB)
-   - LLM Cautions & Limitations
-   - Access to Data Issues
-   - Hallucination Problem
-   - Temperature Settings
-   - Transparency Concerns
+**02. The GenAI Promise and Its Limits** (4.2 KB) 🆕
+   - What Generative AI Does Well
+   - The Three Core Limitations
+   - Hallucination, Knowledge Cutoff, Relationship Blindness
+   - The Solution: Providing Context
 
-**03. Context** (2.6 KB)
+**03. Traditional RAG: Chunking and Vector Search** (5.5 KB) 🆕
+   - How Traditional RAG Works
+   - Why Chunking Matters
+   - Common Chunking Strategies
+   - What is a Vector / What are Embeddings
+   - The Smart Librarian Analogy
+   - Without Vectors vs With Vectors
+   - Similarity Search
+
+**04. Context and the Limits of Traditional RAG** (4.5 KB) 🆕
+   - The Power of Context
+   - The Problem with Traditional RAG
+   - What Traditional RAG Misses
+   - Questions RAG Can't Answer
+   - The GraphRAG Solution
+
+**05. The SEC Filings Knowledge Graph** (3.5 KB) 🆕
+   - SEC 10-K Filings Example
+   - From PDF to Graph
+   - What the Graph Enables
+   - Your Pre-Built Knowledge Graph
+   - Processing Pipeline Preview
+
+**06. Aura Agents** (6.5 KB) 🆕
+   - No-Code GraphRAG Platform
+   - Three-Tool Architecture (Cypher Templates, Similarity Search, Text2Cypher)
+   - Tool Selection and Reasoning
+   - Agent Configuration
+   - Testing and Deployment
+   - Bridge to Code-Based Implementation
+
+### Lab 3: Building Knowledge Graphs (Slides 1-7)
+
+**01. The GenAI Promise and Its Limits** (4.2 KB)
+   - What Generative AI Does Well
+   - The Three Core Limitations
+   - Hallucination, Knowledge Cutoff, Relationship Blindness
+   - The Solution: Providing Context
+
+**02. Context and RAG** (4.5 KB)
    - Importance of Context
-   - Avoiding Hallucination
-   - Improving LLM Responses
+   - Retrieval Augmented Generation (RAG)
+   - How RAG Works
+   - The Problem with Traditional RAG
+   - The GraphRAG Solution
 
-**04. Building the Graph** (11 KB) ⭐ **Largest**
+**03. Building Knowledge Graphs** (11 KB) ⭐ **Largest**
    - Complete GraphRAG Pipeline
    - EDGAR SEC Filings Processing
    - Entity Extraction
    - Schema-Driven Knowledge Graphs
    - Structured Data Integration
 
-**05. Schema Design** (4.7 KB)
+**04. Schema Design** (4.7 KB)
    - Schema Purpose & Benefits
    - Node and Relationship Definitions
    - Pattern Specifications
    - Iterative Schema Development
    - Balancing Flexibility and Structure
 
-**06. Chunking Strategies** (5.1 KB) 🆕
+**05. Chunking Strategies** (5.1 KB)
    - Chunk Size Optimization
    - Large vs Small Chunk Trade-offs
    - FixedSizeSplitter Configuration
@@ -48,124 +88,79 @@ All slides are sequentially numbered 01-22 for easy navigation, aligned with the
    - Impact on Entity Extraction
    - Best Practices by Document Type
 
-**07. Entity Resolution** (6.3 KB) 🆕
+**06. Entity Resolution** (6.3 KB)
    - Entity Duplication Problem
    - Default Resolution Strategies
    - Post-Processing Resolvers (Spacy, FuzzyMatch)
    - Conservative vs Aggressive Resolution
    - Best Practices and Testing
 
-**08. Vectors** (4.8 KB)
+**07. Vectors** (4.8 KB)
    - Vector Fundamentals
    - Embeddings & Similarity
    - Vector Search in Neo4j
    - Document Chunking
 
-**09. Working with Full Datasets** (7.3 KB) 🆕
-   - Sample to Production Scale Journey
-   - Full Dataset Statistics (2,145 nodes, 5,070 relationships)
-   - Cross-Document Insights
-   - Search Quality at Scale
-   - Performance Considerations
+### Lab 5: GraphRAG Retrievers (Slides 1-4)
 
-### Module 2: GraphRAG Retrievers (Slides 10-15)
-
-**10. GraphRAG Explained** (5.2 KB)
+**01. Retrievers Overview** (5.2 KB)
    - What is GraphRAG?
    - Benefits of GraphRAG
-   - Graph-Enhanced Vector Search
-   - Full Text Search
-   - Text to Cypher
+   - Retriever Types Overview
 
-**11. What is a Retriever** (6.3 KB)
-   - Vector Retriever Overview
-   - Vector + Cypher Retriever Overview
-   - Text2Cypher Retriever Overview
-   - Choosing the Right Retriever
-
-**12. Vector Retriever (Detailed)** (6.0 KB) 🆕
+**02. Vector Retriever** (6.0 KB)
    - Vector Retriever Fundamentals
    - How Vector Search Works (5-step process)
    - Components: Embedder, Vector Index, Similarity, Top-K
    - Configuration and Code Examples
    - Best Practices and Use Cases
-   - Limitations
 
-**13. Vector + Cypher Retriever (Detailed)** (8.9 KB) 🆕
+**03. Vector + Cypher Retriever** (8.9 KB)
    - Hybrid Retrieval (Semantic + Graph)
    - Two-Step Process Explained
    - Custom Retrieval Query Patterns
    - OPTIONAL MATCH Usage
    - Advanced Traversals and Metadata
-   - Performance Considerations
 
-**14. Text2Cypher Retriever (Detailed)** (8.1 KB) 🆕
+**04. Text2Cypher Retriever** (8.1 KB)
    - Natural Language to Cypher Conversion
    - Schema's Critical Role
    - LLM Query Generation Process
    - Modern Cypher Syntax Best Practices
    - Complex Query Handling
-   - Error Handling and Validation
 
-**15. Choosing the Right Retriever** (9.6 KB) 🆕
-   - Decision Framework (3 Key Questions)
-   - Content vs Facts Analysis
-   - Question Pattern Guides for Each Retriever
-   - Real-World Question Analysis Examples
-   - Decision Tree
-   - Practice Examples with Answers
+### Lab 6: Intelligent Agents (Slides 1-5)
 
-### Module 3: Intelligent Agents (Slides 16-22)
-
-**16. What is an Agent** (3.7 KB)
+**01. From Retrievers to Agents** (3.7 KB)
    - What are Agents?
    - Agents vs Retrievers
-   - Conversational Wrappers
    - Agent Reasoning & Tools
 
-**17. Microsoft Agent Framework** (3.6 KB) 🆕
+**02. Microsoft Agent Framework** (3.6 KB)
    - Building Agents with Microsoft Agent Framework
    - AzureAIClient Setup
    - Schema Tools
    - Agent Architecture
    - Tool Definition as Python Functions
 
-**18. Simple Schema Agent** (8.9 KB) 🆕
-   - Single-Tool Agent Fundamentals
-   - Schema Tool as First Agent Tool
+**03. Building Your Agent** (8.9 KB)
+   - Single-Tool to Multi-Tool Progression
+   - Schema Tool, Vector Tool, Text2Cypher Tool
    - How Agents Decide Which Tool to Use
    - Agent Instructions and Streaming
-   - Advantages and Limitations
-   - Microsoft Foundry Integration
 
-**19. Vector Graph Agent** (5.4 KB)
-   - Vector + Graph Retrieval Tool
-   - Two-Tool Agent Architecture
-   - Automatic Tool Selection
-   - Multi-Step Reasoning
-   - Progressive Agent Building
-
-**20. Text2Cypher Agent** (6.4 KB)
-   - Text2Cypher Query Tool
-   - Three-Tool Agent Capabilities
-   - Complete GraphRAG Agent
-   - Intelligent Multi-Tool Reasoning
-   - Real-World Applications
-
-**21. Multi-Tool Agent Design** (11.8 KB) 🆕
+**04. Agent Design Patterns** (11.8 KB)
    - Tool Selection Process
    - Progressive Enhancement Pattern
    - Tool Specialization Principles
    - Design Patterns (Naming, Docstrings, Composition)
    - Anti-Patterns to Avoid
    - The GraphRAG "Sweet Spot" (3 Tools)
-   - Real-World Patterns
 
-**22. Aura Agents** (7.1 KB)
-   - No-Code Aura Agents
-   - Tool Types & Configuration
-   - Testing & Deployment
-   - Example Agents
+**05. Congratulations** (2.0 KB)
+   - Workshop Summary
+   - What You Built
+   - Next Steps
 
 ## 🚀 How to Use These Slides
 
@@ -403,26 +398,23 @@ marp 01-what-is-genai-slides.md --server
 ## 📈 Slide Statistics
 
 **Total Presentations:** 22
-**Total Slide Pages:** ~280 individual slides
+**Total Slide Pages:** ~270 individual slides
 **Format:** Marp Markdown
 **Status:** ✅ Ready to present
 
-### Module Breakdown
-- **Module 1:** 9 presentations (Slides 1-9)
-- **Module 2:** 6 presentations (Slides 10-15)
-- **Module 3:** 7 presentations (Slides 16-22)
+### Lab Breakdown
+- **Lab 1:** 6 presentations (Neo4j Aura, GenAI Limits, Traditional RAG, GraphRAG Limits, SEC Filings Graph, Aura Agents)
+- **Lab 3:** 7 presentations (GenAI Fundamentals, Knowledge Graphs)
+- **Lab 5:** 4 presentations (GraphRAG Retrievers)
+- **Lab 6:** 5 presentations (Intelligent Agents)
 
-### New Slides Added (December 2, 2025)
-- 06: Chunking Strategies
-- 07: Entity Resolution
-- 09: Working with Full Datasets
-- 12: Vector Retriever (Detailed)
-- 13: Vector + Cypher Retriever (Detailed)
-- 14: Text2Cypher Retriever (Detailed)
-- 15: Choosing the Right Retriever
-- 17: Microsoft Agent Framework (updated from LangChain)
-- 18: Simple Schema Agent
-- 21: Multi-Tool Agent Design
+### New Slides Added (December 3, 2025)
+- 01: Neo4j Aura Overview (lab-1-neo4j-aura)
+- 02: The GenAI Promise and Its Limits (lab-1-neo4j-aura)
+- 03: Traditional RAG: Chunking and Vector Search (lab-1-neo4j-aura)
+- 04: Context and the Limits of Traditional RAG (lab-1-neo4j-aura)
+- 05: The SEC Filings Knowledge Graph (lab-1-neo4j-aura)
+- 06: Aura Agents (lab-1-neo4j-aura)
 
-**Latest Update:** Complete alignment with 24-lesson GraphAcademy structure
-**Version:** 2.0 (December 2, 2025)
+**Latest Update:** Added Lab 1 slides with full GenAI/RAG/Vectors background and Aura Agents
+**Version:** 2.1 (December 3, 2025)
