@@ -70,6 +70,28 @@ Before running any notebook, make sure you have the correct Python kernel select
 2. Work through each notebook in order
 3. Each notebook builds on concepts from the previous one
 
+### Running Locally
+
+If you prefer to run the labs from the terminal instead of notebooks, first ensure everything is set up properly:
+
+```bash
+uv run setup_env.py
+```
+
+Then run the workshop menu:
+
+```bash
+uv run new-workshops/main.py
+```
+
+Menu items 1, 2, and 3 correspond to notebooks 1, 2, and 3 respectively.
+
+After running these, you will need to restore your Neo4j database by running:
+
+```bash
+uv run scripts/restore_neo4j.py --force
+```
+
 ## Key Concepts
 
 - **Chunks**: Smaller pieces of text split from documents for efficient retrieval

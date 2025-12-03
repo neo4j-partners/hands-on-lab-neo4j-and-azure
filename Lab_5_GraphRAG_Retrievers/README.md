@@ -41,6 +41,22 @@ Use natural language to query your graph directly:
 2. Work through each notebook in order
 3. Each notebook introduces a different retrieval strategy
 
+### Running Locally
+
+If you prefer to run the labs from the terminal instead of notebooks, first ensure everything is set up properly:
+
+```bash
+uv run setup_env.py
+```
+
+Then run the workshop menu:
+
+```bash
+uv run new-workshops/main.py
+```
+
+Menu items 5, 6, and 7 correspond to notebooks 1, 2, and 3 respectively.
+
 ## Key Concepts
 
 - **Vector Retriever**: Uses semantic similarity to find relevant text chunks based on meaning, not just keywords

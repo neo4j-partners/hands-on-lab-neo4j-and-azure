@@ -1,68 +1,67 @@
-# Module 2: GraphRAG Retrievers
+# Lab 5: GraphRAG Retrievers
 
-Welcome to Module 2! This module teaches you how to build intelligent retrievers that combine semantic search with graph traversal. You'll learn three distinct retriever patterns, each optimized for different types of questions.
+Welcome to Lab 5! This lab teaches you three distinct retrieval patterns for getting context from your knowledge graph. Each pattern is optimized for different types of questions.
 
-## Module Overview
+## Lab Overview
 
-In this module, you will:
+In this lab, you will:
 
-- Understand what GraphRAG is and why it's powerful
+- Understand what retrievers are and how they fit into GraphRAG
 - Master three retriever types: Vector, Vector Cypher, and Text2Cypher
-- Learn when to use each retriever type
-- Build retrievers using the neo4j-graphrag Python package
-- Combine retrievers with LLMs for natural language answers
-- Develop intuition for choosing the right retriever for each question
+- Learn when to use each retriever based on question patterns
+- Develop intuition for choosing the right retriever
 
-## Alignment with Lab 5: GraphRAG Retrievers
+## The Big Picture
 
-This module provides the conceptual foundation for Lab 5, which has 3 hands-on notebooks:
+**Where we are**: You have a knowledge graph with structured entities, relationships, and vector-enabled chunks (from Lab 3).
 
-| Lesson | Lab 5 Notebook | Focus |
-|--------|----------------|-------|
-| Lessons 1-2 | (Introduction) | GraphRAG concepts, retriever fundamentals |
-| Lesson 3 | Notebook 1: Vector Retriever | Semantic similarity search, vector indexes |
-| Lesson 4 | Notebook 2: Vector Cypher Retriever | Combining vector search with graph traversal |
-| Lesson 5 | Notebook 3: Text2Cypher Retriever | Natural language to Cypher queries |
-| Lesson 6 | (All notebooks) | Decision framework for choosing retrievers |
+**What you need**: Ways to retrieve relevant context from that graph to answer questions.
+
+**The solution**: Three retriever patterns, each designed for different question types.
 
 ## Lessons
 
-1. [Understanding GraphRAG](./01-graphrag-explained.md) - Why GraphRAG matters
-2. [What is a Retriever](./02-what-is-a-retriever.md) - Retriever fundamentals
-3. [Vector Retriever](./03-vector-retriever.md) - Semantic similarity search
-4. [Vector Cypher Retriever](./04-vector-cypher-retriever.md) - Semantic + graph traversal
-5. [Text2Cypher Retriever](./05-text2cypher-retriever.md) - Natural language to queries
-6. [Choosing the Right Retriever](./06-choosing-retrievers.md) - Decision framework
+1. [Retrievers and the GraphRAG Pattern](./01-retrievers-overview.md) - What retrievers are and how to think about selection
+2. [Vector Retriever](./02-vector-retriever.md) - Semantic similarity search for content questions
+3. [Vector Cypher Retriever](./03-vector-cypher-retriever.md) - Semantic search + graph traversal for relationship-aware questions
+4. [Text2Cypher Retriever](./04-text2cypher-retriever.md) - Natural language to database queries for precise answers
 
 ## Learning Path
 
-**Foundation (Lessons 1-2):**
-Understand why GraphRAG exists and what retrievers do.
+**Understanding Retrievers (Lesson 1):**
+What retrievers do and how to think about which one to use.
 
-**Vector Retriever (Lesson 3):**
-Learn semantic search using embeddings and vector indexes.
+**Semantic Search (Lesson 2):**
+Vector Retriever for conceptual questions and content exploration.
 
-**Vector Cypher Retriever (Lesson 4):**
-Enhance semantic search with graph relationships and entities.
+**Content + Relationships (Lesson 3):**
+Vector Cypher Retriever for questions needing both content and connected entities.
 
-**Text2Cypher Retriever (Lesson 5):**
-Generate database queries from natural language for precise answers.
-
-**Decision Framework (Lesson 6):**
-Learn to choose the right retriever for different question types.
+**Precise Facts (Lesson 4):**
+Text2Cypher Retriever for counts, lists, and specific lookups.
 
 ## The Three Retriever Types
 
-**Quick Reference:**
+| Retriever | What It Does | Best For |
+|-----------|--------------|----------|
+| **Vector** | Semantic similarity search | "What is...", "Tell me about..." |
+| **Vector Cypher** | Semantic search + graph traversal | "Which [entities] are affected by [topic]..." |
+| **Text2Cypher** | Natural language to Cypher | "How many...", "List all...", "Who owns..." |
 
-| Retriever | Best For | Example Question |
-|-----------|----------|------------------|
-| **Vector** | Semantic content search | "What is Apple's business strategy?" |
-| **Vector Cypher** | Content + related entities | "What risks affect tech companies?" |
-| **Text2Cypher** | Facts, counts, specific queries | "How many companies are in the database?" |
+## Decision Framework
+
+When choosing a retriever:
+
+1. **Content or facts?** Content → Vector/Vector Cypher. Facts → Text2Cypher.
+2. **Need related entities?** Yes → Vector Cypher.
+3. **Need counts or lists?** Yes → Text2Cypher.
+
+## What's Next
+
+Understanding *why* each retriever works for different questions prepares you for Lab 6, where you'll build agents that automatically choose the right retriever based on user questions.
 
 ## Navigation
 
-- [← Back to Module 1: Building Knowledge Graphs](../module-1-generative-ai/README.md)
-- [Start with Lesson 1: Understanding GraphRAG →](./01-graphrag-explained.md)
-- [Skip to Module 3: Agents →](../module-3-agents/README.md)
+- [← Back to Lab 3: Building Knowledge Graphs](../lab-3-generative-ai/README.md)
+- [Start with Lesson 1: Retrievers Overview →](./01-retrievers-overview.md)
+- [Skip to Lab 6: Intelligent Agents →](../lab-6-agents/README.md)

@@ -42,6 +42,22 @@ Build a powerful multi-tool agent:
 2. Work through each notebook in order
 3. Each notebook adds new tools to the agent
 
+### Running Locally
+
+If you prefer to run the labs from the terminal instead of notebooks, first ensure everything is set up properly:
+
+```bash
+uv run setup_env.py
+```
+
+Then run the workshop menu:
+
+```bash
+uv run new-workshops/main.py
+```
+
+Menu items 8, 9, and 10 correspond to notebooks 1, 2, and 3 respectively.
+
 ## Key Concepts
 
 - **Agent**: An AI system that can use tools to accomplish tasks autonomously

@@ -1,61 +1,71 @@
-# Module 1: Building Knowledge Graphs
+# Lab 3: Building Knowledge Graphs
 
-Welcome to Module 1! This module teaches you how to build knowledge graphs for GraphRAG applications. You'll start with the fundamentals of Generative AI, then learn to transform unstructured documents into structured, searchable knowledge graphs.
+Welcome to Lab 3! This lab teaches you why knowledge graphs are essential for GenAI applications and how to build them from documents.
 
-## Module Overview
+## Lab Overview
 
-In this module, you will:
+In this lab, you will:
 
-- Understand Generative AI concepts and LLM limitations
-- Learn why context is crucial for accurate LLM responses
-- Master the Document → Chunk → Entity data model
-- Build knowledge graphs from unstructured documents
-- Work with embeddings and vector search
-- Extract entities and relationships using LLMs
-- Design effective schemas for entity extraction
-- Optimize chunking strategies for your data
-- Work with production-scale datasets
+- Understand LLM limitations and why context matters
+- Learn why traditional RAG isn't enough for complex questions
+- Discover how knowledge graphs provide structured context
+- Master the key decisions in graph construction: schema, chunking, entity resolution
+- Enable semantic search with vector embeddings
 
-## Alignment with Lab 3: Graph Building
+## The Big Picture
 
-This module provides the conceptual foundation for Lab 3, which has 4 hands-on notebooks:
+**The Problem**: LLMs are powerful but limited. They hallucinate, lack access to your data, and can't reason over relationships.
 
-| Lesson | Lab 3 Notebook | Focus |
-|--------|----------------|-------|
-| Lessons 1-3 | (Introduction) | GenAI concepts, LLM limitations, importance of context |
-| Lesson 4 | Notebook 1: Data Loading | Document and Chunk structure, relationships |
-| Lessons 6 & 8 | Notebook 2: Embeddings | Vector search, FixedSizeSplitter, semantic similarity |
-| Lessons 4 & 5 | Notebook 3: Entity Extraction | Schema definition, SimpleKGPipeline, entity types |
-| Lesson 9 | Notebook 4: Full Dataset | Production-scale data, cross-document insights |
+**The Solution**: Provide structured context through knowledge graphs that preserve entities, relationships, and meaning.
+
+**The Process**: Transform documents into queryable knowledge graphs using the `neo4j-graphrag` Python package.
 
 ## Lessons
 
-1. [What is Generative AI](./01-what-is-genai.md) - Foundation concepts
-2. [LLM Limitations](./02-llm-limitations.md) - Understanding constraints
-3. [Context](./03-context.md) - Why RAG matters
-4. [Building the Graph](./04-building-the-graph.md) - Documents, chunks, and entities
-5. [Schema Design](./05-schema-design.md) - Designing entity types and relationships
-6. [Optimizing Chunk Size](./06-chunking.md) - Chunking strategies for better extraction
-7. [Entity Resolution](./07-entity-resolution.md) - Resolving duplicate entities
-8. [Vectors](./08-vectors.md) - Embeddings and semantic search
-9. [Working with Full Datasets](./09-full-dataset.md) - Production-scale knowledge graphs
+1. [The GenAI Promise and Its Limits](./01-genai-and-limitations.md) - What LLMs can and cannot do
+2. [Context and Traditional RAG](./02-context-and-rag.md) - Why context helps and where traditional RAG falls short
+3. [From Documents to Knowledge Graphs](./03-building-knowledge-graphs.md) - The transformation process and SimpleKGPipeline
+4. [Schema Design](./04-schema-design.md) - Defining what entities and relationships to extract
+5. [Chunking Strategies](./05-chunking.md) - Breaking documents into processable pieces
+6. [Entity Resolution](./06-entity-resolution.md) - Handling duplicate entities
+7. [Vectors and Semantic Search](./07-vectors.md) - Enabling meaning-based search
 
 ## Learning Path
 
-**Conceptual Foundation (Lessons 1-3):**
-Learn why GraphRAG exists and what problems it solves.
+**Understanding the Problem (Lessons 1-2):**
+Why LLMs need context, and why traditional RAG isn't enough for relationship-aware questions.
 
-**Building Basics (Lessons 4-5):**
-Understand the data model and schema design principles.
+**Building Knowledge Graphs (Lessons 3-4):**
+How to transform documents into structured knowledge with schema-driven extraction.
 
-**Optimization (Lessons 6-7):**
-Learn techniques for improving extraction quality.
+**Quality Decisions (Lessons 5-6):**
+How chunking and entity resolution affect graph quality.
 
-**Search and Scale (Lessons 8-9):**
-Add semantic search and work with production data.
+**Enabling Search (Lesson 7):**
+How vector embeddings enable semantic search over your knowledge graph.
+
+## What You'll Build
+
+By the end of this lab, you'll understand how to create a knowledge graph with:
+
+- **Structured entities**: Companies, risks, products, executives, metrics
+- **Meaningful relationships**: FACES_RISK, OWNS, MENTIONS, WORKS_FOR
+- **Searchable chunks**: Text segments with vector embeddings
+- **Document provenance**: Links back to source documents
+
+This knowledge graph becomes the foundation for intelligent retrieval in Lab 5.
+
+## Key Concepts
+
+| Concept | What It Does | Why It Matters |
+|---------|--------------|----------------|
+| **Schema** | Defines entity and relationship types | Determines what you can query |
+| **Chunking** | Breaks documents into pieces | Affects extraction and retrieval quality |
+| **Entity Resolution** | Merges duplicate entities | Ensures query accuracy |
+| **Vectors** | Enable semantic search | Find content by meaning, not keywords |
 
 ## Navigation
 
-- [← Back to Workshop Home](../README.md)
-- [Start with Lesson 1: What is Generative AI →](./01-what-is-genai.md)
-- [Skip to Module 2: Retrievers →](../module-2-retrievers/README.md)
+- [Start with Lesson 1: GenAI Promise and Limits →](./01-genai-and-limitations.md)
+- [Skip to Lab 5: GraphRAG Retrievers →](../lab-5-retrievers/README.md)
+- [Back to Workshop Home](../README.md)
