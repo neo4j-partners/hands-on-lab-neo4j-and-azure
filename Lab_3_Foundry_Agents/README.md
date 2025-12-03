@@ -32,7 +32,16 @@ In this lab, you'll deploy:
 
 ---
 
-## Step 2: Find Your Foundry Resource
+## Step 2: Switch to New Foundry Experience
+
+1. Look for the banner at the top promoting the new Microsoft Foundry experience
+2. Click **Start building** to switch to the new Foundry interface
+
+![Switch to New Foundry](images/Star_Building_New_Foundry.png)
+
+---
+
+## Step 3: Find Your Foundry Resource
 
 1. In the Foundry view, look under **Use with Foundry** in the left sidebar
 2. Find the Foundry resource that matches your user ID (e.g., `neo-bison-26692-ai-foundry`)
@@ -41,21 +50,12 @@ In this lab, you'll deploy:
 
 ---
 
-## Step 3: Open Your Foundry Project
+## Step 4: Open Your Foundry Project
 
 1. Click on your Foundry resource to open it
 2. Click **Go to Foundry portal** to access the Foundry interface
 
 ![Foundry Project Selection](images/Foundry_Project_Selection.png)
-
----
-
-## Step 4: Switch to New Foundry Experience
-
-1. Once in Foundry, locate the **New Foundry** toggle in the top navigation bar
-2. Enable the **New Foundry** toggle to access the latest features
-
-![Switch to New Foundry](images/Foundry_Change_New_Foundry.png)
 
 ---
 
@@ -72,6 +72,8 @@ In this lab, you'll deploy:
 ![Create New Project](images/create_foundry_new_project.png)
 
 ![Project Advanced Options](images/Create_Project_Advance_Options.png)
+
+> **Note:** After creating the project, the page reload often gets stuck. If this happens, close the browser tab and try opening [ai.azure.com](https://ai.azure.com) directly. It may take a couple of tries to get it to open.
 
 ---
 
