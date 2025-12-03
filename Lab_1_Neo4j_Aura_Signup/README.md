@@ -1,78 +1,64 @@
-# Get Started with Neo4j Aura on Azure Marketplace
+# Lab 1: Neo4j Aura Setup and Exploration
 
-Follow these steps to subscribe to Neo4j Aura through the Azure Marketplace and create your first instance.
+In this lab, you will set up your Neo4j Aura database on Azure Marketplace, restore the knowledge graph from a backup, explore your graph visually, and build an AI-powered agent using Aura Agent.
 
-**Important:** Be sure to create your Aura instance in **US West** as shown in the configuration steps below.
+## Prerequisites
 
-## Step 1: Access the Azure Marketplace
+- Completed **Lab 0** (Azure sign-in)
+- Access to Azure Portal
 
-Log in to the Azure Portal at [portal.azure.com](https://portal.azure.com). In the search bar at the top, type "marketplace" and select **Marketplace** from the results.
+## Part 1: Neo4j Aura Signup
 
-![](images/Find_AMP.png)
+Follow the instructions in [Neo4j_Aura_Signup.md](Neo4j_Aura_Signup.md) to:
 
-## Step 2: Find Neo4j Aura Pay-as-You-Go
+1. Subscribe to Neo4j Aura through Azure Marketplace
+2. Create your Neo4j Aura account
+3. Configure and provision your database instance
+4. Save your connection credentials
 
-In the Marketplace, search for "neo4j". From the results, locate and select **Neo4j AuraDB Professional (pay-as-you-go)**.
+## Part 2: Restore the Backup
 
-![](images/AMP_AURA_PAY_GO.png)
+After your Aura instance is running, restore the pre-built knowledge graph:
 
-## Step 3: Subscribe to Neo4j AuraDB Professional
+1. Go to your instance in the [Aura Console](https://console.neo4j.io)
+2. Click the **...** menu on your instance and select **Backup & restore**
 
-Click **Subscribe** on the Neo4j AuraDB Professional (pay-as-you-go) listing. Fill out the subscription form:
+![](images/backup_restore.png)
 
-- **Subscription**: Select your Azure subscription
-- **Resource group**: Select the resource group from the previous lab (it will match your username)
-- **Name**: Enter a name for your SaaS resource
-- **Plan**: Neo4j Aura Professional - 1-month subscription
+3. Click **Upload backup** to open the upload dialog, then drag the backup file into the dialog:
 
-![](images/Neo4j_Paygo.png)
+   ![](images/restore_drag.png)
 
-## Step 4: Configure Your Account
+   **Use the pre-built backup file**
+   - Drag the file `finance_data.backup` from the `data/` folder in this lab
 
-After the subscription is created, click **Configure account now** to set up your Neo4j Aura account.
+4. Wait for the restore to complete - your instance will restart with the SEC 10-K filings knowledge graph
 
-![](images/ConfigureAccount.png)
+The backup contains:
+- SEC 10-K filing documents from major companies (Apple, Microsoft, NVIDIA, etc.)
+- Extracted entities: Companies, Risk Factors, Products, Executives, Financial Metrics
+- Asset manager ownership data
+- Text chunks with vector embeddings for semantic search
 
-## Step 5: Create Your Neo4j Aura Account
+## Part 3: Explore the Knowledge Graph
 
-You will be redirected to the Neo4j Aura login page. **Important: Do NOT use the "Continue with Microsoft" option!**
+Follow [EXPLORE.md](EXPLORE.md) to:
 
-Instead, click **Sign up** and create a new account using your work email address. This ensures proper account linking with the Azure Marketplace subscription.
+1. Use Neo4j Explore to visually navigate your graph
+2. Search for patterns between asset managers, companies, and risk factors
+3. Apply graph algorithms like Degree Centrality
+4. Identify key entities through visual analysis
 
-![](images/sign-up-aura.png)
+## Part 4: Build an Aura Agent
 
-## Step 6: Select the Marketplace Organization
+Follow [AURA_AGENTS.md](AURA_AGENTS.md) to:
 
-Once logged into Neo4j Aura, click on the organization dropdown (shows "New Organization") and select the **Marketplace Organization** that is linked to your Azure subscription.
+1. Create an AI-powered agent using Neo4j Aura Agent
+2. Configure Cypher template tools for SEC filings analysis
+3. Add semantic search capabilities
+4. Enable natural language to Cypher translation
+5. Test your agent with sample questions
 
-![](images/select_marketplace.png)
+## Next Steps
 
-## Step 7: Create an Instance
-
-In the Aura console, navigate to **Instances** in the left sidebar. Click the **Create instance** button to start configuring your Neo4j database.
-
-![](images/create_instance.png)
-
-## Step 8: Configure Your Instance
-
-Configure your Neo4j Aura instance with the following settings:
-
-- **Tier**: Professional
-- **Instance name**: Choose a descriptive name (e.g., "Aura-Azure-Finance-Workshop")
-- **Cloud provider**: Azure
-- **Region**: **US West, Arizona** (required for this workshop)
-- **Memory & CPU**: Select **4GB Memory | 1 CPU**
-- **Graph Analytics**: Select **Plugin** (enables graph algorithms sharing memory with the database)
-- **Additional settings**: Check **Vector-optimized configuration** for GraphRAG and semantic search applications
-
-Click **Create** to provision your instance.
-
-![](images/Aura_Create_Instance.png)
-
-**Important: Save Your Credentials!**
-
-After clicking Create, a credentials dialog will appear containing your connection URI, username, and password. **Save this information immediately** - the password will not be available after you close this dialog. Click **Download and continue** to save the credentials file. You will need these credentials in later labs.
-
-![](images/Save_Credentials.png)
-
-Your Neo4j Aura database is now ready to use!
+After completing this lab, continue to Lab 2 to set up your development environment and learn how to build GraphRAG applications programmatically.
