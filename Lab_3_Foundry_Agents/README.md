@@ -19,8 +19,6 @@ Azure AI Foundry provides:
 
 In this lab, you'll deploy:
 - **gpt-4o-mini** - For text generation and agent reasoning
-- **text-embedding-ada-002** - For creating vector embeddings
-
 ---
 
 ## Step 1: Access Azure AI Foundry
@@ -32,25 +30,29 @@ In this lab, you'll deploy:
 
 ---
 
-## Step 2: Switch to New Foundry Experience
+## Step 2: Create a Foundry Resource
 
-1. Look for the banner at the top promoting the new Microsoft Foundry experience
-2. Click **Start building** to switch to the new Foundry interface
+1. In the Microsoft Foundry overview page, click **Create a resource**
 
-![Switch to New Foundry](images/Star_Building_New_Foundry.png)
-
----
-
-## Step 3: Find Your Foundry Resource
-
-1. In the Foundry view, look under **Use with Foundry** in the left sidebar
-2. Find the Foundry resource that matches your user ID (e.g., `neo-bison-26692-ai-foundry`)
-
-![Foundry Resources List](images/Foundry_Project.png)
+![Create Foundry Resource](images/create_foundry_resource.png)
 
 ---
 
-## Step 4: Open Your Foundry Project
+## Step 3: Fill Out Foundry Details
+
+1. Select your **Subscription** and **Resource group**
+2. Enter a **Name** for your Foundry resource - use your username so it's easy to find
+3. Select **East US** as the Region
+4. Enter a **Default project name** - use the same name as your username for consistency
+5. Click **Next** to continue with the creation
+
+![Create Foundry Details](images/create_foundry_details.png)
+
+> **Tip:** Using your username for both the resource name and project name makes it easy to identify your resources in a shared environment.
+
+---
+
+## Step 5: Open Your Foundry Project
 
 1. Click on your Foundry resource to open it
 2. Click **Go to Foundry portal** to access the Foundry interface
@@ -59,25 +61,18 @@ In this lab, you'll deploy:
 
 ---
 
-## Step 5: Create a New Project
+## Step 6: Switch to New Foundry Experience
 
-1. When prompted, select **Create a new project** from the dropdown
-2. Click **Advanced options** to configure project settings:
-   - **Project**: Enter a name (e.g., `neo-bison-64753-1313`)
-   - **Subscription**: Select `Neo4j Workshops`
-   - **Resource group**: Select or create a resource group
-   - **Region**: Select `East US 2`
-3. Click **Create** to create your project
+1. Look for the banner at the top promoting the new Microsoft Foundry experience
+2. Click **Start building** to switch to the new Foundry interface
 
-![Create New Project](images/create_foundry_new_project.png)
+![Switch to New Foundry](images/Star_Building_New_Foundry.png)
 
-![Project Advanced Options](images/Create_Project_Advance_Options.png)
-
-> **Note:** After creating the project, the page reload often gets stuck. If this happens, close the browser tab and try opening [ai.azure.com](https://ai.azure.com) directly. It may take a couple of tries to get it to open.
+> **Note:** After switching to the new Foundry Experience, if the page reloads often or gets stuck close the browser tab and try opening [ai.azure.com](https://ai.azure.com) directly. It may take a couple of tries to get it to open.
 
 ---
 
-## Step 6: Navigate to Build
+## Step 7: Navigate to Build
 
 1. After your project is created, click on **Build** in the top navigation bar
 2. This is where you'll deploy and manage your AI models
@@ -86,7 +81,7 @@ In this lab, you'll deploy:
 
 ---
 
-## Step 7: Deploy gpt-4o-mini Model
+## Step 8: Deploy gpt-4o-mini Model
 
 1. Click on **Discover** in the top navigation
 2. Search for `gpt-4o-mini` in the Models section
@@ -95,21 +90,44 @@ In this lab, you'll deploy:
 ![Deploy Model](images/foundry_deploy_model.png)
 
 4. Click the **Deploy** button dropdown
-5. Select **Default settings** to deploy with global standard and default quota
+5. Select **Custom settings** (Global settings will not work)
 
 ![Deploy with Default Settings](images/deply_default_settings.png)
 
-Repeat this process to also deploy **text-embedding-ada-002** for embeddings.
+6. Change the deployment type to **Standard** deployment and reduce the Tokens per Minute Rate Limit to 20000 to avoid quota issues.
+
+![Standard Deployment](images/Standard_Deployment.png)
+
 
 ---
 
-## Step 8: Verify Your Deployments
+## Step 9: Verify Your Deployments
 
 After deploying both models, verify they appear in your project:
-1. Go to **Build** > **Models + endpoints**
-2. Confirm you see both:
+1. Go to **Build** > **Models**
+2. Confirm you see:
    - `gpt-4o-mini`
-   - `text-embedding-ada-002`
+3. Click on the model, and try it out in the playground
+
+---
+
+## Step 10: Building an Agent
+
+1. Click on **Agents** in the top left navigation and click **Create agent**
+
+2. Create an agent named `finance-agent` and give it the description: "You are a Smart Finance Agent"
+
+![Finance Agent Start](images/finance-agent-start.png)
+
+3. Add an MCP tool by clicking on **Tools**, then in the dialog go to the **Custom** tab and select **Model Context Protocol (MCP)**
+
+![Agent MCP Tool](images/agent-mcp-tool.png)
+
+4. YOU HAVE AN AGENT! Now let's test it. Enter a query like "What risks does Apple face?" You will see the agent ask you for approval to run the MCP request - click yes. Then you will see the MCP call in the context that it runs along with the results. Also try things like "What is the schema?"
+
+![Test Finance Agent](images/test_finance_agent.png)
+
+5. Try publishing it and see what your new agent looks like!
 
 ---
 
