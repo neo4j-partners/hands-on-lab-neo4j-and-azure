@@ -102,16 +102,7 @@ LLMs have **context window limits**—they can only process so much text at once
 ---
 
 
-## What are Embeddings?
-
-Embeddings are numerical representations of text encoded as high-dimensional vectors (often 1,536 dimensions).
-
-**The key property:** Similar meanings produce similar vectors.
-
-- "Apple's business strategy" and "the company's strategic approach" → vectors close together
-- "Apple's business strategy" and "banana nutrition facts" → vectors far apart
-
-This enables **semantic search**—finding content by meaning, not just keywords.
+![bg contain](../../images/embeddings_visual.jpg)
 
 ---
 
@@ -141,18 +132,7 @@ Think of embeddings like having a **really smart librarian** who has read every 
 
 ---
 
-## Embeddings in Action
-
-**Query:** "What are the financial risks of climate change?"
-
-**Without embeddings (keyword search):**
-- Finds: "climate change risk assessment"
-- Misses: "environmental regulatory exposure" (same meaning, different words)
-
-**With embeddings (semantic search):**
-- Finds both, because the *meaning* is similar
-- Also finds: "weather-related business disruption"
-- The embedding model understands these are related concepts
+![bg contain](../../images/beyond_keywords.jpg)
 
 ---
 

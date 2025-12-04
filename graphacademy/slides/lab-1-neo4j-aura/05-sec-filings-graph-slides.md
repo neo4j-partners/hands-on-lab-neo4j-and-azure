@@ -60,7 +60,7 @@ Throughout this workshop, you'll work with a knowledge graph built from SEC 10-K
 
 ---
 
-## Your Pre-Built Knowledge Graph
+## The Pre-Built Knowledge Graph
 
 The graph you restored to your Aura instance has already been processed:
 
@@ -74,7 +74,7 @@ The graph you restored to your Aura instance has already been processed:
 
 ---
 
-![bg contain](../images/data_model.png)
+![bg contain](../images/complete_graph.jpg)
 
 ---
 
