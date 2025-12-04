@@ -93,7 +93,7 @@ This is what Lab 3 covers in depth:
 
 ---
 
-![bg contain](../images/pipeline_data.jpg)
+![bg contain](../images/building_graph.jpg)
 
 ---
 

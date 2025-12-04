@@ -31,6 +31,10 @@ ol > li {
 
 ---
 
+![bg contain](../images/neo4j_msft_customers.jpg)
+
+---
+
 # Neo4j Aura: Cloud Graph Database
 
 ---

@@ -141,17 +141,15 @@ GraphRAG extracts structure, creating a *knowledge graph* that preserves:
 
 ---
 
-## Neo4j GraphRAG Retrievers Overview
+![bg contain](../images/neo4j-graphrag.jpg)
 
-Neo4j GraphRAG enables three retrieval patterns:
+---
 
-| Pattern | What It Does |
-|---------|--------------|
-| **Vector search** | Find semantically similar content (what traditional RAG does) |
-| **Vector Cypher** | Semantic search + graph traversal for relationships |
-| **Text2Cypher** | Answer precise questions about entities and relationships |
+![bg contain](../images/graph_mem.jpg)
 
-The combination is more powerful than any single approach.
+---
+
+![bg contain](../images/agentic_tools.jpg)
 
 ---
 
