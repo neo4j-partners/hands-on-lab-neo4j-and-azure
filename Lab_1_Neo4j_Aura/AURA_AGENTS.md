@@ -102,22 +102,11 @@ Click **Add Tool** and select **Similarity Search** to configure a semantic sear
 **Description:** Search SEC filing content semantically to find relevant passages about specific topics, risks, or business information.
 
 **Configuration:**
+- **Embedding provider:** `openai`
+- **Embedding model:** `text-embedding-ada-002`
 - **Vector Index:** `chunkEmbeddings`
 - **Return Properties:** `text`
 - **Top K:** 5
-
-**Retrieval Query (for enhanced context):**
-```cypher
-MATCH (node)-[:FROM_DOCUMENT]-(doc:Document)-[:FILED]-(company:Company)
-OPTIONAL MATCH (company)-[:FACES_RISK]->(risk:RiskFactor)
-WITH node, score, company, collect(DISTINCT risk.name)[0..10] AS risks
-RETURN
-    node.text AS content,
-    score AS relevance,
-    company.name AS source_company,
-    risks AS company_risks
-ORDER BY score DESC
-```
 
 ![Similarity Search Tool](images/similiarity_search_tool.png)
 
