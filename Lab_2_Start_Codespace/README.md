@@ -31,9 +31,9 @@ Once your Codespace has started, it should open a file with setup instructions. 
 
 For reference, you can also view the complete setup instructions in [GUIDE_DEV_CONTAINERS.md](../GUIDE_DEV_CONTAINERS.md).
 
-## Viewing Your Azure AI Foundry Project
+## Viewing Your Microsoft Foundry Project
 
-After running the `azd up` commands in the codespace, it created an Azure AI Foundry project for you.
+After running the `azd up` commands in the codespace, it created a Microsoft Foundry project for you.
 
 To view your Foundry project:
 

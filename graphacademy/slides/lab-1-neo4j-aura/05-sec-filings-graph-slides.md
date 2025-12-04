@@ -45,19 +45,7 @@ Throughout this workshop, you'll work with a knowledge graph built from SEC 10-K
 
 ---
 
-## From PDF to Graph
-
-**In raw PDF form:** Information is locked in narrative text.
-
-**In a knowledge graph:** It becomes structured and queryable:
-
-```
-(Apple Inc)-[:FACES_RISK]->(Cybersecurity Threats)
-(Apple Inc)-[:MENTIONS]->(iPhone)
-(BlackRock Inc)-[:OWNS]->(Apple Inc)
-```
-
-This structure enables questions that traditional RAG can't answer.
+![bg contain](../images/structured_text.jpg)
 
 ---
 
@@ -86,6 +74,10 @@ The graph you restored to your Aura instance has already been processed:
 
 ---
 
+![bg contain](../images/data_model.png)
+
+---
+
 ## The Processing Pipeline (Preview)
 
 This is what Lab 3 covers in depth:
@@ -101,19 +93,7 @@ This is what Lab 3 covers in depth:
 
 ---
 
-## The Complete Picture
-
-Your knowledge graph contains:
-
-```
-Documents → Chunks (with embeddings)
-    ↓
-Entities (Company, Product, RiskFactor, Executive, FinancialMetric)
-    ↓
-Relationships (FACES_RISK, MENTIONS, OWNS, WORKS_FOR, HAS_METRIC)
-```
-
-This structure is ready for GraphRAG retrieval patterns.
+![bg contain](../images/pipeline_data.jpg)
 
 ---
 

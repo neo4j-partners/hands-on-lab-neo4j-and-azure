@@ -48,4 +48,4 @@
    uv run setup_env.py
    ```
 
-6. Move on to Lab 3 - Azure AI Foundry Setup: [Lab_3_Foundry_Agents/README.md](Lab_3_Foundry_Agents/README.md)
+6. Move on to Lab 3 - Microsoft Foundry Setup: [Lab_3_Foundry_Agents/README.md](Lab_3_Foundry_Agents/README.md)

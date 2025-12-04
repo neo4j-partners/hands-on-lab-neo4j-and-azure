@@ -38,7 +38,7 @@ The Microsoft Agent Framework provides infrastructure for building agents:
 
 | Component | Purpose |
 |-----------|---------|
-| **AzureAIClient** | Connects to Azure AI services |
+| **AzureAIClient** | Connects to Microsoft Foundry services |
 | **ChatAgent** | Pre-built agent with tool selection |
 | **Tools** | Python functions with docstrings |
 | **Threads** | Conversation history for multi-turn |
@@ -187,7 +187,7 @@ async for update in agent.run_stream(query):
 
 The Microsoft Agent Framework provides:
 
-- **AzureAIClient** for Azure AI integration
+- **AzureAIClient** for Microsoft Foundry integration
 - **ChatAgent** for pre-built agent functionality
 - **Automatic tool selection** based on docstrings
 - **ReAct pattern** for reasoning and acting

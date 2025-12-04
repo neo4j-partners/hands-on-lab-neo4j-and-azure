@@ -45,17 +45,7 @@ These capabilities emerge from training on vast amounts of text data.
 
 ---
 
-## The Three Core Limitations
-
-Despite their impressive capabilities, LLMs have fundamental limitations:
-
-| Limitation | What Happens |
-|------------|--------------|
-| **Hallucination** | Generates confident but incorrect information |
-| **Knowledge Cutoff** | No access to recent events or your private data |
-| **Relationship Blindness** | Can't reason across connected information |
-
-These aren't bugs—they're fundamental to how LLMs work.
+![bg contain](../../images/gen_ai_gaps.jpg)
 
 ---
 

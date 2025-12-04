@@ -1,7 +1,7 @@
 # hands-on-lab-neo4j-and-azure
 Neo4j is the [leading graph database](https://db-engines.com/en/ranking/graph+dbms) vendor.  We've worked closely with Microsoft Azure engineering for years.  Our products, AuraDB and AuraDS are offered as managed services on Azure.  Neo4j Aura Professional Edition is offered in the [Azure Marketplace](https://portal.azure.com/#create/neo4j.neo4j_aura_professional).
 
-In this hands-on lab, you'll learn about Neo4j, Microsoft Azure AI Foundry, and the [Microsoft Agent Framework](https://github.com/microsoft/agent-framework). The lab is designed for data scientists, data engineers, and AI developers who want to master GraphRAG (Graph Retrieval-Augmented Generation) techniques and build production-ready agentic AI applications.
+In this hands-on lab, you'll learn about Neo4j, Microsoft Foundry, and the [Microsoft Agent Framework](https://github.com/microsoft/agent-framework). The lab is designed for data scientists, data engineers, and AI developers who want to master GraphRAG (Graph Retrieval-Augmented Generation) techniques and build production-ready agentic AI applications.
 
 In today's landscape, organizations need AI systems that can extract deep insights from unstructured documents, understand complex entity relationships, and build intelligent systems that can autonomously reason over vast information networks. This hands-on lab addresses this need directly by providing mastery in the most powerful pattern available for complex document intelligence: Graph Retrieval-Augmented Generation (GraphRAG).
 
@@ -44,9 +44,9 @@ You'll need a laptop with a web browser.  Your browser will need to be able to a
     * Configure environment variables
 * Break (5 min)
 
-### Part 2 - Azure AI Foundry Setup
-* [Lab 3 - Azure AI Foundry Setup](Lab_3_Foundry_Agents) (15 min)
-    * Access Azure AI Foundry
+### Part 2 - Microsoft Foundry Setup
+* [Lab 3 - Microsoft Foundry Setup](Lab_3_Foundry_Agents) (15 min)
+    * Access Microsoft Foundry
     * Create a Foundry Project
     * Deploy gpt-4o-mini and text-embedding-ada-002 models
 * Break (5 min)
@@ -271,8 +271,7 @@ Install the following extensions for an optimal development experience:
    azd up
    ```
    This will provision:
-   - Azure AI Foundry project
-   - Microsoft Foundry with gpt-4o-mini and text-embedding-ada-002 models
+   - Microsoft Foundry project with gpt-4o-mini and text-embedding-ada-002 models
    - Azure Container Registry
    - Azure Monitor and Application Insights
 

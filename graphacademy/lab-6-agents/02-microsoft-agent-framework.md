@@ -8,7 +8,7 @@ In this lesson, you'll understand how the framework works and what components yo
 
 ## Framework Components
 
-**AzureAIClient**: Connects to Azure AI services and handles model interactions.
+**AzureAIClient**: Connects to Microsoft Foundry services and handles model interactions.
 
 **ChatAgent**: Pre-built agent class that handles tool selection, conversation flow, and response generation.
 
@@ -130,7 +130,7 @@ Users see responses as they're generated, rather than waiting for completion.
 ## Summary
 
 The Microsoft Agent Framework provides:
-- **AzureAIClient** for Azure AI integration
+- **AzureAIClient** for Microsoft Foundry integration
 - **ChatAgent** for pre-built agent functionality
 - **Automatic tool selection** based on docstrings
 - **ReAct pattern** for reasoning and acting

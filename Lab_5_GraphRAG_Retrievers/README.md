@@ -8,7 +8,7 @@ Before starting, make sure you have:
 - Completed **Lab 0** (Azure sign-in)
 - Completed **Lab 1** (Neo4j Aura setup)
 - Completed **Lab 2** (Codespace setup with environment variables configured)
-- Completed **Lab 3** (Azure AI Foundry setup)
+- Completed **Lab 3** (Microsoft Foundry setup)
 - Completed **Lab 4** (Knowledge graph built with embeddings)
 
 ## Lab Overview

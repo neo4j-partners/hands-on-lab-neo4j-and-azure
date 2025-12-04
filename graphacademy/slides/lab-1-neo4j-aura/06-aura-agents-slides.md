@@ -34,19 +34,6 @@ Building GraphRAG Applications Without Code
 
 ---
 
-## The Challenge: Building GraphRAG is Hard
-
-Building production GraphRAG applications traditionally requires:
-
-- **Infrastructure setup** - Vector stores, LLM connections, embeddings
-- **Integration complexity** - Connecting multiple systems together
-- **Retrieval logic** - Deciding what data to fetch and how
-- **Testing and iteration** - Refining prompts and queries
-
-**Teams often spend weeks on infrastructure before solving business problems.**
-
----
-
 ## What Are Aura Agents?
 
 Aura Agents is a **no-code platform** for building AI agents grounded in your Neo4j graph data.
@@ -56,9 +43,6 @@ Aura Agents is a **no-code platform** for building AI agents grounded in your Ne
 - Configure retrieval tools without writing code
 - Test in an integrated chat playground
 - Deploy to production via API
-
-**Available on:** Free, Professional, and Enterprise tiers
-
 ---
 
 ## The Three-Tool Architecture
@@ -253,12 +237,6 @@ Aura Agents demonstrates the same patterns you'll implement programmatically:
 - Deploy agents in minutes
 - Secure, authenticated endpoints
 - Scalable infrastructure
-
-**For Learning:**
-- Understand tool selection
-- See how retrievers work
-- Bridge to code-based implementation
-
 ---
 
 ## Summary

@@ -101,31 +101,6 @@ LLMs have **context window limits**—they can only process so much text at once
 
 ---
 
-## Chunking Trade-offs
-
-**Smaller chunks (200-500 tokens):**
-- More precise retrieval
-- May lose context
-- More chunks to search
-
-**Larger chunks (1000-2000 tokens):**
-- More context preserved
-- May include irrelevant content
-- Fewer chunks to search
-
-**The balance:** Large enough to be meaningful, small enough to be relevant.
-
----
-
-## What is a Vector?
-
-Vectors are lists of numbers.
-
-The vector `[1, 2, 3]` represents a point in three-dimensional space.
-
-In machine learning, vectors can represent much more complex data—including the *meaning* of text.
-
----
 
 ## What are Embeddings?
 
@@ -137,6 +112,16 @@ Embeddings are numerical representations of text encoded as high-dimensional vec
 - "Apple's business strategy" and "banana nutrition facts" → vectors far apart
 
 This enables **semantic search**—finding content by meaning, not just keywords.
+
+---
+
+## What is a Vector?
+
+Vectors are lists of numbers.
+
+The vector `[1, 2, 3]` represents a point in three-dimensional space.
+
+In machine learning, vectors can represent much more complex data—including the *meaning* of text.
 
 ---
 

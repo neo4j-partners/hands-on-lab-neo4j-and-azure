@@ -1,7 +1,7 @@
 [project]
 name = "neo4j-azure-ai-workshop"
 version = "0.1.0"
-description = "Hands-on lab for Neo4j and Azure AI"
+description = "Hands-on lab for Neo4j and Microsoft Foundry"
 readme = "README.md"
 requires-python = ">=3.12,<3.13"
 dependencies = [

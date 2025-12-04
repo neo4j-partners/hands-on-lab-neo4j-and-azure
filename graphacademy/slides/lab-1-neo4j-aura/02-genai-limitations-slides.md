@@ -45,17 +45,7 @@ These capabilities emerge from training on vast amounts of text data.
 
 ---
 
-## The Three Core Limitations
-
-Despite their impressive capabilities, LLMs have fundamental limitations:
-
-| Limitation | What Happens |
-|------------|--------------|
-| **Hallucination** | Generates confident but incorrect information |
-| **Knowledge Cutoff** | No access to recent events or your private data |
-| **Relationship Blindness** | Can't reason across connected information |
-
-These aren't bugs—they're fundamental to how LLMs work.
+![bg contain](../images/gen_ai_gaps.jpg)
 
 ---
 
@@ -95,18 +85,6 @@ LLMs process text sequentially and treat each piece in isolation.
 - "How are these two companies connected through their executives?"
 
 These questions require *reasoning over relationships*—connecting entities across documents and traversing chains of connections.
-
----
-
-## Why These Limitations Matter
-
-| Limitation | Impact | Example |
-|------------|--------|---------|
-| Hallucination | Can't trust answers without verification | Legal brief with fabricated citations |
-| Knowledge cutoff | Can't answer questions about your data | "What did our CEO say last quarter?" |
-| Relationship blindness | Can't reason across connected information | "Which investors are exposed to these risks?" |
-
-Building production AI systems means addressing these limitations directly.
 
 ---
 

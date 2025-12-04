@@ -1,6 +1,6 @@
-# Lab 3 - Azure AI Foundry Setup
+# Lab 3 - Microsoft Foundry Setup
 
-In this lab, you will set up Microsoft Azure AI Foundry and deploy the AI models needed for the remaining labs. Azure AI Foundry is Microsoft's unified platform for building, deploying, and managing AI applications.
+In this lab, you will set up Microsoft Foundry and deploy the AI models needed for the remaining labs. Microsoft Foundry is Microsoft's unified platform for building, deploying, and managing AI applications.
 
 ## Prerequisites
 
@@ -9,9 +9,9 @@ Before starting, make sure you have:
 - Completed **Lab 1** (Neo4j Aura setup)
 - Completed **Lab 2** (Codespace setup)
 
-## What is Azure AI Foundry?
+## What is Microsoft Foundry?
 
-Azure AI Foundry provides:
+Microsoft Foundry provides:
 
 - **Model Deployments** - Access to GPT-4, GPT-4o-mini, embedding models, and more
 - **Agent Framework** - Tools for building AI agents that can use external tools
@@ -21,7 +21,7 @@ In this lab, you'll deploy:
 - **gpt-4o-mini** - For text generation and agent reasoning
 ---
 
-## Step 1: Access Azure AI Foundry
+## Step 1: Access Microsoft Foundry
 
 1. Log into the [Azure Portal](https://portal.azure.com)
 2. Click on the **Foundry** icon in the Azure services section
@@ -68,7 +68,7 @@ In this lab, you'll deploy:
 
 ![Switch to New Foundry](images/Star_Building_New_Foundry.png)
 
-> **Note:** After switching to the new Foundry Experience, if the page reloads often or gets stuck close the browser tab and try opening [ai.azure.com](https://ai.azure.com) directly. It may take a couple of tries to get it to open.
+> **Note:** After switching to the new Foundry Experience, if the page reloads often or gets stuck close the browser tab and try opening [https://ai.azure.com/nextgen](https://https://ai.azure.com/nextgen) directly. It may take a couple of tries to get it to open.
 
 ---
 
@@ -115,7 +115,20 @@ After deploying both models, verify they appear in your project:
 
 1. Click on **Agents** in the top left navigation and click **Create agent**
 
-2. Create an agent named `finance-agent` and give it the description: "You are a Smart Finance Agent"
+2. Create an agent named `finance-agent` with the following Description
+
+**Description:**
+```
+You are an expert financial analyst assistant specializing in SEC 10-K filings analysis.
+You help users understand:
+- Company risk factors and how they compare across companies
+- Asset manager ownership patterns and portfolio compositions
+- Financial metrics and products mentioned in company filings
+- Relationships between companies, their documents, and extracted entities
+
+Always provide specific examples from the knowledge graph when answering questions.
+Ground your responses in the actual data from SEC filings.
+```
 
 ![Finance Agent Start](images/finance-agent-start.png)
 
@@ -123,7 +136,11 @@ After deploying both models, verify they appear in your project:
 
 ![Agent MCP Tool](images/agent-mcp-tool.png)
 
-4. YOU HAVE AN AGENT! Now let's test it. Enter a query like "What risks does Apple face?" You will see the agent ask you for approval to run the MCP request - click yes. Then you will see the MCP call in the context that it runs along with the results. Also try things like "What is the schema?"
+4. YOU HAVE AN AGENT! Now let's test it. Enter a query like "What risks does APPLE INC face?" 
+
+We need to use "APPLE INC" because it does an exact string match for the company name. 
+
+You will see the agent ask you for approval to run the MCP request - click yes. Then you will see the MCP call in the context that it runs along with the results. Also try things like "What is the schema?"
 
 ![Test Finance Agent](images/test_finance_agent.png)
 
@@ -133,15 +150,9 @@ After deploying both models, verify they appear in your project:
 
 ## Summary
 
-You have now set up Azure AI Foundry with:
+You have now set up Microsoft Foundry with:
 - A new Foundry project
 - **gpt-4o-mini** deployed for chat completions
-- **text-embedding-ada-002** deployed for embeddings
-
-These models will be used in the remaining labs to:
-- Generate embeddings for vector search (Lab 4)
-- Power GraphRAG retrievers (Lab 5)
-- Enable intelligent agents (Lab 6)
 
 ## What's Next
 

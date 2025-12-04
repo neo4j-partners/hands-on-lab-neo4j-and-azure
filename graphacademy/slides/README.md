@@ -51,6 +51,29 @@ All slides are organized by lab module for easy navigation.
    - Testing and Deployment
    - Bridge to Code-Based Implementation
 
+### Lab 2: Microsoft Foundry & MCP (Slides 1-3)
+
+**01. What is an AI Agent** (4.0 KB)
+   - Evolution of AI Assistants
+   - Agent Components (Perception, Reasoning, Action, Response)
+   - Tools and How Agents Choose Them
+   - The ReAct Pattern
+   - Multi-Tool Examples
+
+**02. What is MCP (Model Context Protocol)** (3.5 KB)
+   - The Tool Integration Problem
+   - MCP as "USB for AI Tools"
+   - MCP Architecture (Host, Client, Server)
+   - Neo4j MCP Server
+   - Benefits of Standardization
+
+**03. Microsoft Foundry** (5.0 KB)
+   - Evolution: Azure AI Studio → Microsoft Foundry
+   - Foundry by the Numbers (11,000+ models, 1,400+ connectors)
+   - Key Components (Foundry Models, Model Router, Agent Service, Foundry IQ)
+   - MCP Tool Catalogue
+   - Enterprise Governance (Control Plane)
+
 ### Lab 4: Building Knowledge Graphs (Slides 1-7)
 
 **01. The GenAI Promise and Its Limits** (4.2 KB)
@@ -397,24 +420,22 @@ marp 01-what-is-genai-slides.md --server
 
 ## 📈 Slide Statistics
 
-**Total Presentations:** 22
-**Total Slide Pages:** ~270 individual slides
+**Total Presentations:** 25
+**Total Slide Pages:** ~300 individual slides
 **Format:** Marp Markdown
 **Status:** ✅ Ready to present
 
 ### Lab Breakdown
 - **Lab 1:** 6 presentations (Neo4j Aura, GenAI Limits, Traditional RAG, GraphRAG Limits, SEC Filings Graph, Aura Agents)
+- **Lab 2:** 3 presentations (What is an Agent, MCP, Microsoft Foundry)
 - **Lab 4:** 7 presentations (GenAI Fundamentals, Knowledge Graphs)
 - **Lab 5:** 4 presentations (GraphRAG Retrievers)
 - **Lab 6:** 5 presentations (Intelligent Agents)
 
 ### New Slides Added (December 3, 2025)
-- 01: Neo4j Aura Overview (lab-1-neo4j-aura)
-- 02: The GenAI Promise and Its Limits (lab-1-neo4j-aura)
-- 03: Traditional RAG: Chunking and Vector Search (lab-1-neo4j-aura)
-- 04: Context and the Limits of Traditional RAG (lab-1-neo4j-aura)
-- 05: The SEC Filings Knowledge Graph (lab-1-neo4j-aura)
-- 06: Aura Agents (lab-1-neo4j-aura)
+- 01: What is an AI Agent (lab-2-foundry)
+- 02: What is MCP (lab-2-foundry)
+- 03: Microsoft Foundry (lab-2-foundry)
 
-**Latest Update:** Added Lab 1 slides with full GenAI/RAG/Vectors background and Aura Agents
-**Version:** 2.1 (December 3, 2025)
+**Latest Update:** Added Lab 2 slides covering AI Agents, MCP, and Microsoft Foundry
+**Version:** 2.2 (December 3, 2025)
