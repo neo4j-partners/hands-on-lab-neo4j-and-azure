@@ -7,7 +7,6 @@ In this lab, you will set up Microsoft Foundry and deploy the AI models needed f
 Before starting, make sure you have:
 - Completed **Lab 0** (Azure sign-in)
 - Completed **Lab 1** (Neo4j Aura setup)
-- Completed **Lab 2** (Codespace setup)
 
 ## What is Microsoft Foundry?
 
@@ -136,9 +135,9 @@ Ground your responses in the actual data from SEC filings.
 
 ![Agent MCP Tool](images/agent-mcp-tool.png)
 
-4. YOU HAVE AN AGENT! Now let's test it. Enter a query like "What risks does APPLE INC face?" 
+4. YOU HAVE AN AGENT! Now let's test it. Enter a query like "What risks does APPLE INC face?"
 
-We need to use "APPLE INC" because it does an exact string match for the company name. 
+We need to use "APPLE INC" because it does an exact string match for the company name.
 
 You will see the agent ask you for approval to run the MCP request - click yes. Then you will see the MCP call in the context that it runs along with the results. Also try things like "What is the schema?"
 
@@ -154,6 +153,11 @@ You have now set up Microsoft Foundry with:
 - A new Foundry project
 - **gpt-4o-mini** deployed for chat completions
 
+**This completes Part 1 (No-Code Track) of the workshop.**
+
 ## What's Next
 
-Continue to [Lab 4 - Building a Knowledge Graph](../Lab_4_Neo4j_GraphRag/README.md) to build your knowledge graph from SEC filings using entity extraction and embeddings.
+To continue with the coding labs in Part 2:
+
+1. Continue to [Lab 4 - Start Codespace](../Lab_4_Start_Codespace) to set up your development environment
+2. Then proceed to [Lab 5 - Building a Knowledge Graph](../Lab_5_Knowledge_Graph) to build your knowledge graph from SEC filings using entity extraction and embeddings

@@ -20,16 +20,22 @@ These techniques apply to any domain where you need to extract insights from doc
 
 To get started, follow the labs in the agenda below in order.
 
-If you already have your Azure account and Aura connection details, you can go straight to [Lab 2 - Start Codespace](Lab_2_Start_Codespace) to start the codespace and begin running the notebooks.
+**Quick Start Options:**
+- **No-Code Track Only (1 hour):** Complete Part 1 (Labs 0-3) to explore Neo4j and AI agents without coding
+- **Full Workshop (3-4 hours):** Complete both Part 1 and Part 2 for the full development experience
+- **Skip to Coding:** If you already have your Azure account and Aura credentials, go straight to [Lab 4 - Start Codespace](Lab_4_Start_Codespace)
 
 ## Duration
-3 hours.
+3-4 hours (full workshop) or 1 hour (no-code track only).
 
 ## Prerequisites
-You'll need a laptop with a web browser.  Your browser will need to be able to access the Azure Console.  If your laptop has a firewall you can't control on it, you may want to bring your personal laptop.
+You'll need a laptop with a web browser. Your browser will need to be able to access the Azure Console. If your laptop has a firewall you can't control on it, you may want to bring your personal laptop.
 
 ## Agenda
-### Part 1 - Getting Started
+
+### Part 1 - No-Code Getting Started
+*This section requires no coding. You'll use visual tools and pre-built interfaces to explore Neo4j and AI agents.*
+
 * Introductions
 * [Lecture - Introduction to Neo4j](https://docs.google.com/presentation/d/1mEXn02TMYJ0nGFj7u5VANQBl1jBJcLGp6dYHB_xY0pQ/edit?usp=sharing) (10 min)
     * What is Neo4j?
@@ -37,47 +43,55 @@ You'll need a laptop with a web browser.  Your browser will need to be able to a
 * [Lab 0 - Sign In](Lab_0_Sign_In) (5 min)
     * Improving the Labs
     * Sign into Azure
-* [Lab 1 - Neo4j Aura](Lab_1_Neo4j_Aura) (15 min)
-    * Signing up for Neo4j Aura
-* [Lab 2 - Start Codespace](Lab_2_Start_Codespace) (10 min)
-    * Launch GitHub Codespace
-    * Configure environment variables
-* Break (5 min)
-
-### Part 2 - Microsoft Foundry Setup
-* [Lab 3 - Microsoft Foundry Setup](Lab_3_Foundry_Agents) (15 min)
+* [Lab 1 - Neo4j Aura Setup](Lab_1_Aura_Setup) (15 min)
+    * Signing up for Neo4j Aura through Azure Marketplace
+    * Restoring the pre-built knowledge graph
+    * Visual exploration with Neo4j Explore
+* [Lab 2 - Aura Agents](Lab_2_Aura_Agents) (20 min)
+    * Building AI agents using Neo4j Aura Agent (no-code)
+    * Creating Cypher template tools
+    * Adding semantic search and Text2Cypher capabilities
+* [Lab 3 - Microsoft Foundry Agents](Lab_3_Foundry_Agents) (15 min)
     * Access Microsoft Foundry
     * Create a Foundry Project
-    * Deploy gpt-4o-mini and text-embedding-ada-002 models
+    * Deploy gpt-4o-mini model
+    * Build an agent with MCP tools
 * Break (5 min)
 
-### Part 3 - Building a Knowledge Graph
+---
+
+### Part 2 - Coding and Advanced Development
+*This section involves Python programming using Jupyter notebooks.*
+
+* [Lab 4 - Start Codespace](Lab_4_Start_Codespace) (10 min)
+    * Launch GitHub Codespace
+    * Configure environment variables
+    * Deploy Azure infrastructure
 * [Lecture - Neo4j and Generative AI](https://docs.google.com/presentation/d/1iHu9vgEG0s6yjKMLUw9XqWGiJrY7Z1oNv0QPa75BCtc/edit?usp=sharing) (15 min)
     * Generating Knowledge Graphs
     * Retrieval Augmented Generation
     * Semantic Search
-* [Lab 4 - Building a Knowledge Graph](Lab_4_Neo4j_GraphRag) (30 min)
+* [Lab 5 - Building a Knowledge Graph](Lab_5_Knowledge_Graph) (30 min)
     * Data Loading Fundamentals
     * Embeddings and Vector Search
     * Entity Extraction
     * Loading the Full Dataset
 * Break (5 min)
-
-### Part 4 - GraphRAG Retrievers
 * [Lecture - Microsoft Foundry](https://docs.google.com/presentation/d/1KPHoVJivbinHg-UtrnTIUbMiFHB8mPEnDO0v0OvvcPM/edit?usp=sharing) (15 min)
     * What is Microsoft Foundry?
     * Generative AI
-* [Lab 5 - GraphRAG Retrievers](Lab_5_GraphRAG_Retrievers) (30 min)
+* [Lab 6 - GraphRAG Retrievers](Lab_6_Retrievers) (30 min)
     * Vector Retriever for Semantic Search
     * Vector Cypher Retriever for Graph-Enhanced Context
     * Text2Cypher Retriever for Natural Language Queries
 * Break (5 min)
-
-### Part 5 - GraphRAG Agents
-* [Lab 6 - GraphRAG Agents](Lab_6_Agents) (30 min)
+* [Lab 7 - GraphRAG Agents](Lab_7_Agents) (30 min)
     * Simple Schema Agent with Microsoft Agent Framework
     * Vector + Graph Agent for Semantic Search with Context
     * Multi-Tool Agent with Text2Cypher
+* [Lab 8 - Hybrid Search](Lab_8_Hybrid_Search) (20 min, Optional)
+    * Fulltext Search with Neo4j indexes
+    * Combining keyword and semantic search
 * [Questions and Next Steps](Questions%20and%20Next%20Steps.md) (5 min)
 
 ## Windows Setup Guide for VS Code
@@ -90,7 +104,7 @@ Before starting, ensure you have:
 - Windows 10 or Windows 11
 - Administrator access on your machine
 - An active Azure subscription
-- Neo4j Aura credentials (see [Lab 1 - Neo4j Aura](Lab_1_Neo4j_Aura))
+- Neo4j Aura credentials (see [Lab 1 - Neo4j Aura Setup](Lab_1_Aura_Setup))
 
 ### Step 1: Download the Project
 
@@ -282,7 +296,7 @@ Install the following extensions for an optimal development experience:
 
 ### Step 12: Run the Notebooks
 
-1. In VS Code, navigate to a lab folder (e.g., `Lab_4_Neo4j_GraphRag`)
+1. In VS Code, navigate to a lab folder (e.g., `Lab_5_Knowledge_Graph`)
 2. Open a notebook file (e.g., `01_data_loading.ipynb`)
 3. When prompted to select a kernel:
    - Click "Select Kernel" in the top right

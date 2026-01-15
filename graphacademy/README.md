@@ -47,8 +47,8 @@ We recommend taking the [Neo4j Fundamentals](https://graphacademy.neo4j.com/cour
 
 ## Workshop Modules
 
-### [Module 1: Building Knowledge Graphs](./module-1-generative-ai/README.md)
-Learn to build knowledge graphs from unstructured documents. **Aligned with Lab 4 (4 notebooks).**
+### [Module 1: Building Knowledge Graphs](./lab-5-knowledge-graph/README.md)
+Learn to build knowledge graphs from unstructured documents. **Aligned with Lab 5 (4 notebooks).**
 
 **Lessons:**
 1. [What is Generative AI](./module-1-generative-ai/01-what-is-genai.md) - Foundation concepts
@@ -61,8 +61,8 @@ Learn to build knowledge graphs from unstructured documents. **Aligned with Lab 
 8. [Vectors](./module-1-generative-ai/08-vectors.md) - Embeddings and semantic search
 9. [Working with Full Datasets](./module-1-generative-ai/09-full-dataset.md) - Production-scale graphs
 
-### [Module 2: GraphRAG Retrievers](./module-2-retrievers/README.md)
-Master three retriever patterns for intelligent information retrieval. **Aligned with Lab 5 (3 notebooks).**
+### [Module 2: GraphRAG Retrievers](./lab-6-retrievers/README.md)
+Master three retriever patterns for intelligent information retrieval. **Aligned with Lab 6 (3 notebooks).**
 
 **Lessons:**
 1. [Understanding GraphRAG](./module-2-retrievers/01-graphrag-explained.md) - Why GraphRAG matters
@@ -72,8 +72,8 @@ Master three retriever patterns for intelligent information retrieval. **Aligned
 5. [Text2Cypher Retriever](./module-2-retrievers/05-text2cypher-retriever.md) - Natural language to queries
 6. [Choosing the Right Retriever](./module-2-retrievers/06-choosing-retrievers.md) - Decision framework
 
-### [Module 3: Intelligent Agents](./module-3-agents/README.md)
-Build agents that automatically choose the right retriever. **Aligned with Lab 6 (3 notebooks).**
+### [Module 3: Intelligent Agents](./lab-7-agents/README.md)
+Build agents that automatically choose the right retriever. **Aligned with Lab 7 (3 notebooks).**
 
 **Lessons:**
 1. [What is an Agent](./module-3-agents/01-what-is-an-agent.md) - Agent concepts
@@ -89,9 +89,9 @@ Build agents that automatically choose the right retriever. **Aligned with Lab 6
 ## Workshop Materials
 
 ### 📚 Reading Materials
-- [Module 1: Generative AI](./module-1-generative-ai/README.md)
-- [Module 2: Retrievers](./module-2-retrievers/README.md)
-- [Module 3: Agents](./module-3-agents/README.md)
+- [Module 1: Building Knowledge Graphs](./lab-5-knowledge-graph/README.md)
+- [Module 2: GraphRAG Retrievers](./lab-6-retrievers/README.md)
+- [Module 3: Intelligent Agents](./lab-7-agents/README.md)
 
 ### 📊 Presentation Slides
 - [**All Workshop Slides**](./slides/README.md) - 15 Marp presentations ready for teaching
@@ -111,7 +111,7 @@ Build agents that automatically choose the right retriever. **Aligned with Lab 6
 
 ## Navigation
 
-- [Start with Module 1: Generative AI →](./module-1-generative-ai/README.md)
+- [Start with Module 1: Building Knowledge Graphs →](./lab-5-knowledge-graph/README.md)
 - [View Presentation Slides →](./slides/README.md)
 
 ---

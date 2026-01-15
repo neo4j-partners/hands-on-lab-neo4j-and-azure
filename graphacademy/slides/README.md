@@ -74,7 +74,7 @@ All slides are organized by lab module for easy navigation.
    - MCP Tool Catalogue
    - Enterprise Governance (Control Plane)
 
-### Lab 4: Building Knowledge Graphs (Slides 1-7)
+### Lab 5: Building Knowledge Graphs (Slides 1-7)
 
 **01. The GenAI Promise and Its Limits** (4.2 KB)
    - What Generative AI Does Well
@@ -124,7 +124,7 @@ All slides are organized by lab module for easy navigation.
    - Vector Search in Neo4j
    - Document Chunking
 
-### Lab 5: GraphRAG Retrievers (Slides 1-4)
+### Lab 6: GraphRAG Retrievers (Slides 1-4)
 
 **01. Retrievers Overview** (5.2 KB)
    - What is GraphRAG?
@@ -152,7 +152,7 @@ All slides are organized by lab module for easy navigation.
    - Modern Cypher Syntax Best Practices
    - Complex Query Handling
 
-### Lab 6: Intelligent Agents (Slides 1-5)
+### Lab 7: Intelligent Agents (Slides 1-5)
 
 **01. From Retrievers to Agents** (3.7 KB)
    - What are Agents?
@@ -428,9 +428,9 @@ marp 01-what-is-genai-slides.md --server
 ### Lab Breakdown
 - **Lab 1:** 6 presentations (Neo4j Aura, GenAI Limits, Traditional RAG, GraphRAG Limits, SEC Filings Graph, Aura Agents)
 - **Lab 2:** 3 presentations (What is an Agent, MCP, Microsoft Foundry)
-- **Lab 4:** 7 presentations (GenAI Fundamentals, Knowledge Graphs)
-- **Lab 5:** 4 presentations (GraphRAG Retrievers)
-- **Lab 6:** 5 presentations (Intelligent Agents)
+- **Lab 5:** 7 presentations (GenAI Fundamentals, Knowledge Graphs)
+- **Lab 6:** 4 presentations (GraphRAG Retrievers)
+- **Lab 7:** 5 presentations (Intelligent Agents)
 
 ### New Slides Added (December 3, 2025)
 - 01: What is an AI Agent (lab-2-foundry)

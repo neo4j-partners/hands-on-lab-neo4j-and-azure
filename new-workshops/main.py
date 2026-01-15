@@ -19,6 +19,11 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent / "solutions"))
 
 # Solution definitions: (module_name, title, is_async, entry_func)
+# Module prefixes align with workshop labs:
+#   01_xx = Lab 5 (Building a Knowledge Graph)
+#   02_xx = Lab 6 (GraphRAG Retrievers)
+#   03_xx = Lab 7 (Intelligent Agents)
+#   05_xx = Lab 8 (Hybrid Search)
 SOLUTIONS = [
     ("solutions.01_01_data_loading", "Data Loading Fundamentals", False, "main"),
     ("solutions.01_02_embeddings", "Embeddings", True, "main"),

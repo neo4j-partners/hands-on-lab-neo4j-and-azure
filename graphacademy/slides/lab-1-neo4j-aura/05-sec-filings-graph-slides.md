@@ -64,7 +64,7 @@ Throughout this workshop, you'll work with a knowledge graph built from SEC 10-K
 
 The graph you restored to your Aura instance has already been processed:
 
-**What was done (Lab 3 covers this in detail):**
+**What was done (Lab 5 covers this in detail):**
 - SEC 10-K filing PDFs were ingested
 - Documents were chunked into smaller pieces
 - An LLM extracted entities and relationships
@@ -80,7 +80,7 @@ The graph you restored to your Aura instance has already been processed:
 
 ## The Processing Pipeline (Preview)
 
-This is what Lab 3 covers in depth:
+This is what Lab 5 covers in depth:
 
 | Step | What Happens |
 |------|--------------|
