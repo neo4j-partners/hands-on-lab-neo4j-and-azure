@@ -16,8 +16,8 @@ from neo4j_graphrag.llm import OpenAILLM
 from pydantic import Field, computed_field
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
-# Load .env from project root (parent of new-workshops/)
-_root_env = Path(__file__).parent.parent.parent / ".env"
+# Load .env from financial_data_load directory
+_root_env = Path(__file__).parent.parent / ".env"
 load_dotenv(_root_env)
 
 

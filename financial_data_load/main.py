@@ -4,10 +4,10 @@ Workshop Solution Runner
 
 Interactive menu to run workshop solutions.
 
-Usage from root directory:
-    uv run python new-workshop/main.py          # Interactive menu
-    uv run python new-workshop/main.py 4        # Run solution 4 directly
-    uv run python new-workshop/main.py A        # Run all from 02_01 onward
+Usage from financial_data_load directory:
+    uv run python main.py          # Interactive menu
+    uv run python main.py 4        # Run solution 4 directly
+    uv run python main.py A        # Run all from 02_01 onward
 """
 
 import asyncio
@@ -15,8 +15,8 @@ import importlib
 import sys
 from pathlib import Path
 
-# Add solutions directory to path for config imports
-sys.path.insert(0, str(Path(__file__).parent / "solutions"))
+# Add src directory to path for config imports
+sys.path.insert(0, str(Path(__file__).parent / "src"))
 
 # Solution definitions: (module_name, title, is_async, entry_func)
 # Module prefixes align with workshop labs:
@@ -25,25 +25,25 @@ sys.path.insert(0, str(Path(__file__).parent / "solutions"))
 #   03_xx = Lab 7 (Intelligent Agents)
 #   05_xx = Lab 8 (Hybrid Search)
 SOLUTIONS = [
-    ("solutions.01_01_data_loading", "Data Loading Fundamentals", False, "main"),
-    ("solutions.01_02_embeddings", "Embeddings", True, "main"),
-    ("solutions.01_03_entity_extraction", "Entity Extraction", True, "main"),
-    ("solutions.01_04_full_dataset_queries", "Full Dataset Queries", False, "main"),
-    ("solutions.02_01_vector_retriever", "Vector Retriever", False, "main"),
-    ("solutions.02_02_vector_cypher_retriever", "Vector Cypher Retriever", False, "main"),
-    ("solutions.02_03_text2cypher_retriever", "Text2Cypher Retriever", False, "main"),
-    ("solutions.03_01_simple_agent", "Simple Agent", True, "run_agent"),
-    ("solutions.03_02_vector_graph_agent", "Vector Graph Agent", True, "run_agent"),
-    ("solutions.03_03_text2cypher_agent", "Text2Cypher Agent", True, "run_agent"),
-    ("solutions.05_01_fulltext_search", "Fulltext Search", False, "main"),
-    ("solutions.05_02_hybrid_search", "Hybrid Search", False, "main"),
+    ("src.01_01_data_loading", "Data Loading Fundamentals", False, "main"),
+    ("src.01_02_embeddings", "Embeddings", True, "main"),
+    ("src.01_03_entity_extraction", "Entity Extraction", True, "main"),
+    ("src.01_04_full_dataset_queries", "Full Dataset Queries", False, "main"),
+    ("src.02_01_vector_retriever", "Vector Retriever", False, "main"),
+    ("src.02_02_vector_cypher_retriever", "Vector Cypher Retriever", False, "main"),
+    ("src.02_03_text2cypher_retriever", "Text2Cypher Retriever", False, "main"),
+    ("src.03_01_simple_agent", "Simple Agent", True, "run_agent"),
+    ("src.03_02_vector_graph_agent", "Vector Graph Agent", True, "run_agent"),
+    ("src.03_03_text2cypher_agent", "Text2Cypher Agent", True, "run_agent"),
+    ("src.05_01_fulltext_search", "Fulltext Search", False, "main"),
+    ("src.05_02_hybrid_search", "Hybrid Search", False, "main"),
 ]
 
 # Default queries for agent solutions
 AGENT_QUERIES = {
-    "solutions.03_01_simple_agent": "Summarise the schema of the graph database.",
-    "solutions.03_02_vector_graph_agent": "What risk factors are mentioned in Apple's financial documents?",
-    "solutions.03_03_text2cypher_agent": "What stock has Microsoft issued?",
+    "src.03_01_simple_agent": "Summarise the schema of the graph database.",
+    "src.03_02_vector_graph_agent": "What risk factors are mentioned in Apple's financial documents?",
+    "src.03_03_text2cypher_agent": "What stock has Microsoft issued?",
 }
 
 
