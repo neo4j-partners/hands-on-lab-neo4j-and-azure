@@ -26,11 +26,10 @@ Usage:
 """
 
 import neo4j
-from neo4j import GraphDatabase
 from neo4j_graphrag.retrievers import HybridRetriever, HybridCypherRetriever
 from neo4j_graphrag.types import RetrieverResultItem
 
-from config import Neo4jConfig, get_embedder
+from config import get_neo4j_driver, get_embedder
 
 # Index names
 VECTOR_INDEX = "chunkEmbeddings"
@@ -209,15 +208,9 @@ def search_method_comparison(retriever: HybridRetriever, query: str) -> None:
 
 def main() -> None:
     """Run all hybrid search examples."""
-    config = Neo4jConfig()
-    driver = GraphDatabase.driver(
-        config.uri,
-        auth=(config.username, config.password),
-    )
-
-    try:
+    with get_neo4j_driver() as driver:
         driver.verify_connectivity()
-        print(f"Connected to Neo4j: {config.uri}")
+        print("Connected to Neo4j")
 
         # Initialize embedder
         embedder = get_embedder()
@@ -232,7 +225,7 @@ def main() -> None:
             )
             if not result.single():
                 print(f"\nError: Fulltext index '{FULLTEXT_INDEX}' not found.")
-                print("Run: uv run python scripts/restore_neo4j.py --full-text")
+                print("Run: uv run python full_data_load.py")
                 return
 
         # Create HybridRetriever
@@ -263,9 +256,7 @@ def main() -> None:
         graph_enhanced_search(hybrid_cypher_retriever, "artificial intelligence")
         search_method_comparison(hybrid_retriever, "Microsoft cloud computing strategy")
 
-    finally:
-        driver.close()
-        print("\nConnection closed")
+    print("\nConnection closed")
 
 
 if __name__ == "__main__":

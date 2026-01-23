@@ -7,9 +7,7 @@ creating Document and Chunk nodes with relationships.
 Run with: uv run python solutions/01_01_data_loading.py
 """
 
-from neo4j import GraphDatabase
-
-from config import Neo4jConfig
+from config import get_neo4j_driver
 
 # Sample text representing SEC 10-K filing content
 SAMPLE_TEXT = """
@@ -120,13 +118,7 @@ def show_graph_structure(driver) -> None:
 
 def main():
     """Run data loading demo."""
-    config = Neo4jConfig()
-    driver = GraphDatabase.driver(
-        config.uri,
-        auth=(config.username, config.password)
-    )
-
-    try:
+    with get_neo4j_driver() as driver:
         driver.verify_connectivity()
         print("Connected to Neo4j successfully!")
 
@@ -153,9 +145,7 @@ def main():
         # Show structure
         show_graph_structure(driver)
 
-    finally:
-        driver.close()
-        print("\nConnection closed.")
+    print("\nConnection closed.")
 
 
 if __name__ == "__main__":

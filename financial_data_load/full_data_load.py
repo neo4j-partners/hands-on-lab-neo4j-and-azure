@@ -27,7 +27,7 @@ Prerequisites:
 - Azure AI Foundry deployed (run: azd up && uv run python setup_env.py)
 - Azure CLI logged in (az login --use-device-code)
 - Neo4j connection configured in .env
-- PDFs in DATA_DIR (defaults to ~/projects/workshops/workshop-financial-data)
+- PDFs in financial-data/form10k-sample (relative to this script)
 """
 
 import asyncio
@@ -58,8 +58,8 @@ load_dotenv(_root_env)
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-# Data directory - adjust this path as needed
-DATA_DIR = Path.home() / "projects" / "workshops" / "workshop-financial-data"
+# Data directory - relative to this script
+DATA_DIR = Path(__file__).parent / "financial-data"
 PDF_DIR = DATA_DIR / "form10k-sample"
 COMPANY_CSV = DATA_DIR / "Company_Filings.csv"
 ASSET_MANAGER_CSV = DATA_DIR / "Asset_Manager_Holdings.csv"

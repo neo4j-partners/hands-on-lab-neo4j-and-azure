@@ -9,13 +9,12 @@ Run with: uv run python solutions/01_02_embeddings.py
 
 import asyncio
 
-from neo4j import GraphDatabase
 from neo4j_graphrag.indexes import create_vector_index
 from neo4j_graphrag.experimental.components.text_splitters.fixed_size_splitter import (
     FixedSizeSplitter,
 )
 
-from config import Neo4jConfig, get_embedder
+from config import get_neo4j_driver, get_embedder
 
 # Sample text representing SEC 10-K filing content
 SAMPLE_TEXT = """
@@ -159,13 +158,7 @@ def demo_search(driver, embedder) -> None:
 
 async def main():
     """Run embeddings demo."""
-    config = Neo4jConfig()
-    driver = GraphDatabase.driver(
-        config.uri,
-        auth=(config.username, config.password)
-    )
-
-    try:
+    with get_neo4j_driver() as driver:
         driver.verify_connectivity()
         print("Connected to Neo4j successfully!")
 
@@ -199,9 +192,7 @@ async def main():
         print("\n=== Vector Search Demo ===")
         demo_search(driver, embedder)
 
-    finally:
-        driver.close()
-        print("\n\nConnection closed.")
+    print("\n\nConnection closed.")
 
 
 if __name__ == "__main__":

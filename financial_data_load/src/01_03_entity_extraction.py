@@ -9,10 +9,9 @@ Run with: uv run python solutions/01_03_entity_extraction.py
 
 import asyncio
 
-from neo4j import GraphDatabase
 from neo4j_graphrag.experimental.pipeline.kg_builder import SimpleKGPipeline
 
-from config import Neo4jConfig, get_llm, get_embedder
+from config import get_neo4j_driver, get_llm, get_embedder
 
 # Sample text representing SEC 10-K filing content
 SAMPLE_TEXT = """
@@ -164,13 +163,7 @@ def find_chunks_for_entity(driver, entity_name: str) -> None:
 
 async def main():
     """Run entity extraction demo."""
-    config = Neo4jConfig()
-    driver = GraphDatabase.driver(
-        config.uri,
-        auth=(config.username, config.password)
-    )
-
-    try:
+    with get_neo4j_driver() as driver:
         driver.verify_connectivity()
         print("Connected to Neo4j successfully!")
 
@@ -217,9 +210,7 @@ async def main():
         find_chunks_for_entity(driver, "iPhone")
         find_chunks_for_entity(driver, "Apple")
 
-    finally:
-        driver.close()
-        print("\n\nConnection closed.")
+    print("\n\nConnection closed.")
 
 
 if __name__ == "__main__":

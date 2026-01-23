@@ -5,12 +5,11 @@ This script demonstrates various queries to explore the full Neo4j knowledge gra
 containing SEC 10-K filings from multiple companies with extracted entities and relationships.
 
 Prerequisites:
-- Full dataset must be loaded (use restore_neo4j.py script)
+- Full dataset must be loaded (use full_data_load.py script)
 - Neo4j connection configured in config.py
 """
 
-from neo4j import GraphDatabase
-from config import Neo4jConfig, get_embedder
+from config import get_neo4j_driver, get_embedder
 
 
 INDEX_NAME = "chunkEmbeddings"
@@ -137,19 +136,14 @@ def show_company_products(driver, company_name: str):
 def main():
     # Setup connection
     print("Connecting to Neo4j...")
-    neo4j_config = Neo4jConfig()
-    driver = GraphDatabase.driver(
-        neo4j_config.uri,
-        auth=(neo4j_config.username, neo4j_config.password)
-    )
-    driver.verify_connectivity()
-    print("Connected to Neo4j successfully!\n")
+    with get_neo4j_driver() as driver:
+        driver.verify_connectivity()
+        print("Connected to Neo4j successfully!\n")
 
-    # Initialize embedder
-    embedder = get_embedder()
-    print(f"Embedder initialized: {embedder.model}\n")
+        # Initialize embedder
+        embedder = get_embedder()
+        print(f"Embedder initialized: {embedder.model}\n")
 
-    try:
         # Show graph summary
         print("\n" + "="*60)
         print("GRAPH SUMMARY")
@@ -203,11 +197,8 @@ def main():
         print()
         show_company_products(driver, "Microsoft")
 
-    finally:
-        # Cleanup
-        driver.close()
-        print("\n" + "="*60)
-        print("Connection closed.")
+    print("\n" + "="*60)
+    print("Connection closed.")
 
 
 if __name__ == "__main__":

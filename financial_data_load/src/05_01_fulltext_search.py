@@ -10,7 +10,7 @@ Usage:
 
 from neo4j import GraphDatabase
 
-from config import Neo4jConfig
+from config import get_neo4j_driver
 
 
 def basic_search(driver: GraphDatabase.driver, term: str) -> None:
@@ -146,13 +146,7 @@ def hybrid_search(driver: GraphDatabase.driver, keyword: str) -> None:
 
 def main() -> None:
     """Run all fulltext search examples."""
-    config = Neo4jConfig()
-    driver = GraphDatabase.driver(
-        config.uri,
-        auth=(config.username, config.password),
-    )
-
-    try:
+    with get_neo4j_driver() as driver:
         driver.verify_connectivity()
         print("Connected to Neo4j")
 
@@ -163,7 +157,7 @@ def main() -> None:
             )
             if not result.single():
                 print("\nError: Fulltext index 'search_entities' not found.")
-                print("Run: uv run python scripts/restore_neo4j.py --full-text")
+                print("Run: uv run python full_data_load.py")
                 return
 
         # Run examples
@@ -173,9 +167,6 @@ def main() -> None:
         boolean_search(driver, "supply NOT chain")
         search_with_graph_traversal(driver, "Nvidia")
         hybrid_search(driver, "Amazon")
-
-    finally:
-        driver.close()
 
 
 if __name__ == "__main__":
