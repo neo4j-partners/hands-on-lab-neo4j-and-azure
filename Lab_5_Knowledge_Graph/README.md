@@ -28,18 +28,19 @@ Add semantic search capabilities to your graph:
 - Create a vector index in Neo4j
 - Perform similarity search to find relevant chunks
 
-### 03_entity_extraction.ipynb - Entity Extraction
-Extract structured entities and relationships from text:
-- Learn the difference between lexical and semantic graphs
-- Define a schema with entity and relationship types
-- Use `SimpleKGPipeline` to extract entities from text
-- Query the combined graph (chunks + entities)
+### 03_vector_retriever.ipynb - Vector Retriever
+Learn the fundamentals of semantic search with vector retrieval:
+- Set up a VectorRetriever using Neo4j's vector index
+- Perform semantic similarity searches on your knowledge graph
+- Use GraphRAG to combine vector search with LLM-generated answers
+- Understand how vector search finds contextually similar content
 
-### 04_full_dataset.ipynb - Working with the Full Dataset
-Load the complete SEC 10-K dataset and explore richer results:
-- Load pre-built knowledge graph with multiple company filings
-- See improved search results with more data
-- Explore the expanded entity and relationship network
+### 04_vector_cypher_retriever.ipynb - Vector Cypher Retriever
+Combine vector search with custom Cypher queries for enhanced context:
+- Create custom Cypher retrieval queries to traverse graph relationships
+- Return additional context like companies and asset managers alongside text chunks
+- Discover shared risks among companies using graph traversal
+- Compare results with and without graph-enhanced context
 
 ## Getting Started
 

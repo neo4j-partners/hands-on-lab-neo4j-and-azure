@@ -1,6 +1,6 @@
 # Lab 6 - GraphRAG Retrievers
 
-In this lab, you'll learn how to implement Graph Retrieval-Augmented Generation (GraphRAG) using different retriever strategies with the Neo4j GraphRAG Python package. You'll explore vector search, combine vector search with Cypher queries for richer context, and use natural language to generate Cypher queries automatically.
+In this lab, you'll learn how to use natural language to query your knowledge graph, extract structured entities from text, and work with a complete dataset. You'll use Text2Cypher to convert questions into Cypher queries, build richer graphs through entity extraction, and see the full power of GraphRAG with real-world data.
 
 ## Prerequisites
 
@@ -12,34 +12,33 @@ Before starting, make sure you have:
 
 ## Lab Overview
 
-This lab consists of three notebooks that demonstrate different retrieval strategies:
+This lab consists of three notebooks:
 
-### 01_vector_retriever.ipynb - Vector Retriever
-Learn the fundamentals of semantic search with vector retrieval:
-- Set up a VectorRetriever using Neo4j's vector index
-- Perform semantic similarity searches on your knowledge graph
-- Use GraphRAG to combine vector search with LLM-generated answers
-- Understand how vector search finds contextually similar content
-
-### 02_vector_cypher_retriever.ipynb - Vector Cypher Retriever
-Combine vector search with custom Cypher queries for enhanced context:
-- Create custom Cypher retrieval queries to traverse graph relationships
-- Return additional context like companies and asset managers alongside text chunks
-- Discover shared risks among companies using graph traversal
-- Compare results with and without graph-enhanced context
-
-### 03_text2cypher_retriever.ipynb - Text2Cypher Retriever
+### 01_text2cypher_retriever.ipynb - Text2Cypher Retriever
 Use natural language to query your graph directly:
 - Automatically convert natural language questions to Cypher queries
 - Query specific nodes, relationships, and properties without writing Cypher
 - Understand the graph schema and how it guides query generation
 - Build accessible natural language interfaces to your knowledge graph
 
+### 02_entity_extraction.ipynb - Entity Extraction
+Extract structured entities and relationships from text:
+- Learn the difference between lexical and semantic graphs
+- Define a schema with entity and relationship types
+- Use `SimpleKGPipeline` to extract entities from text
+- Query the combined graph (chunks + entities)
+
+### 03_full_dataset.ipynb - Working with the Full Dataset
+Load the complete SEC 10-K dataset and explore richer results:
+- Load pre-built knowledge graph with multiple company filings
+- See improved search results with more data
+- Explore the expanded entity and relationship network
+
 ## Getting Started
 
-1. Open the first notebook: `01_vector_retriever.ipynb`
+1. Open the first notebook: `01_text2cypher_retriever.ipynb`
 2. Work through each notebook in order
-3. Each notebook introduces a different retrieval strategy
+3. Each notebook builds on the previous one
 
 ### Running Locally
 
@@ -59,19 +58,10 @@ Menu items 5, 6, and 7 correspond to notebooks 1, 2, and 3 respectively.
 
 ## Key Concepts
 
-- **Vector Retriever**: Uses semantic similarity to find relevant text chunks based on meaning, not just keywords
-- **Vector Cypher Retriever**: Combines vector search with Cypher graph traversal to return richer, relationship-aware context
 - **Text2Cypher Retriever**: Converts natural language questions into Cypher queries for precise, fact-based answers
+- **Entity Extraction**: Using LLMs to identify companies, products, services, and relationships from text
+- **Knowledge Graph**: Combined structure of documents, chunks, and extracted entities
 - **GraphRAG**: A pipeline that combines retrievers with LLMs to generate contextual answers grounded in your knowledge graph
-- **Retrieval Context**: The data returned by retrievers that grounds LLM responses in your actual data
-
-## When to Use Each Retriever
-
-| Retriever | Best For |
-|-----------|----------|
-| **Vector** | Semantic questions where meaning matters more than exact matches |
-| **Vector Cypher** | Questions requiring both semantic similarity and graph relationships |
-| **Text2Cypher** | Fact-based questions about specific entities, counts, or relationships |
 
 ## Next Steps
 
