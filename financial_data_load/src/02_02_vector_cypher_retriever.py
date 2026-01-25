@@ -18,19 +18,22 @@ from neo4j_graphrag.retrievers import VectorCypherRetriever
 from config import get_embedder, get_llm, get_neo4j_driver
 
 # Retrieval query 1: Company + Risk context
+# Traverses from chunk to companies mentioned in that chunk, then to their risks
+# Uses explicit grouping with WITH clause for modern Cypher compliance
 COMPANY_RISK_QUERY: Final[str] = """
-MATCH (node)-[:FROM_DOCUMENT]-(doc:Document)-[:FILED]-(company:Company)-[:FACES_RISK]->(risk:RiskFactor)
-RETURN company.name AS company, collect(DISTINCT risk.name)[0..20] AS risks, node.text AS context
+MATCH (node)<-[:FROM_CHUNK]-(company:Company)-[:FACES_RISK]->(risk:RiskFactor)
+WITH node, company, collect(DISTINCT risk.name)[0..20] AS risks
+RETURN company.name AS company, risks, node.text AS context
 """
 
 # Retrieval query 2: Asset Manager context
-# Using COLLECT subquery to limit asset managers per company.
+# Uses COLLECT subquery to limit asset managers per company.
 # This ensures top_k controls the final result count, not just vector search nodes.
-# Without this, graph traversal can expand 5 nodes into many more rows (one per manager).
+# Relationship direction: (AssetManager)-[:OWNS]->(Company)
 ASSET_MANAGER_QUERY: Final[str] = """
-MATCH (node)-[:FROM_DOCUMENT]-(doc:Document)-[:FILED]-(company:Company)
+MATCH (node)<-[:FROM_CHUNK]-(company:Company)
 WITH node, company, COLLECT {
-  MATCH (company)-[:OWNS]-(manager:AssetManager)
+  MATCH (manager:AssetManager)-[:OWNS]->(company)
   RETURN manager.managerName
   LIMIT 5
 } AS managers
@@ -38,19 +41,19 @@ RETURN company.name AS company, managers AS AssetManagersWithSharesInCompany, no
 """
 
 # Retrieval query 3: Shared Risks between companies
-# Using explicit grouping with WITH clause for modern Cypher compliance.
-# Using slice notation [0..10] on collect() to limit array sizes per row.
-# LIMIT 10 controls row count, but collect() could still return unbounded arrays without slicing.
+# Finds companies that share risk factors extracted from the same document context.
+# Uses explicit grouping with WITH clause for modern Cypher compliance.
+# Uses slice notation [0..10] on collect() to limit array sizes per row.
 SHARED_RISKS_QUERY: Final[str] = """
 WITH node
-MATCH (node)-[:FROM_DOCUMENT]-(doc:Document)-[:FILED]-(c1:Company)
+MATCH (node)<-[:FROM_CHUNK]-(c1:Company)
 MATCH (c1)-[:FACES_RISK]->(risk:RiskFactor)<-[:FACES_RISK]-(c2:Company)
 WHERE c1 <> c2
-WITH c1, c2, risk
+WITH c1.name AS source_company, c2.name AS related, risk.name AS shared_risk
 RETURN
-  c1.name AS source_company,
-  collect(DISTINCT c2.name)[0..10] AS related_companies,
-  collect(DISTINCT risk.name)[0..10] AS shared_risks
+  source_company,
+  collect(DISTINCT related)[0..10] AS related_companies,
+  collect(DISTINCT shared_risk)[0..10] AS shared_risks
 LIMIT 10
 """
 

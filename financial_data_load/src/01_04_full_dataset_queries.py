@@ -113,14 +113,17 @@ def find_chunks_for_entity(driver, entity_name: str, limit: int = 5):
 
 
 def show_company_products(driver, company_name: str):
-    """Show products mentioned by a company."""
+    """Show products related to a company via shared chunks."""
     with driver.session() as session:
+        # Companies and Products are connected through shared chunks
+        # (Company)-[:FROM_CHUNK]->(Chunk)<-[:FROM_CHUNK]-(Product)
         result = session.run("""
-            MATCH (c:Company)-[:MENTIONS]->(p:Product)
+            MATCH (c:Company)-[:FROM_CHUNK]->(chunk:Chunk)<-[:FROM_CHUNK]-(p:Product)
             WHERE toUpper(c.name) CONTAINS toUpper($name)
               AND p.name IS NOT NULL
-            RETURN c.name as company, p.name as product
-            ORDER BY p.name
+            WITH c.name AS company, p.name AS product
+            RETURN DISTINCT company, product
+            ORDER BY product
             LIMIT 20
         """, name=company_name)
 

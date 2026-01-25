@@ -34,6 +34,9 @@ import asyncio
 import csv
 import logging
 import sys
+import time
+import traceback
+from datetime import datetime
 from pathlib import Path
 from typing import Optional
 
@@ -47,6 +50,7 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 
 from neo4j_graphrag.experimental.pipeline.kg_builder import SimpleKGPipeline
 from neo4j_graphrag.experimental.components.schema import GraphSchema
+from neo4j_graphrag.indexes import create_vector_index, create_fulltext_index
 from neo4j_graphrag.llm import OpenAILLM
 from neo4j_graphrag.embeddings import OpenAIEmbeddings
 
@@ -54,9 +58,37 @@ from neo4j_graphrag.embeddings import OpenAIEmbeddings
 _root_env = Path(__file__).parent / ".env"
 load_dotenv(_root_env)
 
-# Configure logging
-logging.basicConfig(level=logging.INFO)
+# Configure logging with file output
+LOG_DIR = Path(__file__).parent / "logs"
+LOG_DIR.mkdir(exist_ok=True)
+LOG_FILE = LOG_DIR / f"data_load_{datetime.now().strftime('%Y%m%d_%H%M%S')}.log"
+
+# Create formatters and handlers
+file_formatter = logging.Formatter(
+    '%(asctime)s | %(levelname)-8s | %(name)s | %(message)s',
+    datefmt='%Y-%m-%d %H:%M:%S'
+)
+console_formatter = logging.Formatter('%(levelname)s: %(message)s')
+
+# File handler - detailed logging
+file_handler = logging.FileHandler(LOG_FILE)
+file_handler.setLevel(logging.DEBUG)
+file_handler.setFormatter(file_formatter)
+
+# Console handler - info and above
+console_handler = logging.StreamHandler()
+console_handler.setLevel(logging.INFO)
+console_handler.setFormatter(console_formatter)
+
+# Configure root logger
+logging.basicConfig(level=logging.DEBUG, handlers=[file_handler, console_handler])
 logger = logging.getLogger(__name__)
+
+# Also capture neo4j and neo4j_graphrag logs
+logging.getLogger("neo4j").setLevel(logging.DEBUG)
+logging.getLogger("neo4j_graphrag").setLevel(logging.DEBUG)
+
+logger.info(f"Logging to: {LOG_FILE}")
 
 # Data directory - relative to this script
 DATA_DIR = Path(__file__).parent / "financial-data"
@@ -341,26 +373,116 @@ async def create_asset_manager_relationships(
     logger.info("Asset manager relationships created")
 
 
+async def create_search_indexes(driver: neo4j.Driver) -> None:
+    """Create vector and fulltext indexes for search.
+
+    Creates:
+    - chunkEmbeddings: Vector index on Chunk.embedding for semantic search
+    - search_entities: Fulltext index on entity names for keyword search
+    """
+    logger.info("Creating search indexes...")
+
+    # Vector index for semantic search on chunk embeddings
+    # Uses 1536 dimensions for text-embedding-ada-002
+    try:
+        create_vector_index(
+            driver,
+            name="chunkEmbeddings",
+            label="Chunk",
+            embedding_property="embedding",
+            dimensions=1536,
+            similarity_fn="cosine",
+        )
+        logger.info("  Created vector index: chunkEmbeddings")
+    except Exception as e:
+        logger.warning(f"  Vector index creation: {e}")
+
+    # Fulltext index for keyword search on entity names
+    # Indexes Company, Product, RiskFactor, Executive, FinancialMetric names
+    with driver.session() as session:
+        session.run("""
+            CREATE FULLTEXT INDEX search_entities IF NOT EXISTS
+            FOR (n:Company|Product|RiskFactor|Executive|FinancialMetric)
+            ON EACH [n.name]
+        """)
+        logger.info("  Created fulltext index: search_entities")
+
+    # Fulltext index for chunk text (used by hybrid search)
+    with driver.session() as session:
+        session.run("""
+            CREATE FULLTEXT INDEX chunkText IF NOT EXISTS
+            FOR (n:Chunk)
+            ON EACH [n.text]
+        """)
+        logger.info("  Created fulltext index: chunkText")
+
+    logger.info("Search indexes created")
+
+
+class PDFProcessingResult:
+    """Track results for a single PDF processing run."""
+    def __init__(self, pdf_path: Path):
+        self.pdf_path = pdf_path
+        self.start_time: float = 0
+        self.end_time: float = 0
+        self.success: bool = False
+        self.error: Optional[str] = None
+        self.error_traceback: Optional[str] = None
+        self.result: Optional[str] = None
+
+    @property
+    def duration(self) -> float:
+        return self.end_time - self.start_time if self.end_time else 0
+
+
 async def process_pdf(
     pipeline: SimpleKGPipeline,
     pdf_path: Path,
     company_meta: Optional[dict] = None,
-) -> None:
+) -> PDFProcessingResult:
     """Process a single PDF through the KG pipeline."""
-    logger.info(f"Processing: {pdf_path.name}")
+    result = PDFProcessingResult(pdf_path)
+    result.start_time = time.time()
+
+    logger.info(f"=" * 60)
+    logger.info(f"PROCESSING PDF: {pdf_path.name}")
+    logger.info(f"  Full path: {pdf_path}")
+    logger.info(f"  File size: {pdf_path.stat().st_size / 1024:.1f} KB")
+    if company_meta:
+        logger.info(f"  Company: {company_meta.get('name', 'unknown')}")
+        logger.info(f"  Ticker: {company_meta.get('ticker', 'unknown')}")
 
     metadata = {"source": str(pdf_path)}
     if company_meta:
         metadata.update(company_meta)
 
     try:
-        result = await pipeline.run_async(
+        logger.debug(f"  Calling pipeline.run_async()...")
+        pipeline_result = await pipeline.run_async(
             file_path=str(pdf_path),
             document_metadata=metadata,
         )
-        logger.info(f"  Completed: {pdf_path.name} - {result}")
+        result.end_time = time.time()
+        result.success = True
+        result.result = str(pipeline_result)
+
+        logger.info(f"  SUCCESS: {pdf_path.name}")
+        logger.info(f"  Duration: {result.duration:.1f}s")
+        logger.info(f"  Result: {pipeline_result}")
+
     except Exception as e:
-        logger.error(f"  Failed: {pdf_path.name} - {e}")
+        result.end_time = time.time()
+        result.success = False
+        result.error = str(e)
+        result.error_traceback = traceback.format_exc()
+
+        logger.error(f"  FAILED: {pdf_path.name}")
+        logger.error(f"  Duration: {result.duration:.1f}s")
+        logger.error(f"  Error type: {type(e).__name__}")
+        logger.error(f"  Error message: {e}")
+        logger.debug(f"  Full traceback:\n{result.error_traceback}")
+
+    return result
 
 
 async def print_graph_summary(driver: neo4j.Driver) -> None:
@@ -487,6 +609,55 @@ async def print_graph_summary(driver: neo4j.Driver) -> None:
 # Main Pipeline
 # ============================================================================
 
+def write_processing_summary(results: list[PDFProcessingResult], log_file: Path) -> None:
+    """Write a detailed processing summary to a separate file."""
+    summary_file = log_file.parent / f"summary_{log_file.stem}.txt"
+
+    with open(summary_file, 'w') as f:
+        f.write("=" * 70 + "\n")
+        f.write("PDF PROCESSING SUMMARY\n")
+        f.write(f"Generated: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n")
+        f.write("=" * 70 + "\n\n")
+
+        # Overall stats
+        successful = [r for r in results if r.success]
+        failed = [r for r in results if not r.success]
+        total_time = sum(r.duration for r in results)
+
+        f.write(f"Total PDFs: {len(results)}\n")
+        f.write(f"Successful: {len(successful)}\n")
+        f.write(f"Failed: {len(failed)}\n")
+        f.write(f"Total processing time: {total_time:.1f}s\n\n")
+
+        # Successful PDFs
+        if successful:
+            f.write("-" * 70 + "\n")
+            f.write("SUCCESSFUL PDFS\n")
+            f.write("-" * 70 + "\n")
+            for r in successful:
+                f.write(f"\n  {r.pdf_path.name}\n")
+                f.write(f"    Duration: {r.duration:.1f}s\n")
+                f.write(f"    Result: {r.result}\n")
+
+        # Failed PDFs
+        if failed:
+            f.write("\n" + "-" * 70 + "\n")
+            f.write("FAILED PDFS\n")
+            f.write("-" * 70 + "\n")
+            for r in failed:
+                f.write(f"\n  {r.pdf_path.name}\n")
+                f.write(f"    Duration: {r.duration:.1f}s\n")
+                f.write(f"    Error: {r.error}\n")
+                if r.error_traceback:
+                    f.write(f"    Traceback:\n")
+                    for line in r.error_traceback.split('\n'):
+                        f.write(f"      {line}\n")
+
+        f.write("\n" + "=" * 70 + "\n")
+
+    logger.info(f"Processing summary written to: {summary_file}")
+
+
 async def main(
     pdf_limit: Optional[int] = None,
     skip_metadata: bool = False,
@@ -500,6 +671,14 @@ async def main(
         skip_metadata: Skip loading CSV metadata (Company, AssetManager nodes).
         clear_db: Clear all nodes/relationships before loading.
     """
+    overall_start = time.time()
+    processing_results: list[PDFProcessingResult] = []
+
+    logger.info("=" * 70)
+    logger.info("STARTING FULL DATA LOAD")
+    logger.info(f"Start time: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+    logger.info("=" * 70)
+
     # Check data directory exists
     if not DATA_DIR.exists():
         logger.error(f"Data directory not found: {DATA_DIR}")
@@ -518,22 +697,33 @@ async def main(
 
     if pdf_limit:
         pdf_files = pdf_files[:pdf_limit]
+        logger.info(f"PDF limit set: processing {pdf_limit} of {len(list(PDF_DIR.glob('*.pdf')))} PDFs")
 
-    logger.info(f"Found {len(pdf_files)} PDF files to process")
+    logger.info(f"Found {len(pdf_files)} PDF files to process:")
+    for i, pdf in enumerate(pdf_files, 1):
+        logger.info(f"  {i}. {pdf.name} ({pdf.stat().st_size / 1024:.1f} KB)")
 
     # Load metadata
     company_meta = {}
     if COMPANY_CSV.exists():
         company_meta = load_company_metadata(COMPANY_CSV)
         logger.info(f"Loaded metadata for {len(company_meta)} companies")
+        for filename, meta in company_meta.items():
+            logger.debug(f"  {filename} -> {meta.get('name')} ({meta.get('ticker')})")
+    else:
+        logger.warning(f"Company CSV not found: {COMPANY_CSV}")
 
     asset_holdings = []
     if ASSET_MANAGER_CSV.exists():
         asset_holdings = load_asset_managers(ASSET_MANAGER_CSV)
         logger.info(f"Loaded {len(asset_holdings)} asset manager holdings")
+    else:
+        logger.warning(f"Asset manager CSV not found: {ASSET_MANAGER_CSV}")
 
     # Initialize Neo4j
     config = Neo4jConfig()
+    logger.info(f"Connecting to Neo4j: {config.uri}")
+
     driver = GraphDatabase.driver(
         config.uri,
         auth=(config.username, config.password),
@@ -541,7 +731,7 @@ async def main(
 
     try:
         driver.verify_connectivity()
-        logger.info(f"Connected to Neo4j: {config.uri}")
+        logger.info("Neo4j connection verified successfully")
 
         # Clear database if requested
         if clear_db:
@@ -553,42 +743,95 @@ async def main(
 
         # Initialize Azure AI LLM and Embedder
         logger.info("Initializing Azure AI Foundry LLM and Embedder...")
-        llm = get_llm()
-        embedder = get_embedder()
+        try:
+            llm = get_llm()
+            embedder = get_embedder()
 
-        agent_config = AgentConfig()
-        logger.info(f"  Model: {agent_config.model_name}")
-        logger.info(f"  Embedder: {agent_config.embedding_name}")
-        logger.info(f"  Endpoint: {agent_config.inference_endpoint}")
+            agent_config = AgentConfig()
+            logger.info(f"  Model: {agent_config.model_name}")
+            logger.info(f"  Embedder: {agent_config.embedding_name}")
+            logger.info(f"  Endpoint: {agent_config.inference_endpoint}")
+        except Exception as e:
+            logger.error(f"Failed to initialize Azure AI: {e}")
+            logger.error(traceback.format_exc())
+            return
 
         # Create pipeline
         logger.info("Creating SimpleKGPipeline...")
-        pipeline = SimpleKGPipeline(
-            llm=llm,
-            driver=driver,
-            embedder=embedder,
-            schema=SEC_SCHEMA,
-            from_pdf=True,
-            on_error="IGNORE",  # Continue on extraction errors
-            perform_entity_resolution=True,
-        )
+        try:
+            pipeline = SimpleKGPipeline(
+                llm=llm,
+                driver=driver,
+                embedder=embedder,
+                schema=SEC_SCHEMA,
+                from_pdf=True,
+                on_error="IGNORE",  # Continue on extraction errors
+                perform_entity_resolution=True,
+            )
+            logger.info("Pipeline created successfully")
+        except Exception as e:
+            logger.error(f"Failed to create pipeline: {e}")
+            logger.error(traceback.format_exc())
+            return
 
         # Process each PDF
-        for pdf_path in pdf_files:
-            meta = company_meta.get(pdf_path.name)
-            await process_pdf(pipeline, pdf_path, meta)
+        logger.info("\n" + "=" * 70)
+        logger.info("BEGINNING PDF PROCESSING")
+        logger.info("=" * 70)
 
-        logger.info("=" * 50)
-        logger.info(f"Processed {len(pdf_files)} PDFs")
+        for i, pdf_path in enumerate(pdf_files, 1):
+            logger.info(f"\n[{i}/{len(pdf_files)}] Starting {pdf_path.name}")
+            meta = company_meta.get(pdf_path.name)
+            result = await process_pdf(pipeline, pdf_path, meta)
+            processing_results.append(result)
+
+            # Log running totals
+            successful = sum(1 for r in processing_results if r.success)
+            failed = sum(1 for r in processing_results if not r.success)
+            logger.info(f"  Running totals: {successful} successful, {failed} failed")
+
+        # Write processing summary
+        logger.info("\n" + "=" * 70)
+        logger.info("PDF PROCESSING COMPLETE")
+        logger.info("=" * 70)
+
+        successful = [r for r in processing_results if r.success]
+        failed = [r for r in processing_results if not r.success]
+
+        logger.info(f"Processed {len(processing_results)} PDFs")
+        logger.info(f"  Successful: {len(successful)}")
+        logger.info(f"  Failed: {len(failed)}")
+
+        if failed:
+            logger.warning("Failed PDFs:")
+            for r in failed:
+                logger.warning(f"  - {r.pdf_path.name}: {r.error}")
+
+        # Write detailed summary file
+        write_processing_summary(processing_results, LOG_FILE)
 
         # Create asset manager relationships (after Companies exist)
         if not skip_metadata and asset_holdings:
             await create_asset_manager_relationships(driver, asset_holdings)
 
-        logger.info("Data loading complete!")
+        # Create search indexes (after all data is loaded)
+        await create_search_indexes(driver)
+
+        # Calculate overall timing
+        overall_duration = time.time() - overall_start
+        logger.info("\n" + "=" * 70)
+        logger.info("DATA LOADING COMPLETE")
+        logger.info("=" * 70)
+        logger.info(f"Total duration: {overall_duration:.1f}s ({overall_duration/60:.1f} minutes)")
+        logger.info(f"Log file: {LOG_FILE}")
 
         # Show detailed summary
         await print_graph_summary(driver)
+
+    except Exception as e:
+        logger.error(f"Unexpected error in main: {e}")
+        logger.error(traceback.format_exc())
+        raise
 
     finally:
         driver.close()

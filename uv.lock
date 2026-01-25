@@ -883,7 +883,7 @@ requires-dist = [
 
 [[package]]
 name = "neo4j-graphrag"
-version = "1.12.0"
+version = "1.13.0"
 source = { directory = "../neo4j-graphrag-python" }
 dependencies = [
     { name = "fsspec" },
@@ -901,6 +901,7 @@ dependencies = [
 [package.metadata]
 requires-dist = [
     { name = "anthropic", marker = "extra == 'anthropic'", specifier = ">=0.49.0,<0.50.0" },
+    { name = "boto3", marker = "extra == 'bedrock'", specifier = ">=1.35.0,<2.0.0" },
     { name = "cohere", marker = "extra == 'cohere'", specifier = ">=5.9.0,<6.0.0" },
     { name = "fsspec", specifier = ">=2024.9.0,<2025.0.0" },
     { name = "google-cloud-aiplatform", marker = "extra == 'google'", specifier = ">=1.66.0,<2.0.0" },
@@ -931,7 +932,7 @@ requires-dist = [
     { name = "types-pyyaml", specifier = ">=6.0.12.20240917,<7.0.0" },
     { name = "weaviate-client", marker = "extra == 'weaviate'", specifier = ">=4.6.1,<5.0.0" },
 ]
-provides-extras = ["weaviate", "pinecone", "google", "cohere", "anthropic", "ollama", "openai", "mistralai", "qdrant", "kg-creation-tools", "sentence-transformers", "experimental", "examples", "nlp", "fuzzy-matching"]
+provides-extras = ["weaviate", "pinecone", "google", "cohere", "anthropic", "bedrock", "ollama", "openai", "mistralai", "qdrant", "kg-creation-tools", "sentence-transformers", "experimental", "examples", "nlp", "fuzzy-matching"]
 
 [package.metadata.requires-dev]
 dev = [

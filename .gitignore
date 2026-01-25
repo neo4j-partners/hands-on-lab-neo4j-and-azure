@@ -102,3 +102,6 @@ atlassian-ide-plugin.xml
 
 # Claude Code
 .claude/
+
+# Data loading logs
+logs/

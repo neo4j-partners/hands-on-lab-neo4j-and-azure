@@ -49,6 +49,13 @@ From the **project root**:
 uv sync --prerelease=allow
 ```
 
+This project uses a local fork of `neo4j-graphrag-python` for development. If you make changes to the library, force reinstall:
+
+```bash
+# Force reinstall after library changes
+uv pip install --force-reinstall ~/projects/neo4j-graphrag-python
+```
+
 ### 4. Test Connections
 
 ```bash
@@ -56,31 +63,55 @@ cd financial_data_load
 uv run python src/test_connection.py
 ```
 
-### 5. Load Full Dataset (Optional)
+### 5. Load Full Dataset
 
-To load all SEC 10-K filings at once using the SimpleKGPipeline:
+Load all SEC 10-K filings using the SimpleKGPipeline. Data files are in `financial-data/`:
 
 ```bash
 cd financial_data_load
 
-# Load all PDFs (requires data in ~/projects/workshops/workshop-financial-data)
-uv run python full_data_load.py
+# Test with 1 PDF first (recommended)
+uv run python full_data_load.py --limit 1 --clear
 
-# Load only 2 PDFs for testing
-uv run python full_data_load.py --limit 2
+# Load all 8 PDFs
+uv run python full_data_load.py --clear
 
-# Clear database and reload
-uv run python full_data_load.py --clear --limit 2
+# Options
+uv run python full_data_load.py --help
 ```
 
-This automated pipeline:
-- Loads company metadata from CSV
-- Processes PDFs through SimpleKGPipeline (entity extraction + embeddings)
-- Creates Company, RiskFactor, Product, Executive, FinancialMetric nodes
-- Creates AssetManager holdings relationships
-- Prints a detailed graph summary when complete
+**Options:**
+| Flag | Description |
+|------|-------------|
+| `--limit N` | Process only N PDFs (for testing) |
+| `--clear` | Clear database before loading |
+| `--skip-metadata` | Skip loading CSV metadata (Company, AssetManager) |
 
-### 6. Run Workshop Solutions
+**Pipeline Flow:**
+1. Loads company metadata from `financial-data/Company_Filings.csv`
+2. Creates Company nodes with uniqueness constraints
+3. Processes PDFs through SimpleKGPipeline:
+   - Chunks documents (27 chunks per PDF typical)
+   - Generates embeddings (1536 dimensions via text-embedding-ada-002)
+   - Extracts entities using GPT-4o (RiskFactor, Product, Executive, FinancialMetric)
+   - Creates relationships (FACES_RISK, OFFERS, HAS_EXECUTIVE, etc.)
+4. Creates AssetManager nodes and OWNS relationships from `Asset_Manager_Holdings.csv`
+
+**Expected Output (1 PDF):**
+```
+NODE COUNTS BY LABEL:
+   __KGBuilder__: 170
+   __Entity__: 142
+   RiskFactor: 67
+   Product: 58
+   Chunk: 27
+   Company: 12
+   ...
+
+TOTALS: 505 nodes, 310 relationships
+```
+
+### 6. Run Workshop Solutions (Alternative)
 
 ```bash
 # Interactive menu
@@ -152,6 +183,10 @@ financial_data_load/
 │   └── main.parameters.json
 ├── scripts/
 │   └── setup_azure.sh      # Azure region configuration
+├── financial-data/         # SEC 10-K data files
+│   ├── Company_Filings.csv
+│   ├── Asset_Manager_Holdings.csv
+│   └── form10k-sample/     # PDF files (8 companies)
 ├── setup_env.py            # Sync azd outputs to .env
 ├── full_data_load.py       # Full dataset loader (SimpleKGPipeline)
 ├── main.py                 # Workshop solution runner

@@ -25,10 +25,11 @@ from azure.identity.aio import AzureCliCredential
 from config import get_neo4j_driver, get_agent_config, get_embedder
 
 # Retrieval query for vector search with graph context
+# Path: (Company)-[:FROM_CHUNK]->(Chunk) - companies mentioned in chunks
 RETRIEVAL_QUERY: Final[str] = """
-MATCH (node)-[:FROM_DOCUMENT]-(doc:Document)-[:FILED]-(company:Company)
+OPTIONAL MATCH (company:Company)-[:FROM_CHUNK]->(node)
 OPTIONAL MATCH (company)-[:FACES_RISK]->(risk:RiskFactor)
-WITH node, score, company, collect(risk.name)[0..20] AS risks
+WITH node, score, company, collect(DISTINCT risk.name)[0..20] AS risks
 WHERE score IS NOT NULL
 RETURN
     node.text AS text,

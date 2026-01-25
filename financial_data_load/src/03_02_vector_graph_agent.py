@@ -37,10 +37,11 @@ YIELD node, score
 - `score`: The similarity score (0.0 to 1.0) of the vector match.
 """
 # Retrieval query that enriches vector search results with company and risk context
+# Path: (Company)-[:FROM_CHUNK]->(Chunk) - companies mentioned in chunks
 RETRIEVAL_QUERY: Final[str] = """
-MATCH (node)-[:FROM_DOCUMENT]-(doc:Document)-[:FILED]-(company:Company)
+OPTIONAL MATCH (company:Company)-[:FROM_CHUNK]->(node)
 OPTIONAL MATCH (company)-[:FACES_RISK]->(risk:RiskFactor)
-WITH node, score, company, collect(risk.name)[0..20] AS risks
+WITH node, score, company, collect(DISTINCT risk.name)[0..20] AS risks
 WHERE score IS NOT NULL
 RETURN
     node.text AS text,

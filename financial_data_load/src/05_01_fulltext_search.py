@@ -85,6 +85,8 @@ def search_with_graph_traversal(driver: GraphDatabase.driver, company_name: str)
     """Search company and traverse to related entities."""
     print(f"\n=== Graph Traversal: '{company_name}' ===")
     with driver.session() as session:
+        # Traverse from Company to Documents via chunks
+        # Path: (Company)-[:FROM_CHUNK]->(Chunk)-[:FROM_DOCUMENT]->(Document)
         result = session.run(
             """
             CALL db.index.fulltext.queryNodes('search_entities', $term)
@@ -93,11 +95,11 @@ def search_with_graph_traversal(driver: GraphDatabase.driver, company_name: str)
             WITH node AS company, score
             LIMIT 1
 
-            OPTIONAL MATCH (company)-[:FILED]->(doc:Document)
-            WITH company, score, COLLECT(DISTINCT doc.path)[0..10] AS documents
+            OPTIONAL MATCH (company)-[:FROM_CHUNK]->(chunk:Chunk)-[:FROM_DOCUMENT]->(doc:Document)
+            WITH company, score, collect(DISTINCT doc.path)[0..10] AS documents
 
             OPTIONAL MATCH (company)-[:FACES_RISK]->(risk:RiskFactor)
-            WITH company, score, documents, COLLECT(DISTINCT risk.name)[0..5] AS risks
+            WITH company, score, documents, collect(DISTINCT risk.name)[0..5] AS risks
 
             RETURN company.name AS company, score, documents, risks
             """,
@@ -121,6 +123,8 @@ def hybrid_search(driver: GraphDatabase.driver, keyword: str) -> None:
     """Hybrid search combining fulltext with graph patterns."""
     print(f"\n=== Hybrid Search: '{keyword}' ===")
     with driver.session() as session:
+        # Find company by keyword, then get chunks where it was mentioned
+        # Path: (Company)-[:FROM_CHUNK]->(Chunk)
         result = session.run(
             """
             CALL db.index.fulltext.queryNodes('search_entities', $keyword)
@@ -130,6 +134,7 @@ def hybrid_search(driver: GraphDatabase.driver, keyword: str) -> None:
             LIMIT 1
 
             MATCH (entity)-[:FROM_CHUNK]->(chunk:Chunk)
+            WHERE chunk.text IS NOT NULL
 
             RETURN entity.name AS company,
                    keyword_score,

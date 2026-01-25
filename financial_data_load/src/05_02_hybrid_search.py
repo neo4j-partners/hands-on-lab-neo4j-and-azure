@@ -32,32 +32,43 @@ from neo4j_graphrag.types import RetrieverResultItem
 from config import get_neo4j_driver, get_embedder
 
 # Index names
+# HybridRetriever requires both indexes to be on the SAME node type
+# - Vector index: on Chunk.embedding (semantic similarity)
+# - Fulltext index: on Chunk.text (keyword matching)
 VECTOR_INDEX = "chunkEmbeddings"
-FULLTEXT_INDEX = "search_entities"
+FULLTEXT_INDEX = "chunkText"
 
 # Retrieval query for HybridCypherRetriever
 # This runs AFTER hybrid search finds matching Chunk nodes
 # 'node' = matched Chunk, 'score' = combined hybrid score
 RETRIEVAL_QUERY = """
-// Traverse from matched chunk to document and company
-MATCH (node)-[:FROM_DOCUMENT]->(doc:Document)<-[:FILED]-(company:Company)
+// Get document from chunk
+MATCH (node)-[:FROM_DOCUMENT]->(doc:Document)
 
-// Get risk factors for context
+// Find companies mentioned in this chunk
+OPTIONAL MATCH (company:Company)-[:FROM_CHUNK]->(node)
+
+// Get risk factors for context (if company found)
 OPTIONAL MATCH (company)-[:FACES_RISK]->(risk:RiskFactor)
 
-// Get products mentioned
-OPTIONAL MATCH (company)-[:MENTIONS]->(product:Product)
+// Get products mentioned in same chunk
+OPTIONAL MATCH (product:Product)-[:FROM_CHUNK]->(node)
 
 // Explicit grouping before aggregations for modern Cypher compliance
-WITH node.text AS text, score, company.name AS company, doc.path AS document, risk, product
+WITH node.text AS text,
+     score,
+     company.name AS company,
+     doc.path AS document,
+     collect(DISTINCT risk.name)[0..3] AS risks,
+     collect(DISTINCT product.name)[0..3] AS products
 
 // Return enriched results
 RETURN text,
        score,
        company,
        document,
-       collect(DISTINCT risk.name)[0..3] AS risks,
-       collect(DISTINCT product.name)[0..3] AS products
+       risks,
+       products
 """
 
 
@@ -218,14 +229,24 @@ def main() -> None:
 
         # Check indexes exist
         with driver.session() as session:
-            # Check fulltext index
+            # Check fulltext index on Chunk.text (required for hybrid search)
             result = session.run(
                 "SHOW FULLTEXT INDEXES YIELD name WHERE name = $name RETURN name",
                 name=FULLTEXT_INDEX,
             )
             if not result.single():
                 print(f"\nError: Fulltext index '{FULLTEXT_INDEX}' not found.")
-                print("Run: uv run python full_data_load.py")
+                print("Run: uv run python full_data_load.py to create indexes.")
+                return
+
+            # Check vector index
+            result = session.run(
+                "SHOW VECTOR INDEXES YIELD name WHERE name = $name RETURN name",
+                name=VECTOR_INDEX,
+            )
+            if not result.single():
+                print(f"\nError: Vector index '{VECTOR_INDEX}' not found.")
+                print("Run: uv run python full_data_load.py to create indexes.")
                 return
 
         # Create HybridRetriever
