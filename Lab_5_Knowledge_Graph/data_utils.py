@@ -1,12 +1,121 @@
-"""Utilities for data loading and Neo4j operations."""
+"""Utilities for data loading, Neo4j operations, and AI services."""
 
-import sys
+import asyncio
 from pathlib import Path
+
+from azure.identity import AzureCliCredential, DefaultAzureCredential
+from dotenv import load_dotenv
 from neo4j import GraphDatabase
+from neo4j_graphrag.embeddings import OpenAIEmbeddings
+from neo4j_graphrag.experimental.components.text_splitters.fixed_size_splitter import FixedSizeSplitter
+from neo4j_graphrag.llm import OpenAILLM
+from pydantic import Field, computed_field
+from pydantic_settings import BaseSettings, SettingsConfigDict
 
-sys.path.insert(0, '../new-workshops/solutions')
-from config import Neo4jConfig
+# Load configuration from project root
+_config_file = Path(__file__).parent.parent / "CONFIG.txt"
+load_dotenv(_config_file)
 
+
+# =============================================================================
+# Configuration Classes
+# =============================================================================
+
+class Neo4jConfig(BaseSettings):
+    """Neo4j configuration loaded from environment variables."""
+
+    model_config = SettingsConfigDict(env_prefix="", extra="ignore")
+
+    uri: str = Field(validation_alias="NEO4J_URI")
+    username: str = Field(validation_alias="NEO4J_USERNAME")
+    password: str = Field(validation_alias="NEO4J_PASSWORD")
+
+
+class AgentConfig(BaseSettings):
+    """Agent configuration loaded from environment variables."""
+
+    model_config = SettingsConfigDict(env_prefix="", extra="ignore")
+
+    project_endpoint: str = Field(validation_alias="AZURE_AI_PROJECT_ENDPOINT")
+    model_name: str = Field(default="gpt-4o-mini", validation_alias="AZURE_AI_MODEL_NAME")
+    embedding_name: str = Field(
+        default="text-embedding-ada-002",
+        validation_alias="AZURE_AI_EMBEDDING_NAME",
+    )
+
+    @computed_field
+    @property
+    def inference_endpoint(self) -> str:
+        """Get the model inference endpoint from project endpoint."""
+        if "/api/projects/" in self.project_endpoint:
+            base = self.project_endpoint.split("/api/projects/")[0]
+            return f"{base}/models"
+        return self.project_endpoint
+
+
+# =============================================================================
+# Azure Authentication
+# =============================================================================
+
+def _get_azure_token() -> str:
+    """Get Azure token for cognitive services.
+
+    Tries AzureCliCredential first (for Dev Containers after 'az login'),
+    then falls back to DefaultAzureCredential for other environments.
+    """
+    scope = "https://cognitiveservices.azure.com/.default"
+
+    try:
+        credential = AzureCliCredential()
+        token = credential.get_token(scope)
+        return token.token
+    except Exception:
+        pass
+
+    try:
+        credential = DefaultAzureCredential()
+        token = credential.get_token(scope)
+        return token.token
+    except Exception as e:
+        raise RuntimeError(
+            "Azure authentication failed. Please run:\n"
+            "  1. az login --use-device-code\n"
+            "  2. Restart your Jupyter kernel\n\n"
+            f"Original error: {e}"
+        ) from e
+
+
+# =============================================================================
+# AI Services
+# =============================================================================
+
+def get_embedder() -> OpenAIEmbeddings:
+    """Get embedder using Azure AI's OpenAI-compatible endpoint."""
+    config = AgentConfig()
+    token = _get_azure_token()
+
+    return OpenAIEmbeddings(
+        model=config.embedding_name,
+        base_url=config.inference_endpoint,
+        api_key=token,
+    )
+
+
+def get_llm() -> OpenAILLM:
+    """Get LLM using Azure AI's OpenAI-compatible endpoint."""
+    config = AgentConfig()
+    token = _get_azure_token()
+
+    return OpenAILLM(
+        model_name=config.model_name,
+        base_url=config.inference_endpoint,
+        api_key=token,
+    )
+
+
+# =============================================================================
+# Neo4j Connection
+# =============================================================================
 
 class Neo4jConnection:
     """Manages Neo4j database connection."""
@@ -43,15 +152,15 @@ class Neo4jConnection:
         print("Connection closed.")
 
 
+# =============================================================================
+# Data Loading
+# =============================================================================
+
 class DataLoader:
     """Handles loading text data from files."""
 
     def __init__(self, file_path: str):
-        """Initialize with path to data file.
-
-        Args:
-            file_path: Path to the text file to load.
-        """
+        """Initialize with path to data file."""
         self.file_path = Path(file_path)
         self._text = None
 
@@ -70,14 +179,26 @@ class DataLoader:
             "size": len(self.text)
         }
 
-    def split_into_chunks(self, separator: str = "\n\n") -> list[str]:
-        """Split text into chunks by the given separator.
 
-        Args:
-            separator: String to split on. Defaults to double newlines (paragraphs).
+# =============================================================================
+# Text Splitting
+# =============================================================================
 
-        Returns:
-            List of non-empty chunks.
-        """
-        chunks = [chunk.strip() for chunk in self.text.split(separator) if chunk.strip()]
-        return chunks
+def split_text(text: str, chunk_size: int = 500, chunk_overlap: int = 50) -> list[str]:
+    """Split text into chunks using FixedSizeSplitter.
+
+    Args:
+        text: Text to split
+        chunk_size: Maximum characters per chunk
+        chunk_overlap: Characters to overlap between chunks
+
+    Returns:
+        List of chunk text strings
+    """
+    splitter = FixedSizeSplitter(
+        chunk_size=chunk_size,
+        chunk_overlap=chunk_overlap,
+        approximate=True
+    )
+    result = asyncio.run(splitter.run(text))
+    return [chunk.text for chunk in result.chunks]
