@@ -4,9 +4,13 @@
 
 Build Generative AI & GraphRAG Agents with Neo4j and Microsoft Foundry
 
+## Landing Page
+
+Join us for an immersive hands-on workshop with Neo4j and GenAI agents without writing any code. You'll set up a Neo4j Aura instance, explore a pre-built knowledge graph of SEC 10-K financial filings, and build AI agents that use GraphRAG with both Neo4j Aura Agents and Microsoft Foundry's visual tools. For those ready to go deeper, we'll dive into a developer section where you'll build and deploy intelligent multi-tool agents using the Microsoft Agent Framework. Whether you're a seasoned developer, an AI enthusiast, or just curious about the future of GenAI, this is your hands-on introduction to explainable, relationship-aware AI.
+
 ## Workshop Overview
 
-This workshop equips participants with practical skills to combine Neo4j's graph database platform with Microsoft Foundry AI capabilities to build explainable, context-aware AI applications using GraphRAG and agentic patterns.
+This workshop will give participants real-world experience with combining Neo4j's graph database platform with Microsoft Foundry AI capabilities to build explainable, context-aware AI applications using GraphRAG and agentic patterns.
 
 Participants will work with a real-world dataset—SEC 10-K financial filings—to experience how knowledge graphs enhance AI applications with structured context and relationship-aware retrieval.
 
@@ -75,7 +79,7 @@ Dive into Python-based development to build production-ready GraphRAG applicatio
   - Launch GitHub Codespace
   - Configure environment variables
   - Deploy Azure infrastructure
-- **Lab 5 – Building a Knowledge Graph**:
+- **Lab 5 – Building a Knowledge Graph for GraphRAG**:
   - Load documents and create chunk embeddings
   - Implement VectorRetriever for semantic search
   - Use VectorCypherRetriever for graph-enhanced context
@@ -101,11 +105,11 @@ Take your GraphRAG skills to the next level with advanced retrieval techniques. 
 
 #### Labs
 
-- **Lab 7 – Advanced Retrievers**:
+- **Lab 7 – Advanced GraphRAG Retrievers**:
   - Implement Text2Cypher for natural language to Cypher translation
   - Use LLMs for automated entity extraction
   - Build knowledge graphs from unstructured text
-- **Lab 8 – Hybrid Search**:
+- **Lab 8 – GraphRAG for Hybrid Search**:
   - Create fulltext indexes for keyword search
   - Implement HybridRetriever combining keyword and semantic search
   - Use HybridCypherRetriever for graph-enhanced hybrid results
