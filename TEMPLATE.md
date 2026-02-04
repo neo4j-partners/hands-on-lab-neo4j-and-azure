@@ -1,4 +1,4 @@
-# Neo4j GenAI Hands-On Lab with Microsoft Foundry Program Template, 2026
+# Neo4j And Azure Lab - GraphRAG Workshop Program Template, 2026
 
 ## Program Name
 

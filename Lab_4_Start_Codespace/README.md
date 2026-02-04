@@ -12,7 +12,7 @@ Before starting, make sure you have:
 
 Click the buttons below to start your development environment:
 
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/neo4j-partners/hands-on-lab-neo4j-and-azure)
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/neo4j-partners/neo4j-and-azure-lab)
 
 ## What is a GitHub Codespace?
 
@@ -86,7 +86,7 @@ Before starting, ensure you have:
 
 ### Step 1: Download the Project
 
-1. Go to https://github.com/neo4j-partners/hands-on-lab-neo4j-and-azure
+1. Go to https://github.com/neo4j-partners/neo4j-and-azure-lab
 2. Click the green "Code" button
 3. Select "Download ZIP" (or clone with `git clone`)
 4. Extract the ZIP file to a location on your computer

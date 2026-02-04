@@ -22,7 +22,7 @@ Once the entered information is validated, you will receive your own AWS and Neo
 ![Resource Group Information](images/oneblink_rg.png)
 
 ## Improving the Labs
-As you work through these labs, we'd really appreciate your feedback.  One way to help us improve is to open an issue by going [here](https://github.com/neo4j-partners/hands-on-lab-neo4j-and-azure/issues).  Outright bugs, usability suggestions, and general comments are all appreciated.  Pull requests are great too!
+As you work through these labs, we'd really appreciate your feedback.  One way to help us improve is to open an issue by going [here](https://github.com/neo4j-partners/neo4j-and-azure-lab/issues).  Outright bugs, usability suggestions, and general comments are all appreciated.  Pull requests are great too!
 
 ## Sign into Azure
 We're going to sign into a new Azure account.  You may already have other Azure accounts.  If you use Chrome, you might consider using a guest profile for these exercises.  That's not mandatory though and other browsers work fine too.

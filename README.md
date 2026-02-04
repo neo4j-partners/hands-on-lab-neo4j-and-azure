@@ -1,4 +1,4 @@
-# hands-on-lab-neo4j-and-azure
+# Neo4j And Azure Lab
 Neo4j is the [leading graph database](https://db-engines.com/en/ranking/graph+dbms) vendor.  We've worked closely with Microsoft Azure engineering for years.  Our products, AuraDB and AuraDS are offered as managed services on Azure.  Neo4j Aura Professional Edition is offered in the [Azure Marketplace](https://portal.azure.com/#create/neo4j.neo4j_aura_professional).
 
 In this hands-on lab, you'll learn about Neo4j, Microsoft Foundry, and the [Microsoft Agent Framework](https://github.com/microsoft/agent-framework). The lab is designed for data scientists, data engineers, and AI developers who want to master GraphRAG (Graph Retrieval-Augmented Generation) techniques and build production-ready agentic AI applications.
@@ -216,10 +216,10 @@ Before starting, ensure you have:
 
 ### Step 1: Download the Project
 
-1. Go to https://github.com/neo4j-partners/hands-on-lab-neo4j-and-azure
+1. Go to https://github.com/neo4j-partners/neo4j-and-azure-lab
 2. Click the green "Code" button
 3. Select "Download ZIP"
-4. Extract the ZIP file to a location on your computer (e.g., `C:\Projects\hands-on-lab-neo4j-and-azure`)
+4. Extract the ZIP file to a location on your computer (e.g., `C:\Projects\neo4j-and-azure-lab`)
 
 ### Step 2: Install Python 3.12
 
@@ -337,7 +337,7 @@ Install the following extensions for an optimal development experience:
 
 1. Open VS Code
 2. Click "File" > "Open Folder"
-3. Navigate to where you extracted the project (e.g., `C:\Projects\hands-on-lab-neo4j-and-azure`)
+3. Navigate to where you extracted the project (e.g., `C:\Projects\neo4j-and-azure-lab`)
 4. Click "Select Folder"
 
 ### Step 9: Set Up Python Environment

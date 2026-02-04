@@ -1,5 +1,5 @@
 {
-    "name": "hands-on-lab-neo4j-and-azure",
+    "name": "neo4j-and-azure-lab",
     "image": "mcr.microsoft.com/devcontainers/python:3.12-bookworm",
     "forwardPorts": [8000],
     "features": {

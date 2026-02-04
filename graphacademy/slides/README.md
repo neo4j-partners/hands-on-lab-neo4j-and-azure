@@ -345,7 +345,7 @@ Or create your own custom theme!
 All slides reference images in the `../images/` directory. Make sure the images folder is at the same level as the graphacademy folder:
 
 ```
-hands-on-lab-neo4j-and-azure/
+neo4j-and-azure-lab/
 ├── images/              ← Images here
 └── graphacademy/
     └── slides/          ← Slides here
