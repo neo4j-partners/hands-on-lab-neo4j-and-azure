@@ -1,6 +1,8 @@
-# Lab 8 - Hybrid Search (Optional)
+# Lab 8 - Hybrid Search
 
-In this optional lab, you'll learn how to combine fulltext (keyword) search with vector (semantic) search for improved retrieval accuracy. Hybrid search gives you the precision of keyword matching with the semantic understanding of vector search.
+> **Advanced Lab** - This lab builds on the core workshop (Labs 4-6) with advanced search techniques.
+
+In this lab, you'll learn how to combine fulltext (keyword) search with vector (semantic) search for improved retrieval accuracy. Hybrid search gives you the precision of keyword matching with the semantic understanding of vector search.
 
 ## Prerequisites
 
@@ -69,7 +71,18 @@ Combine vector and fulltext search for best-of-both-worlds retrieval:
 
 Congratulations on completing all the labs! You have learned:
 
-- **Part 1 (No-Code)**: Neo4j Aura setup, Aura Agents, and Microsoft Foundry Agents
-- **Part 2 (Coding)**: Building knowledge graphs, GraphRAG retrievers, intelligent agents, and hybrid search
+**Part 1 - No-Code (Labs 0-3):**
+- Neo4j Aura setup
+- Aura Agents
+- Microsoft Foundry Agents
+
+**Part 2 - Core Labs (Labs 4-6):**
+- Codespace setup and environment configuration
+- Building knowledge graphs with embeddings
+- Creating intelligent Foundry Agents with graph tools
+
+**Part 2 - Advanced Labs (Labs 7-8):**
+- Text2Cypher and entity extraction for advanced retrieval
+- Hybrid search combining keyword and semantic matching
 
 You now have the skills to build production-ready GraphRAG applications that combine the power of knowledge graphs with large language models.

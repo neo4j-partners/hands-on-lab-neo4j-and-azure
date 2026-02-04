@@ -1,6 +1,6 @@
-# Lab 7 - GraphRAG Agents
+# Lab 6 - Foundry Agents
 
-In this lab, you'll learn how to build intelligent agents that use your Neo4j knowledge graph as a tool. You'll start with a simple agent that can explore the graph schema, then progressively add more sophisticated tools including vector search with graph traversal and natural language to Cypher query generation.
+In this lab, you'll learn how to build intelligent agents using Microsoft Foundry that use your Neo4j knowledge graph as a tool. You'll start with a simple agent that can explore the graph schema, then progressively add more sophisticated tools including vector search with graph traversal and natural language to Cypher query generation.
 
 ## Prerequisites
 
@@ -9,7 +9,6 @@ Before starting, make sure you have:
 - Completed **Lab 1** (Neo4j Aura setup)
 - Completed **Lab 4** (Codespace setup with environment variables configured)
 - Completed **Lab 5** (Knowledge graph built with embeddings)
-- Completed **Lab 6** (Understanding of GraphRAG retrievers)
 
 ## Lab Overview
 
@@ -91,9 +90,11 @@ Menu items 8, 9, and 10 correspond to notebooks 1, 2, and 3 respectively.
 
 ## Next Steps
 
-After completing this lab, you can optionally continue to [Lab 8 - Hybrid Search](../Lab_8_Hybrid_Search) to learn advanced search techniques that combine keyword and semantic search.
-
-**Congratulations!** You have completed the main workshop. You now know how to:
+**Congratulations!** You have completed the core workshop (Labs 4-6). You now know how to:
 - Build knowledge graphs from unstructured documents
-- Implement multiple retrieval strategies (Vector, VectorCypher, Text2Cypher)
+- Implement vector and graph-enhanced retrieval strategies
 - Create intelligent agents that automatically choose the right tool for each question
+
+For more advanced topics, continue to the **Advanced Labs**:
+- [Lab 7 - Advanced Retrievers](../Lab_7_Retrievers) - Text2Cypher, entity extraction, and full dataset exploration
+- [Lab 8 - Hybrid Search](../Lab_8_Hybrid_Search) - Combining keyword and semantic search

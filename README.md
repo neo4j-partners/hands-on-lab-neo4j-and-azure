@@ -165,7 +165,7 @@ You'll need a laptop with a web browser. Your browser will need to be able to ac
 
 ---
 
-### Part 2 - Coding and Advanced Development
+### Part 2 - Core Labs
 *This section involves Python programming using Jupyter notebooks.*
 
 * [Lab 4 - Start Codespace](Lab_4_Start_Codespace) (10 min)
@@ -177,24 +177,27 @@ You'll need a laptop with a web browser. Your browser will need to be able to ac
     * Retrieval Augmented Generation
     * Semantic Search
 * [Lab 5 - Building a Knowledge Graph](Lab_5_Knowledge_Graph) (30 min)
-    * Data Loading Fundamentals
-    * Embeddings and Vector Search
-    * Entity Extraction
-    * Loading the Full Dataset
+    * Data Loading and Embeddings
+    * GraphRAG Retrievers (Vector and VectorCypher)
 * Break (5 min)
 * [Lecture - Microsoft Foundry](https://docs.google.com/presentation/d/1KPHoVJivbinHg-UtrnTIUbMiFHB8mPEnDO0v0OvvcPM/edit?usp=sharing) (15 min)
     * What is Microsoft Foundry?
     * Generative AI
-* [Lab 6 - GraphRAG Retrievers](Lab_6_Retrievers) (30 min)
-    * Vector Retriever for Semantic Search
-    * Vector Cypher Retriever for Graph-Enhanced Context
-    * Text2Cypher Retriever for Natural Language Queries
-* Break (5 min)
-* [Lab 7 - GraphRAG Agents](Lab_7_Agents) (30 min)
+* [Lab 6 - Foundry Agents](Lab_6_Foundry_Agents) (30 min)
     * Simple Schema Agent with Microsoft Agent Framework
     * Vector + Graph Agent for Semantic Search with Context
     * Multi-Tool Agent with Text2Cypher
-* [Lab 8 - Hybrid Search](Lab_8_Hybrid_Search) (20 min, Optional)
+
+---
+
+### Part 2 - Advanced Labs
+*Optional advanced topics building on the core workshop.*
+
+* [Lab 7 - Advanced Retrievers](Lab_7_Retrievers) (30 min)
+    * Text2Cypher Retriever for Natural Language Queries
+    * Entity Extraction
+    * Working with the Full Dataset
+* [Lab 8 - Hybrid Search](Lab_8_Hybrid_Search) (20 min)
     * Fulltext Search with Neo4j indexes
     * Combining keyword and semantic search
 * [Questions and Next Steps](Questions%20and%20Next%20Steps.md) (5 min)

@@ -1,4 +1,6 @@
-# Lab 6 - GraphRAG Retrievers
+# Lab 7 - Advanced Retrievers
+
+> **Advanced Lab** - This lab builds on the core workshop (Labs 4-6) with more advanced retrieval techniques.
 
 In this lab, you'll learn how to use natural language to query your knowledge graph, extract structured entities from text, and work with a complete dataset. You'll use Text2Cypher to convert questions into Cypher queries, build richer graphs through entity extraction, and see the full power of GraphRAG with real-world data.
 
@@ -9,6 +11,7 @@ Before starting, make sure you have:
 - Completed **Lab 1** (Neo4j Aura setup)
 - Completed **Lab 4** (Codespace setup with environment variables configured)
 - Completed **Lab 5** (Knowledge graph built with embeddings)
+- Completed **Lab 6** (Foundry Agents)
 
 ## Lab Overview
 
@@ -65,4 +68,4 @@ Menu items 5, 6, and 7 correspond to notebooks 1, 2, and 3 respectively.
 
 ## Next Steps
 
-After completing this lab, continue to [Lab 7 - GraphRAG Agents](../Lab_7_Agents) to learn how to build intelligent agents that can automatically select the right retriever based on the question.
+After completing this lab, continue to [Lab 8 - Hybrid Search](../Lab_8_Hybrid_Search) to learn how to combine keyword and semantic search for improved retrieval accuracy.
