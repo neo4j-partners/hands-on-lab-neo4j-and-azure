@@ -15,7 +15,7 @@ Enter your email, the event code from the information sheet, and the validation 
 
 ![](images/07.png)
 
-Once the entered information is validated, you will receive your own AWS and Neo4j accounts. Please refrain from sharing this account information with fellow attendees, as it is specifically assigned to you. Remember to save this information, as you will need it until the end of the lab. These accounts will be terminated by the end of the day.
+Once the entered information is validated, you will receive your own Azure and Neo4j accounts. Please refrain from sharing this account information with fellow attendees, as it is specifically assigned to you. Remember to save this information, as you will need it until the end of the lab. These accounts will be terminated by the end of the day.
 
 **Important:** Leave this window open or copy the Resource Group name from this screen now, as you will need it for the upcoming labs:
 
