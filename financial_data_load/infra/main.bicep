@@ -17,7 +17,7 @@ param skipRoleAssignments bool = false
 
 // Chat completion model
 @description('Name of the chat model to deploy')
-param chatModelName string = 'gpt-5.2'
+param chatModelName string = 'gpt-4o'
 @description('Version of the chat model to deploy')
 param chatModelVersion string = '2025-12-11'
 @description('SKU for the chat deployment')
@@ -85,7 +85,7 @@ resource aiProject 'Microsoft.CognitiveServices/accounts/projects@2025-04-01-pre
   }
 }
 
-// Chat model deployment (gpt-5.2)
+// Chat model deployment (gpt-4o)
 resource chatDeployment 'Microsoft.CognitiveServices/accounts/deployments@2024-10-01' = {
   parent: aiServices
   name: chatModelName

@@ -127,6 +127,6 @@ NEO4J_PASSWORD=<password>
 Auto-populated by `setup_env.py`:
 ```
 AZURE_AI_PROJECT_ENDPOINT=<foundry endpoint>
-AZURE_AI_MODEL_NAME=gpt-5.2
+AZURE_AI_MODEL_NAME=gpt-4o
 AZURE_AI_EMBEDDING_NAME=text-embedding-ada-002
 ```

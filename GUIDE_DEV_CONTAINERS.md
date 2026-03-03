@@ -52,7 +52,7 @@ For more details, see the [VS Code Dev Containers documentation](https://code.vi
 
 3. **View Deployed Models in Microsoft Foundry Portal:**
 
-   This creates a Microsoft Foundry project with two model deployments: **gpt-5.2** (for chat completions) and **text-embedding-ada-002** (for vector embeddings). Open [ai.azure.com](https://ai.azure.com/) in the same browser where you're logged into Azure to view your project.
+   This creates a Microsoft Foundry project with two model deployments: **gpt-4o** (for chat completions) and **text-embedding-ada-002** (for vector embeddings). Open [ai.azure.com](https://ai.azure.com/) in the same browser where you're logged into Azure to view your project.
 
    Click **Models** in the left sidebar to see your deployments:
 

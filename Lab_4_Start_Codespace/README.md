@@ -8,12 +8,6 @@ Before starting, make sure you have:
 - Your **Azure Resource Group name** from Lab 0
 - Your **Neo4j Aura credentials** (URI, username, password) from Lab 1
 
-## Launch the Codespace
-
-Click the buttons below to start your development environment:
-
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/neo4j-partners/neo4j-and-azure-lab)
-
 ## What is a GitHub Codespace?
 
 A GitHub Codespace is a cloud-hosted development environment that runs in your browser. When you launch a Codespace, GitHub provisions a virtual machine with:
@@ -24,6 +18,24 @@ A GitHub Codespace is a cloud-hosted development environment that runs in your b
 - A terminal with access to run commands
 
 This means you don't need to install anything on your local machine—everything is ready to go in the cloud.
+
+## Codespace Configuration
+
+When you launch the codespace below you will need to have the following values from previous workshop steps:
+
+| Variable | Where to Find It |
+|----------|-----------------|
+| `AZURE_RESOURCE_GROUP` | From [Lab 0](../Lab_0_Sign_In) — the resource group name shown on the registration completion screen (matches your username) |
+| `NEO4J_URI` | From [Lab 1, Step 8](../Lab_1_Aura_Setup/Neo4j_Aura_Signup.md) — the connection URI from the credentials dialog after instance creation |
+| `NEO4J_USERNAME` | From [Lab 1, Step 8](../Lab_1_Aura_Setup/Neo4j_Aura_Signup.md) — typically `neo4j` |
+| `NEO4J_PASSWORD` | From [Lab 1, Step 8](../Lab_1_Aura_Setup/Neo4j_Aura_Signup.md) — from the credentials dialog (or the downloaded credentials file) |
+
+## Launch the Codespace
+
+Click the button below to start your development environment:
+
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/neo4j-partners/neo4j-and-azure-lab)
+
 
 ## Setup
 
@@ -42,7 +54,7 @@ To view your Foundry project:
    ![Foundry Home Page](images/Foundry_Home_Page.png)
 
 2. The deployment created two models:
-   - **gpt-5.2** - for text generation
+   - **gpt-4o** - for text generation
    - **text-embedding-ada-002** - for creating embeddings
 
    ![Foundry Models](images/Foundry_Models.png)
