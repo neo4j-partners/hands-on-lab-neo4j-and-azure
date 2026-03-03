@@ -54,10 +54,10 @@ az login --use-device-code
 
 You will use the Foundry project you created in Lab 3. To find the project endpoint:
 
-1. Go to https://ai.azure.com/
-2. Open your project (the one you created in Lab 3)
-3. On the project **Overview** page, find the **Libraries** section and look under **Foundry**
-4. Copy the **Project endpoint** — it looks like: `https://<resource-name>.services.ai.azure.com/api/projects/<project-name>`
+1. Go to https://ai.azure.com/ and open your project (the one you created in Lab 3)
+2. On the project home page, copy the **Project endpoint** value
+
+![Foundry Home Page](images/Foundry_Home_Page.png)
 
 ### Step 3: Configure Environment Variables
 
@@ -186,7 +186,7 @@ az login
    AZURE_AI_EMBEDDING_NAME=text-embedding-3-small
    ```
 
-   > **Note:** To find your project endpoint, go to https://ai.azure.com/, open your project from Lab 3, and copy the endpoint from **Overview** > **Libraries** > **Foundry**.
+   > **Note:** To find your project endpoint, go to https://ai.azure.com/, open your project from Lab 3, and copy the **Project endpoint** from the project home page.
 
 ### Step 8: Run the Notebooks
 

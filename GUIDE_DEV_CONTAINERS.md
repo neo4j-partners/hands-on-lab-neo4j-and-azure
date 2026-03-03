@@ -20,10 +20,11 @@
 2. **Get your Foundry project endpoint:**
 
    You will use the Foundry project you created in Lab 3. To find the project endpoint:
-   - Go to https://ai.azure.com/
-   - Open your project (the one you created in Lab 3)
-   - On the project **Overview** page, find the **Libraries** section and look under **Foundry**
-   - Copy the **Project endpoint** — it looks like: `https://<resource-name>.services.ai.azure.com/api/projects/<project-name>`
+   - Go to https://ai.azure.com/ and open your project (the one you created in Lab 3)
+   - On the project home page, copy the **Project endpoint** value
+
+   ![Foundry Home Page](Lab_4_Start_Codespace/images/Foundry_Home_Page.png)
+
 
 3. **Configure environment variables:**
 

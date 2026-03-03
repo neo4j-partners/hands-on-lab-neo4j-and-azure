@@ -16,6 +16,11 @@ NEO4J_FULLTEXT_ENTITY_INDEX_NAME=search_entities
 
 # Embedding Configuration
 EMBEDDING_DIMENSIONS=1536
+
+# Azure Configuration — get your project endpoint from the Foundry portal (ai.azure.com)
+AZURE_AI_PROJECT_ENDPOINT=
+AZURE_AI_MODEL_NAME=gpt-4o-mini
+AZURE_AI_EMBEDDING_NAME=text-embedding-3-small
 EOF
         echo "✅ .env created with Neo4j configuration"
     else
