@@ -5,7 +5,7 @@ In this lab, you will spin up a GitHub Codespace instance to use as your develop
 ## Prerequisites
 
 Before starting, make sure you have:
-- Your **Azure Resource Group name** from Lab 0
+- Completed **Lab 3** (Microsoft Foundry setup with model deployments)
 - Your **Neo4j Aura credentials** (URI, username, password) from Lab 1
 
 ## What is a GitHub Codespace?
@@ -25,7 +25,6 @@ When you launch the codespace below you will need to have the following values f
 
 | Variable | Where to Find It |
 |----------|-----------------|
-| `AZURE_RESOURCE_GROUP` | From [Lab 0](../Lab_0_Sign_In) — the resource group name shown on the registration completion screen (matches your username) |
 | `NEO4J_URI` | From [Lab 1, Step 8](../Lab_1_Aura_Setup/Neo4j_Aura_Signup.md) — the connection URI from the credentials dialog after instance creation |
 | `NEO4J_USERNAME` | From [Lab 1, Step 8](../Lab_1_Aura_Setup/Neo4j_Aura_Signup.md) — typically `neo4j` |
 | `NEO4J_PASSWORD` | From [Lab 1, Step 8](../Lab_1_Aura_Setup/Neo4j_Aura_Signup.md) — from the credentials dialog (or the downloaded credentials file) |
@@ -39,25 +38,38 @@ Click the button below to start your development environment:
 
 ## Setup
 
-Once your Codespace has started, it should open a file with setup instructions. You will be prompted to enter your secrets (Resource Group name, Neo4j credentials). After that, run the setup commands provided in the terminal to configure the Azure infrastructure for the remaining labs.
+Once your Codespace has started, it should open a file with setup instructions. You will be prompted to enter your Neo4j credentials. After that, follow the steps below to configure the Azure connection for the remaining labs.
 
 For reference, you can also view the complete setup instructions in [GUIDE_DEV_CONTAINERS.md](../GUIDE_DEV_CONTAINERS.md).
 
-## Viewing Your Microsoft Foundry Project
+### Step 1: Sign in to Azure
 
-After running the `azd up` commands in the codespace, it created a Microsoft Foundry project for you.
+In the Codespace terminal, authenticate with Azure:
 
-To view your Foundry project:
+```bash
+az login --use-device-code
+```
+
+### Step 2: Get Your Foundry Project Endpoint
+
+You will use the Foundry project you created in Lab 3. To find the project endpoint:
 
 1. Go to https://ai.azure.com/
+2. Open your project (the one you created in Lab 3)
+3. On the project **Overview** page, find the **Libraries** section and look under **Foundry**
+4. Copy the **Project endpoint** — it looks like: `https://<resource-name>.services.ai.azure.com/api/projects/<project-name>`
 
-   ![Foundry Home Page](images/Foundry_Home_Page.png)
+### Step 3: Configure Environment Variables
 
-2. The deployment created two models:
-   - **gpt-4o** - for text generation
-   - **text-embedding-ada-002** - for creating embeddings
+Edit the `.env` file in the root of the project and add the following Azure variables (your Neo4j credentials should already be populated):
 
-   ![Foundry Models](images/Foundry_Models.png)
+```
+AZURE_AI_PROJECT_ENDPOINT=<paste your project endpoint here>
+AZURE_AI_MODEL_NAME=gpt-4o-mini
+AZURE_AI_EMBEDDING_NAME=text-embedding-ada-002
+```
+
+> **Note:** Set `AZURE_AI_MODEL_NAME` to whichever model you deployed in Lab 3 (`gpt-4o-mini` or `gpt-4o`).
 
 ## Running the Notebooks
 
@@ -140,23 +152,12 @@ After installation, sign in:
 az login
 ```
 
-### Step 5: Install Azure Developer CLI (azd)
-
-- **Windows**: `winget install microsoft.azd`
-- **macOS**: `brew install azure/azd/azd`
-- **Linux**: `curl -fsSL https://aka.ms/install-azd.sh | bash`
-
-After installation, sign in:
-```bash
-azd auth login
-```
-
-### Step 6: Install Visual Studio Code
+### Step 5: Install Visual Studio Code
 
 1. Download VS Code from https://code.visualstudio.com/
 2. Install the **Python** and **Jupyter** extensions from the Extensions marketplace
 
-### Step 7: Set Up the Project
+### Step 6: Set Up the Project
 
 1. Open the project folder in VS Code
 2. Open a terminal and create the Python environment:
@@ -168,44 +169,26 @@ azd auth login
    - Type "Python: Select Interpreter"
    - Choose the interpreter from the `.venv` folder
 
-### Step 8: Configure Environment Variables
+### Step 7: Configure Environment Variables
 
 1. Copy the sample environment file:
    ```bash
    cp .env.sample .env
    ```
-2. Edit `.env` and add your Neo4j credentials:
+2. Edit `.env` and add your Neo4j credentials and Azure Foundry endpoint (from Lab 3):
    ```
    NEO4J_URI=neo4j+s://xxxxx.databases.neo4j.io
    NEO4J_USERNAME=neo4j
    NEO4J_PASSWORD=your-password-here
+
+   AZURE_AI_PROJECT_ENDPOINT=https://<resource-name>.services.ai.azure.com/api/projects/<project-name>
+   AZURE_AI_MODEL_NAME=gpt-4o-mini
+   AZURE_AI_EMBEDDING_NAME=text-embedding-ada-002
    ```
 
-### Step 9: Deploy Azure Infrastructure
+   > **Note:** To find your project endpoint, go to https://ai.azure.com/, open your project from Lab 3, and copy the endpoint from **Overview** > **Libraries** > **Foundry**.
 
-1. Initialize the Azure Developer environment:
-   ```bash
-   azd env new
-   # Enter an environment name (e.g., "dev")
-   ```
-
-2. Set your Azure location and resource group:
-   ```bash
-   azd env set AZURE_LOCATION eastus2
-   azd env set AZURE_RESOURCE_GROUP your-resource-group-name
-   ```
-
-3. Deploy the infrastructure:
-   ```bash
-   azd up
-   ```
-
-4. Sync Azure configuration to your `.env` file:
-   ```bash
-   uv run setup_env.py
-   ```
-
-### Step 10: Run the Notebooks
+### Step 8: Run the Notebooks
 
 1. Navigate to a lab folder (e.g., `Lab_6_Context_Providers`)
 2. Open a notebook file (e.g., `01_data_loading.ipynb`)
@@ -219,7 +202,6 @@ azd auth login
 | Python version is not 3.12 | Ensure Python 3.12.x is installed and in your PATH |
 | `uv` command not found | Close and reopen your terminal |
 | Azure CLI authentication fails | Run `az logout` then `az login` again |
-| `azd up` fails with region error | Use a supported region: eastus2, swedencentral, or westus2 |
 | Jupyter kernel not found | Run `uv sync` again and restart VS Code |
 | Import errors in notebooks | Ensure you've selected the correct Python interpreter from `.venv` |
 

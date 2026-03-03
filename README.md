@@ -391,7 +391,7 @@ Install the following extensions for an optimal development experience:
    azd env set AZURE_LOCATION eastus2
    ```
 
-3. Set your Azure resource group name:
+3. Set your Azure resource group name (use the existing resource group from Lab 0 that matches your username). **Do not create a new resource group** — a new resource group will not have the correct permissions and your deployment will fail.
    ```powershell
    azd env set AZURE_RESOURCE_GROUP your-resource-group-name
    ```

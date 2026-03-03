@@ -1,5 +1,46 @@
 # Dev Containers & Codespaces Quick Start Guide
 
+> If you are running locally instead of using a Codespace, see [Quick Start: Open in a Local Dev Container](#quick-start-open-in-a-local-dev-container) below.
+
+## Quick Start: GitHub Codespaces
+
+> **Warning:** It may take several minutes for the Codespace to start. After it starts, please wait an additional couple of minutes for all post-install scripts to finish running.  You can tell when it is finished initalizing because the .env will be created in the root directory.
+>
+> ![Wait for Environment to Finish Initializing](Lab_4_Start_Codespace/images/wait_finish_env.png)
+
+> **Note:** The Codespace/Dev Container prepopulates the `.env` file in the project root with Neo4j connection settings. Review these values to ensure they are accurate for your environment. If running outside of a Codespace or Dev Container, you must manually set the Neo4j environment variables (`NEO4J_URI`, `NEO4J_USERNAME`, `NEO4J_PASSWORD`) in your `.env` file.
+
+### Setup Steps
+
+1. **Authenticate with Azure:**
+   ```bash
+   az login --use-device-code
+   ```
+
+2. **Get your Foundry project endpoint:**
+
+   You will use the Foundry project you created in Lab 3. To find the project endpoint:
+   - Go to https://ai.azure.com/
+   - Open your project (the one you created in Lab 3)
+   - On the project **Overview** page, find the **Libraries** section and look under **Foundry**
+   - Copy the **Project endpoint** — it looks like: `https://<resource-name>.services.ai.azure.com/api/projects/<project-name>`
+
+3. **Configure environment variables:**
+
+   Edit the `.env` file in the project root and add the following Azure variables (your Neo4j credentials should already be populated):
+
+   ```
+   AZURE_AI_PROJECT_ENDPOINT=<paste your project endpoint here>
+   AZURE_AI_MODEL_NAME=gpt-4o-mini
+   AZURE_AI_EMBEDDING_NAME=text-embedding-ada-002
+   ```
+
+   > **Note:** Set `AZURE_AI_MODEL_NAME` to whichever model you deployed in Lab 3 (`gpt-4o-mini` or `gpt-4o`).
+
+4. Move on to Lab 5 - Foundry Agents: [Lab_5_Foundry_Agents/README.md](Lab_5_Foundry_Agents/README.md)
+
+---
+
 ## Quick Start: Open in a Local Dev Container
 
 If you have Docker and VS Code installed locally, you can run the workshop in an isolated container volume without using a Codespace:
@@ -9,58 +50,6 @@ If you have Docker and VS Code installed locally, you can run the workshop in an
 3. Open VS Code and run **Dev Containers: Clone Repository in Container Volume...** from the Command Palette (`F1`)
 4. Enter `neo4j-partners/neo4j-and-azure-lab` and press Enter
 5. VS Code will reload, clone the repo, and build the dev container — this may take several minutes
-6. Once the build completes, continue with the [Setup Steps](#setup-steps) below
+6. Once the build completes, continue with the [Setup Steps](#setup-steps) above
 
 For more details, see the [VS Code Dev Containers documentation](https://code.visualstudio.com/docs/devcontainers/containers#_quick-start-open-a-git-repository-or-github-pr-in-an-isolated-container-volume).
-
-## Quick Start: GitHub Codespaces
-
-> **Warning:** It may take several minutes for the Codespace to start. After it starts, please wait an additional couple of minutes for all post-install scripts to finish running.  You can tell when it is finished initalizing because the .env will be created in the root directory.
-> 
-> ![Wait for Environment to Finish Initializing](Lab_4_Start_Codespace/images/wait_finish_env.png)
-
-> **Note:** The Codespace/Dev Container prepopulates the `.env` file in the project root with Neo4j connection settings. Review these values to ensure they are accurate for your environment. If running outside of a Codespace or Dev Container, you must manually set the Neo4j environment variables (`NEO4J_URI`, `NEO4J_USERNAME`, `NEO4J_PASSWORD`) in your `.env` file.
-
-### Setup Steps
-
-1. **Run in terminal:**
-   ```bash
-   # Authenticate with Azure
-   az login --use-device-code
-   azd auth login --use-device-code
-
-   # Select Azure region and initialize environment
-   ./scripts/setup_azure.sh
-  
-   azd env set SKIP_ROLE_ASSIGNMENTS true
-   
-   # Deploy
-   azd up
-   ```
-
-   > **Note:** The setup script clears the `.azure/` directory and Azure-related settings from `.env` to ensure a fresh deployment. Neo4j settings in `.env` are preserved. See [docs/AZ_CLI_GUIDE.md](docs/AZ_CLI_GUIDE.md) for details.
-   
-2. **Follow the prompts:**
-   - **Resource group:** Select the resource group from the setup in Lab 0 and is the same as your Azure Username. 
-
-3. ```
-   ? Select an Azure Subscription: 1. Your Subscription
-   ? Pick a resource group to use:
-     1. Create a new resource group
-   > 2. your-existing-resource-group
-   ```
-
-3. **View Deployed Models in Microsoft Foundry Portal:**
-
-   This creates a Microsoft Foundry project with two model deployments: **gpt-4o** (for chat completions) and **text-embedding-ada-002** (for vector embeddings). Open [ai.azure.com](https://ai.azure.com/) in the same browser where you're logged into Azure to view your project.
-
-   Click **Models** in the left sidebar to see your deployments:
-
-   ![Models Section](images/models_section.png)
-
-4. **Setup environment:**
-   ```bash
-   uv run setup_env.py
-   ```
-
-6. Move on to Lab 5 - Foundry Agents: [Lab_5_Foundry_Agents/README.md](Lab_5_Foundry_Agents/README.md)
