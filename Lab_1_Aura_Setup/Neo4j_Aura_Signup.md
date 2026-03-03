@@ -41,11 +41,11 @@ Instead, click **Sign up** and create a new account using your work email addres
 
 ![](images/sign-up-aura.png)
 
-## Step 6: Select the Marketplace Organization
+## Step 6: Select New Project
 
-Once logged into Neo4j Aura, click on the organization dropdown (shows "New Organization") and select the **Marketplace Organization** that is linked to your Azure subscription.
+Once logged into Neo4j Aura, click on New Project.
 
-![](images/select_marketplace.png)
+![](images/aura_new_project)
 
 ## Step 7: Create an Instance
 
@@ -53,7 +53,9 @@ In the Aura console, navigate to **Instances** in the left sidebar. Click the **
 
 ![](images/create_instance.png)
 
-## Step 8: Configure Your Instance
+## Step 8: Configure Your Professional Instance
+
+Important! Please select Professional Instance
 
 Configure your Neo4j Aura instance with the following settings:
 

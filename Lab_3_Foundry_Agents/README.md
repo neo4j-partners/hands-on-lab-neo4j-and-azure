@@ -12,12 +12,12 @@ Before starting, make sure you have:
 
 Microsoft Foundry provides:
 
-- **Model Deployments** - Access to GPT-5.2, embedding models, and more
+- **Model Deployments** - Access to GPT-4o, GPT-4o-mini, embedding models, and more
 - **Agent Framework** - Tools for building AI agents that can use external tools
 - **Unified API** - Consistent interface for different AI capabilities
 
 In this lab, you'll deploy:
-- **gpt-5.2** - For text generation and agent reasoning
+- **gpt-4o-mini** or **gpt-4o** - For text generation and agent reasoning
 ---
 
 ## Step 1: Setup Microsoft Foundry
@@ -39,7 +39,7 @@ In this lab, you'll deploy:
 
 ## Step 3: Fill Out Foundry Details
 
-1. Select your **Subscription** and **Resource group**
+1. Select your **Subscription** and **Resource group** - The Resource Group is the resource group in the original setup screen that is based on your username.
 2. Enter a **Name** for your Foundry resource - use your username so it's easy to find
 3. Select **East US** as the Region
 4. Enter a **Default project name** - use the same name as your username for consistency
@@ -62,18 +62,20 @@ In this lab, you'll deploy:
 
 ## Step 6: Navigate to Build
 
-1. After your project is created, click on **Build** in the top navigation bar
+1. After your project is created, click on **Start building** in the top navigation bar
 2. This is where you'll deploy and manage your AI models
 
 ![Foundry Build](images/Foundry_Build.png)
 
 ---
 
-## Step 7: Deploy gpt-5.2 Model
+## Step 7: Deploy a Model
+
+**gpt-4o-mini** is recommended for this lab as it uses less quota. If you need higher quality responses, you can deploy **gpt-4o** instead.
 
 1. Click on **Discover** in the top navigation
-2. Search for `gpt-5.2` in the Models section
-3. Select **gpt-5.2**
+2. Search for `gpt-4o-mini` or `gpt-4o` in the Models section
+3. Select your chosen model
 
 ![Deploy Model](images/foundry_deploy_model.png)
 
@@ -91,10 +93,10 @@ In this lab, you'll deploy:
 
 ## Step 9: Verify Your Deployments
 
-After deploying both models, verify they appear in your project:
+After deploying the model, verify that appear in your project:
 1. Go to **Build** > **Models**
 2. Confirm you see:
-   - `gpt-5.2`
+   - `gpt-4o-mini` or `gpt-4o`
 3. Click on the model, and try it out in the playground
 
 ---
@@ -105,9 +107,9 @@ After deploying both models, verify they appear in your project:
 
 2. Create an agent named `finance-agent` with the following Description
 
-3. Change the model type to  **gpt-5.2**
+3. Change the model type to **gpt-4o-mini** or **gpt-4o** (whichever you deployed)
 
-**Description:**
+**Instructions:**
 ```
 You are an expert financial analyst assistant specializing in SEC 10-K filings analysis.
 You help users understand:
@@ -122,21 +124,23 @@ Ground your responses in the actual data from SEC filings.
 
 ![Finance Agent Start](images/finance-agent-start.png)
 
-4. Add an MCP tool by clicking on **Tools**, then in the dialog go to the **Custom** tab and select **Model Context Protocol (MCP)**
+4. Add an MCP tool by clicking on **Tools** --> **Browse all tools**, then in the dialog go to the **Custom** tab and select **Model Context Protocol (MCP)**
 
 ![Agent MCP Tool](images/agent-mcp-tool.png)
 
-5. In the "Add Model Context Protocol Tool" Dialog enter the mcp server information that your workshop administrator setup for you:
+5. In the "Add Model Context Protocol Tool" Dialog enter the mcp server information that your workshop administrator setup for you.  Set the following values:
 
-* Name: `mcp-server-finance-agent`
-* Remote MCP Server endpoint: `https://neo4jmcp-app-dev.{hostname}.eastus.azurecontainerapps.io/mcp`  <---- CRITICAL BE SURE TO ADD /MCP At the end
-* Authentication: Key based
-* Credential Key: Authorization
-* Credential Value: Bearer {bearer_token....===}
+* **Name**: `mcp-server-finance-agent`
+* **Remote MCP Server endpoint**: `https://neo4jmcp-app-dev.{hostname}.eastus.azurecontainerapps.io/mcp`  <---- CRITICAL BE SURE TO ADD /MCP At the end
+* **Authentication**: Key based
+* **Credential Key**: Authorization
+* **Credential Value** - the value needs to be the word Bearer followed by the actual token: Bearer bearer_token....===
 
-6. YOU HAVE AN AGENT! Now let's test it. Enter a query like "What risks does APPLE INC face?"
+6. Click on the **Save** in the top of the dialog.  The agent is now setu Now let's test it. Enter a query like "What risks does the database say that Microsoft face?
 
-We need to use "APPLE INC" because it does an exact string match for the company name.
+"
+
+We need to use "Microsoft" because it does an exact string match for the company name.
 
 You will see the agent ask you for approval to run the MCP request - click yes. Then you will see the MCP call in the context that it runs along with the results. Also try things like "What is the schema?"
 
@@ -150,7 +154,7 @@ You will see the agent ask you for approval to run the MCP request - click yes. 
 
 You have now set up Microsoft Foundry with:
 - A new Foundry project
-- **gpt-5.2** deployed for chat completions
+- **gpt-4o-mini** or **gpt-4o** deployed for chat completions
 
 **This completes Part 1 (No-Code Track) of the workshop.**
 
