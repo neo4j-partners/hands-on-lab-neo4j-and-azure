@@ -3,17 +3,12 @@
     "image": "mcr.microsoft.com/devcontainers/python:3.12-bookworm",
     "forwardPorts": [8000],
     "features": {
-        "ghcr.io/devcontainers/features/azure-cli:1": {
-            "installBicep": true
-        },
-        "ghcr.io/azure/azure-dev/azd:latest": {},
+        "ghcr.io/devcontainers/features/azure-cli:1": {},
         "ghcr.io/devcontainers/features/github-cli:1": {}
     },
     "customizations": {
         "vscode": {
             "extensions": [
-                "ms-azuretools.azure-dev",
-                "ms-azuretools.vscode-bicep",
                 "ms-python.python",
                 "ms-toolsai.jupyter",
                 "github.copilot"
@@ -36,9 +31,6 @@
         "memory": "8gb"
     },
     "secrets": {
-        "AZURE_RESOURCE_GROUP": {
-            "description": "Existing Azure resource group name or leave empty to create a new one during 'azd up'"
-        },
         "NEO4J_URI": {
             "description": "Neo4j connection URI (e.g., neo4j+s://xxx.databases.neo4j.io)"
         },
