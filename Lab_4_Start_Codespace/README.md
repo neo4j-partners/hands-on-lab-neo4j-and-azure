@@ -66,7 +66,7 @@ Edit the `.env` file in the root of the project and add the following Azure vari
 ```
 AZURE_AI_PROJECT_ENDPOINT=<paste your project endpoint here>
 AZURE_AI_MODEL_NAME=gpt-4o-mini
-AZURE_AI_EMBEDDING_NAME=text-embedding-ada-002
+AZURE_AI_EMBEDDING_NAME=text-embedding-3-small
 ```
 
 > **Note:** Set `AZURE_AI_MODEL_NAME` to whichever model you deployed in Lab 3 (`gpt-4o-mini` or `gpt-4o`).
@@ -183,7 +183,7 @@ az login
 
    AZURE_AI_PROJECT_ENDPOINT=https://<resource-name>.services.ai.azure.com/api/projects/<project-name>
    AZURE_AI_MODEL_NAME=gpt-4o-mini
-   AZURE_AI_EMBEDDING_NAME=text-embedding-ada-002
+   AZURE_AI_EMBEDDING_NAME=text-embedding-3-small
    ```
 
    > **Note:** To find your project endpoint, go to https://ai.azure.com/, open your project from Lab 3, and copy the endpoint from **Overview** > **Libraries** > **Foundry**.

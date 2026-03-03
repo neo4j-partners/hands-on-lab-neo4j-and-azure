@@ -18,7 +18,7 @@ Microsoft Foundry provides:
 
 In this lab, you'll deploy:
 - **gpt-4o-mini** or **gpt-4o** - For text generation and agent reasoning
-- **text-embedding-ada-002** - For creating vector embeddings (used in Part 2 coding labs)
+- **text-embedding-3-small** - For creating vector embeddings (used in Part 2 coding labs)
 ---
 
 ## Step 1: Setup Microsoft Foundry
@@ -94,10 +94,10 @@ In this lab, you'll deploy:
 
 ## Step 8: Deploy an Embedding Model
 
-The coding labs in Part 2 require an embedding model for vector search. Deploy **text-embedding-ada-002** using the same process:
+The coding labs in Part 2 require an embedding model for vector search. Deploy **text-embedding-3-small** using the same process:
 
 1. Click on **Discover** in the top navigation
-2. Search for `text-embedding-ada-002` in the Models section
+2. Search for `text-embedding-3-small` in the Models section
 3. Select the model
 4. Click the **Deploy** button dropdown
 5. Select **Custom settings**
@@ -111,7 +111,7 @@ After deploying the models, verify they appear in your project:
 1. Go to **Build** > **Models**
 2. Confirm you see:
    - `gpt-4o-mini` or `gpt-4o`
-   - `text-embedding-ada-002`
+   - `text-embedding-3-small`
 3. Click on a model, and try it out in the playground
 
 ---
@@ -170,7 +170,7 @@ You will see the agent ask you for approval to run the MCP request - click yes. 
 You have now set up Microsoft Foundry with:
 - A new Foundry project
 - **gpt-4o-mini** or **gpt-4o** deployed for chat completions
-- **text-embedding-ada-002** deployed for vector embeddings
+- **text-embedding-3-small** deployed for vector embeddings
 
 **This completes Part 1 (No-Code Track) of the workshop.**
 

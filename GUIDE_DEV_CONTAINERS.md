@@ -32,7 +32,7 @@
    ```
    AZURE_AI_PROJECT_ENDPOINT=<paste your project endpoint here>
    AZURE_AI_MODEL_NAME=gpt-4o-mini
-   AZURE_AI_EMBEDDING_NAME=text-embedding-ada-002
+   AZURE_AI_EMBEDDING_NAME=text-embedding-3-small
    ```
 
    > **Note:** Set `AZURE_AI_MODEL_NAME` to whichever model you deployed in Lab 3 (`gpt-4o-mini` or `gpt-4o`).
