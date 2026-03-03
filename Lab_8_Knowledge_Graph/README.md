@@ -1,6 +1,6 @@
 # Lab 8 - Building a Knowledge Graph
 
-In this lab, you'll learn how to build a knowledge graph in Neo4j for GraphRAG (Graph Retrieval-Augmented Generation) applications. You'll cover the complete pipeline from loading text data and generating embeddings, through to implementing retrieval strategies that leverage graph relationships.
+This lab covers the complete pipeline for building a knowledge graph in Neo4j: loading text data, generating embeddings, and implementing retrieval strategies that traverse graph relationships.
 
 ## Prerequisites
 

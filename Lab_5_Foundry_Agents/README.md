@@ -1,10 +1,10 @@
 # Lab 5 - Foundry Agents
 
-In this lab, you'll build your first intelligent agents using the **Microsoft Agent Framework (MAF)** with Microsoft Foundry.
+In this lab, you'll build your first agents using the **Microsoft Agent Framework (MAF)** with Microsoft Foundry.
 
 ## What is the Microsoft Agent Framework?
 
-The [Microsoft Agent Framework](https://github.com/microsoft/agent-framework) is a production-ready framework for building AI agents that can reason, use tools, and maintain context across conversations. At its core, it solves a fundamental problem: LLMs are stateless. Every time you send a message, the model has no memory of previous interactions and no access to your data. The agent framework bridges this gap by orchestrating a lifecycle around each LLM invocation — injecting relevant knowledge before the call (via context providers), giving the model the ability to take actions (via tools), and extracting useful information from the response afterward. This turns a bare LLM into an agent that can retrieve, reason, and act.
+The [Microsoft Agent Framework](https://github.com/microsoft/agent-framework) is a framework for building AI agents that can reason, use tools, and maintain context across conversations. At its core, it solves a fundamental problem: LLMs are stateless. Every time you send a message, the model has no memory of previous interactions and no access to your data. The agent framework bridges this gap by orchestrating a lifecycle around each LLM invocation — injecting relevant knowledge before the call (via context providers), giving the model the ability to take actions (via tools), and extracting useful information from the response afterward. This turns a bare LLM into an agent that can retrieve, reason, and act.
 
 The framework provides:
 
@@ -13,6 +13,17 @@ The framework provides:
 - **Context Providers** — Hooks that run automatically before/after each agent invocation to inject or extract information
 - **Sessions** — Per-conversation containers with persistent state that survives across turns
 - **Middleware** — Interceptors for logging, validation, and custom processing at the agent, chat, and function layers
+
+### What is a Context Provider?
+
+A context provider is a pluggable component that participates in the **context engineering pipeline** — the practice of dynamically managing what context (history, RAG results, instructions, tools) reaches the model. Rather than hardcoding all context upfront, context providers let you compose independent concerns — memory, search, user preferences — into a single agent without them knowing about each other.
+
+Each provider extends `BaseContextProvider` and implements two lifecycle hooks:
+
+- **`before_run()`** — Called before each model invocation. Add instructions, messages, or tools to the `SessionContext`.
+- **`after_run()`** — Called after each model invocation. Process the response — extract data, store memories, update state.
+
+Providers are **composable**: you register multiple providers when creating an agent, each identified by a unique `source_id`. The framework runs all `before_run()` hooks in order, invokes the model, then runs all `after_run()` hooks in reverse order. Each provider's contributions are tracked by source, so providers can filter or build on each other's context. The framework ships with several built-in providers (Azure AI Search, Mem0 memory, Neo4j graph), but writing your own is straightforward.
 
 ### Tools vs Context Providers
 

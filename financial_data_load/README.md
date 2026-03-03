@@ -93,7 +93,7 @@ uv run python main.py load --clear
 3. Processes PDFs through SimpleKGPipeline:
    - Chunks documents (27 chunks per PDF typical)
    - Generates embeddings (1536 dimensions via text-embedding-ada-002)
-   - Extracts entities using GPT-5.2 (RiskFactor, Product, Executive, FinancialMetric)
+   - Extracts entities using the LLM (RiskFactor, Product, Executive, FinancialMetric)
    - Creates relationships (FACES_RISK, OFFERS, HAS_EXECUTIVE, etc.)
 4. Runs fuzzy entity resolution (via `FuzzyMatchResolver`) to merge near-duplicate entities (e.g. "Apple" vs "Apple Inc.")
 5. Creates uniqueness constraints, embedding indexes, and fulltext indexes
@@ -190,7 +190,7 @@ Persistent agent memory using neo4j-agent-memory:
 
 ## Architecture
 
-- **Azure AI Foundry** — Model hosting (GPT-5.2, text-embedding-ada-002)
+- **Azure AI Foundry** — Model hosting (gpt-4o, text-embedding-ada-002)
 - **Microsoft Agent Framework** — Agent creation and tool management
 - **agent-framework-neo4j** — Neo4j context providers for automatic context injection
 - **neo4j-graphrag-python** — Graph retrieval capabilities

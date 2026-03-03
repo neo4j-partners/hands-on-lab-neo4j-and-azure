@@ -4,7 +4,7 @@
 
 ## Quick Start: GitHub Codespaces
 
-> **Warning:** It may take several minutes for the Codespace to start. After it starts, please wait an additional couple of minutes for all post-install scripts to finish running.  You can tell when it is finished initalizing because the .env will be created in the root directory.
+> **Warning:** It may take several minutes for the Codespace to start. After it starts, please wait an additional couple of minutes for all post-install scripts to finish running.  You can tell when it is finished initializing because the .env will be created in the root directory.
 >
 > ![Wait for Environment to Finish Initializing](Lab_4_Start_Codespace/images/wait_finish_env.png)
 
@@ -42,7 +42,7 @@
 
 ---
 
-## Quick Start: Open in a Local Dev Container
+## Alternative Local Quick Start: Open in a Local Dev Container
 
 If you have Docker and VS Code installed locally, you can run the workshop in an isolated container volume without using a Codespace:
 

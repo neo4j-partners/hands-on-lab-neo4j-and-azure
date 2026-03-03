@@ -2,7 +2,7 @@
 
 > **Advanced Lab** - This lab builds on the core workshop (Labs 4-9) with more advanced retrieval techniques.
 
-In this lab, you'll learn how to use natural language to query your knowledge graph, extract structured entities from text, and work with a complete dataset. You'll use Text2Cypher to convert questions into Cypher queries, build richer graphs through entity extraction, and see the full power of GraphRAG with real-world data.
+This lab covers natural language querying, entity extraction, and working with the complete dataset. You'll use Text2Cypher to convert questions into Cypher queries, build graphs through entity extraction, and see GraphRAG results improve with more data.
 
 ## Prerequisites
 

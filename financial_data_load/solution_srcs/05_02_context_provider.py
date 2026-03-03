@@ -45,8 +45,7 @@ class UserInfoMemory(BaseContextProvider):
         state: dict[str, Any],
     ) -> None:
         """Inject dynamic instructions based on stored user info."""
-        my_state = state.setdefault(self.source_id, {})
-        user_info = my_state.setdefault("user_info", UserInfo())
+        user_info = state.setdefault("user_info", UserInfo())
 
         instructions: list[str] = []
 
@@ -75,8 +74,7 @@ class UserInfoMemory(BaseContextProvider):
         state: dict[str, Any],
     ) -> None:
         """Extract user info from the conversation after each turn."""
-        my_state = state.setdefault(self.source_id, {})
-        user_info = my_state.setdefault("user_info", UserInfo())
+        user_info = state.setdefault("user_info", UserInfo())
         if user_info.name is not None and user_info.age is not None:
             return  # Already have everything
 
@@ -100,7 +98,7 @@ class UserInfoMemory(BaseContextProvider):
                 user_info.name = extracted.name
             if extracted and user_info.age is None and extracted.age:
                 user_info.age = extracted.age
-            state.setdefault(self.source_id, {})["user_info"] = user_info
+            state["user_info"] = user_info
         except Exception:
             pass  # Failed to extract, continue without updating
 
@@ -138,7 +136,8 @@ async def run_agent(query: str):
     await ask("Now, what is the square root of 9?")
 
     # Show extracted state
-    user_info = session.state.get("user-info-memory", {}).get("user_info", UserInfo())
+    provider_state = session.state.get("user-info-memory", {})
+    user_info = provider_state.get("user_info", UserInfo())
     print(f"Extracted Name: {user_info.name}")
     print(f"Extracted Age: {user_info.age}")
 

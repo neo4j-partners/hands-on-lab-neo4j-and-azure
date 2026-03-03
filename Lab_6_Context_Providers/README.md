@@ -1,10 +1,22 @@
-# Lab 6 - MAF Context Providers
+# Lab 6 - Neo4j Context Providers for MAF
 
-In this lab, you'll learn how to use **context providers** with the Microsoft Agent Framework (MAF) to automatically inject knowledge graph context into agent conversations. Instead of defining tools that the agent must explicitly call, context providers run automatically before each agent invocation, enriching the LLM with relevant information from your Neo4j knowledge graph.
+In Lab 5, you learned what context providers are and how they work in the Microsoft Agent Framework. In this lab and the next, you'll put that knowledge to work with two Neo4j context provider packages that give agents automatic access to knowledge graphs and persistent memory.
 
-## What is Neo4jContextProvider?
+## Two Neo4j Context Providers
 
-The notebooks in this lab use `Neo4jContextProvider` from the [`agent-framework-neo4j`](https://github.com/neo4j-labs/agent-framework-neo4j) package. It's a MAF context provider that connects your agent to a Neo4j knowledge graph, automatically searching for relevant content and injecting it into the LLM's context window before every invocation.
+### 1. `agent-framework-neo4j` — Knowledge Graph Retrieval (This Lab)
+
+The [`agent-framework-neo4j`](https://github.com/neo4j-labs/neo4j-maf-provider) package provides `Neo4jContextProvider`, a MAF context provider that connects your agent to a Neo4j knowledge graph. Before each LLM invocation, it automatically searches for relevant content — using vector, fulltext, or hybrid search — and injects the results into the agent's context window. Its most distinctive capability is **graph enrichment**: after the initial search finds matching nodes, a custom Cypher query traverses relationships to pull in related entities (companies, products, risk factors, executives), giving the LLM structured context alongside the matched text.
+
+### 2. `neo4j-agent-memory` — Persistent Agent Memory (Lab 7)
+
+The [`neo4j-agent-memory`](https://github.com/neo4j-labs/agent-memory) package provides a graph-native memory system for AI agents. It stores conversations, builds knowledge graphs from interactions, and enables agents to learn from their own reasoning. The package offers three memory types — **short-term** (conversation history), **long-term** (facts, preferences, and entities), and **reasoning** (traces and tool usage patterns) — all backed by Neo4j. Its MAF context provider automatically injects relevant memories before each invocation and extracts new memories afterward.
+
+---
+
+## `Neo4jContextProvider` in Detail
+
+The notebooks in this lab use `Neo4jContextProvider` from `agent-framework-neo4j`. It connects your agent to a Neo4j knowledge graph, automatically searching for relevant content and injecting it into the LLM's context window before every invocation.
 
 ### How It Works
 
@@ -26,11 +38,11 @@ The provider supports three search modes via the `index_type` parameter:
 |------|-------------|----------|
 | **`vector`** | Converts query to an embedding, searches a vector index by cosine similarity | Finding conceptually related content even when keywords don't match |
 | **`fulltext`** | Tokenizes query, searches a fulltext index using BM25 scoring | Finding content with specific terms and exact phrases |
-| **`hybrid`** | Runs both vector and fulltext searches, combines scores | Comprehensive retrieval combining semantic understanding and keyword matching |
+| **`hybrid`** | Runs both vector and fulltext searches, combines scores | Retrieval combining semantic understanding and keyword matching |
 
 ### Graph Enrichment
 
-The provider's most powerful feature is **graph enrichment** via the `retrieval_query` parameter. After the initial index search finds matching nodes, a custom Cypher query traverses the graph to pull in related entities — company names, products, risk factors, executives — giving the LLM much richer context than the matched text alone.
+The provider's most distinctive capability is **graph enrichment** via the `retrieval_query` parameter. After the initial index search finds matching nodes, a custom Cypher query traverses the graph to pull in related entities — company names, products, risk factors, executives — giving the LLM structured context alongside the matched text.
 
 The provider automatically selects the right underlying retriever based on your configuration:
 

@@ -207,4 +207,4 @@ az login
 
 ## Next Steps
 
-After completing this lab, continue to [Lab 5 - Foundry Agents](../Lab_5_Foundry_Agents) to build your first intelligent agent with the Microsoft Agent Framework.
+After completing this lab, continue to [Lab 5 - Foundry Agents](../Lab_5_Foundry_Agents) to build your first agent with the Microsoft Agent Framework.

@@ -1,10 +1,10 @@
 # Lab 7 - Agent Memory
 
-In this lab, you'll learn how to give agents **persistent memory** using the `neo4j-agent-memory` package with the Microsoft Agent Framework. Unlike the knowledge graph context providers in Lab 6 that retrieve from a static knowledge base, agent memory enables agents to remember conversations, learn user preferences, extract entities, and recall similar past interactions — all stored in Neo4j.
+This lab uses the [`neo4j-agent-memory`](https://github.com/neo4j-labs/agent-memory) package — the second Neo4j context provider introduced in Lab 6's README. It's a graph-native memory system that gives AI agents persistent, searchable memory stored in Neo4j.
+
+While the `agent-framework-neo4j` provider in Lab 6 retrieves from a static knowledge base you built, agent memory is dynamic: it grows with every conversation as the agent learns user preferences, extracts entities, and records its own reasoning.
 
 ## What is Neo4j Agent Memory?
-
-The notebooks in this lab use the [`neo4j-agent-memory`](https://github.com/neo4j-labs/agent-memory) package — a graph-native memory system that gives AI agents persistent, searchable memory stored in Neo4j. While the knowledge graph context providers in Lab 6 retrieve from a static knowledge base you built, agent memory is dynamic: it grows with every conversation as the agent learns user preferences, extracts entities, and records its own reasoning.
 
 ### Three Memory Types
 

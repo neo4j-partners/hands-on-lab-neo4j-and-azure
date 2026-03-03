@@ -22,7 +22,7 @@ Add semantic search capabilities with graph context:
 - Let the agent choose between schema and document retrieval tools
 
 ### 03_text2cypher_agent.ipynb - Multi-Tool Agent with Text2Cypher
-Build a powerful multi-tool agent:
+Build a multi-tool agent:
 - Add a Text2Cypher tool for natural language database queries
 - Configure custom Cypher generation prompts
 - Give the agent three tools: schema, semantic search, and database queries
@@ -89,7 +89,7 @@ Menu items 9 and 10 correspond to notebooks 2 and 3 respectively.
 - Give agents persistent memory with Neo4j Agent Memory
 - Build knowledge graphs from unstructured documents
 - Implement vector and graph-enhanced retrieval strategies
-- Create intelligent agents that automatically choose the right tool for each question
+- Create agents that automatically choose the right tool for each question
 
 For more advanced topics, continue to the **Advanced Labs**:
 - [Lab 10 - Advanced Retrievers](../Lab_10_Retrievers) - Text2Cypher, entity extraction, and full dataset exploration

@@ -18,7 +18,7 @@ Click **Connect to instance** to connect to your database.
 
 ## Step 3: Search for Asset Manager Relationships
 
-In the search bar, build a pattern to explore the relationships between asset managers, companies, and risk factors. Type `AssetManager`, then select the **OWNS** relationship, followed by **Company**, then **FACES_RISK**, and finally **RiskFactor`.
+In the search bar, build a pattern to explore the relationships between asset managers, companies, and risk factors. Type `AssetManager`, then select the **OWNS** relationship, followed by **Company**, then **FACES_RISK**, and finally **RiskFactor**.
 
 This creates the pattern: `AssetManager — OWNS → Company — FACES_RISK → RiskFactor`
 

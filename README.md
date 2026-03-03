@@ -1,20 +1,16 @@
 # Neo4j And Azure Lab
 Neo4j is the [leading graph database](https://db-engines.com/en/ranking/graph+dbms) vendor.  We've worked closely with Microsoft Azure engineering for years.  Our products, AuraDB and AuraDS are offered as managed services on Azure.  Neo4j Aura Professional Edition is offered in the [Azure Marketplace](https://portal.azure.com/#create/neo4j.neo4j_aura_professional).
 
-In this hands-on lab, you'll learn about Neo4j, Microsoft Foundry, and the [Microsoft Agent Framework](https://github.com/microsoft/agent-framework). The lab is designed for data scientists, data engineers, and AI developers who want to master GraphRAG (Graph Retrieval-Augmented Generation) techniques and build production-ready agentic AI applications.
+This hands-on lab covers Neo4j, Microsoft Foundry, and the [Microsoft Agent Framework](https://github.com/microsoft/agent-framework). It is designed for data scientists, data engineers, and AI developers working with GraphRAG (Graph Retrieval-Augmented Generation).
 
-In today's landscape, organizations need AI systems that can extract deep insights from unstructured documents, understand complex entity relationships, and build intelligent systems that can autonomously reason over vast information networks. This hands-on lab addresses this need directly by providing mastery in the most powerful pattern available for complex document intelligence: Graph Retrieval-Augmented Generation (GraphRAG).
+You'll work with real SEC 10-K company filings to build a knowledge graph from unstructured text, extract entities with generative AI, and implement multiple retrieval strategies: vector similarity search, graph-enhanced retrievers that traverse entity relationships, and natural language to Cypher query generation. The final labs build agents using the Microsoft Agent Framework that select the right tool for each question and reason over the knowledge graph.
 
-You'll work with a real-world dataset of SEC 10-K company filings to learn fundamental GraphRAG patterns. We'll start by building a knowledge graph from unstructured text using generative AI for entity extraction. Then you'll implement multiple retrieval strategies: vector similarity search for semantic retrieval, graph-enhanced retrievers that leverage entity relationships, and natural language to Cypher query generation. Finally, you'll build intelligent agents using the Microsoft Agent Framework that can autonomously reason over your knowledge graph to answer complex questions.
-
-By the end of this lab, you'll have hands-on experience with:
+By the end, you'll have working experience with:
 - Building knowledge graphs from unstructured documents
-- Implementing semantic search with vector embeddings
-- Creating graph-enhanced retrieval patterns for richer context
-- Developing agentic AI systems that combine multiple tools and reasoning strategies
+- Semantic search with vector embeddings
+- Graph-enhanced retrieval that traverses relationships for context beyond matched text
+- AI agents that combine multiple tools and retrieval strategies
 - Deploying GraphRAG applications on Azure infrastructure
-
-These techniques apply to any domain where you need to extract insights from documents, understand entity relationships, and build AI systems that can reason over complex information networks.
 
 ## Knowledge Graph Data Model
 

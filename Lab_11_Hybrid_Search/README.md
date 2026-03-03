@@ -2,7 +2,7 @@
 
 > **Advanced Lab** - This lab builds on the core workshop (Labs 4-9) with advanced search techniques.
 
-In this lab, you'll learn how to combine fulltext (keyword) search with vector (semantic) search for improved retrieval accuracy. Hybrid search gives you the precision of keyword matching with the semantic understanding of vector search.
+This lab combines fulltext (keyword) search with vector (semantic) search. Hybrid search gives you the precision of keyword matching with the semantic understanding of vector search.
 
 ## Prerequisites
 
@@ -24,7 +24,7 @@ Learn the fundamentals of keyword-based search with Neo4j fulltext indexes:
 - Combine fulltext search with graph traversal
 
 ### 02_hybrid_search.ipynb - Hybrid Search
-Combine vector and fulltext search for best-of-both-worlds retrieval:
+Combine vector and fulltext search for stronger retrieval than either alone:
 - Use the `HybridRetriever` from neo4j-graphrag package
 - Tune the `alpha` parameter to balance keyword vs semantic matching
 - Use `HybridCypherRetriever` for graph-enhanced hybrid results
@@ -88,4 +88,4 @@ Congratulations on completing all the labs! You have learned:
 - Text2Cypher and entity extraction for advanced retrieval
 - Hybrid search combining keyword and semantic matching
 
-You now have the skills to build production-ready GraphRAG applications that combine the power of knowledge graphs with large language models.
+You now have the skills to build GraphRAG applications that combine knowledge graphs with large language models.

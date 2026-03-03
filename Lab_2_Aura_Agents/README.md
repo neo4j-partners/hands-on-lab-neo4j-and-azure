@@ -48,7 +48,7 @@ Click **Add Tool** and select **Cypher Template** for each of the following tool
 
 **Tool Name:** `get_company_overview`
 
-**Description:** Get comprehensive overview of a company including their SEC filing, risk factors, and major institutional owners.
+**Description:** Get an overview of a company including their SEC filing, risk factors, and major institutional owners.
 
 **Parameters:** `company_name` (string) - The company name to look up (e.g., "APPLE INC", "NVIDIA CORPORATION")
 
@@ -178,7 +178,7 @@ Deploy your agent to a production endpoint:
 
 ## Summary
 
-You have now built an Aura Agent that combines three powerful retrieval patterns:
+You have now built an Aura Agent that combines three retrieval patterns:
 
 | Tool Type | Purpose | Best For |
 |-----------|---------|----------|

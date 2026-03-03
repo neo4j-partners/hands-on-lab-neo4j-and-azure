@@ -6,6 +6,8 @@ LLM/embedder initialization, and configuration management.
 Supports both direct OpenAI and Azure AI Foundry.
 """
 
+from __future__ import annotations
+
 from contextlib import contextmanager
 from pathlib import Path
 
