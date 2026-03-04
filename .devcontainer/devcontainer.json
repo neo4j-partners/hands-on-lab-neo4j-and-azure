@@ -29,16 +29,5 @@
     "remoteUser": "vscode",
     "hostRequirements": {
         "memory": "8gb"
-    },
-    "secrets": {
-        "NEO4J_URI": {
-            "description": "Neo4j connection URI (e.g., neo4j+s://xxx.databases.neo4j.io)"
-        },
-        "NEO4J_USERNAME": {
-            "description": "Neo4j username"
-        },
-        "NEO4J_PASSWORD": {
-            "description": "Neo4j password"
-        }
     }
 }

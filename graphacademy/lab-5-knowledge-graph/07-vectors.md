@@ -10,7 +10,7 @@ In machine learning, vectors can represent much more complex data—including th
 
 ## What are Embeddings?
 
-Embeddings are numerical representations of data—text, images, or audio—encoded as vectors. For text, embedding models convert words, sentences, or paragraphs into high-dimensional vectors (often 1,536 dimensions for models like OpenAI's text-embedding-ada-002).
+Embeddings are numerical representations of data—text, images, or audio—encoded as vectors. For text, embedding models convert words, sentences, or paragraphs into high-dimensional vectors (often 1,536 dimensions for models like OpenAI's text-embedding-3-small).
 
 The key property: **similar meanings produce similar vectors**.
 

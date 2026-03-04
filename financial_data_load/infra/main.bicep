@@ -27,7 +27,7 @@ param chatDeploymentCapacity int = 20
 
 // Embedding model
 @description('Name of the embedding model to deploy')
-param embeddingModelName string = 'text-embedding-ada-002'
+param embeddingModelName string = 'text-embedding-3-small'
 @description('Version of the embedding model to deploy')
 param embeddingModelVersion string = '2'
 @description('SKU for the embedding deployment')
@@ -102,7 +102,7 @@ resource chatDeployment 'Microsoft.CognitiveServices/accounts/deployments@2024-1
   }
 }
 
-// Embedding model deployment (text-embedding-ada-002)
+// Embedding model deployment (text-embedding-3-small)
 resource embeddingDeployment 'Microsoft.CognitiveServices/accounts/deployments@2024-10-01' = {
   parent: aiServices
   name: embeddingModelName

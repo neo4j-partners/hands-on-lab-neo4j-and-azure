@@ -92,7 +92,7 @@ uv run python main.py load --clear
 2. Creates Company nodes from CSV metadata
 3. Processes PDFs through SimpleKGPipeline:
    - Chunks documents (27 chunks per PDF typical)
-   - Generates embeddings (1536 dimensions via text-embedding-ada-002)
+   - Generates embeddings (1536 dimensions via text-embedding-3-small)
    - Extracts entities using the LLM (RiskFactor, Product, Executive, FinancialMetric)
    - Creates relationships (FACES_RISK, OFFERS, HAS_EXECUTIVE, etc.)
 4. Runs fuzzy entity resolution (via `FuzzyMatchResolver`) to merge near-duplicate entities (e.g. "Apple" vs "Apple Inc.")
@@ -190,7 +190,7 @@ Persistent agent memory using neo4j-agent-memory:
 
 ## Architecture
 
-- **Azure AI Foundry** — Model hosting (gpt-4o, text-embedding-ada-002)
+- **Azure AI Foundry** — Model hosting (gpt-4o, text-embedding-3-small)
 - **Microsoft Agent Framework** — Agent creation and tool management
 - **agent-framework-neo4j** — Neo4j context providers for automatic context injection
 - **neo4j-graphrag-python** — Graph retrieval capabilities
@@ -251,7 +251,7 @@ After running `setup_env.py`, your `.env` file will contain:
 
 ```bash
 # Azure AI (from azd)
-AZURE_AI_EMBEDDING_NAME=text-embedding-ada-002
+AZURE_AI_EMBEDDING_NAME=text-embedding-3-small
 AZURE_AI_MODEL_NAME=gpt-4o
 AZURE_AI_PROJECT_ENDPOINT=https://...
 AZURE_AI_SERVICES_ENDPOINT=https://...

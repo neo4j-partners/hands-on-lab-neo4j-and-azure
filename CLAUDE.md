@@ -99,14 +99,14 @@ financial_data_load/       # Python CLI and data loading
 ## Key Technical Details
 
 - **Python**: Requires 3.12.x (not 3.13+)
-- **Embeddings**: 1536 dimensions via text-embedding-ada-002
+- **Embeddings**: 1536 dimensions via text-embedding-3-small
 - **Vector Index**: `chunkEmbeddings` on `Chunk.embedding`
 - **Fulltext Indexes**: `search_chunks` (keyword search), `search_entities` (entity lookup)
 - **Local Fork**: Uses local `neo4j-graphrag-python` from `~/projects/neo4j-graphrag-python`
 
 ## Environment Variables
 
-Required in `CONFIG.txt` (lab notebooks) or `.env` (financial_data_load CLI):
+Required in `CONFIG.txt`:
 ```
 NEO4J_URI=neo4j+s://xxx.databases.neo4j.io
 NEO4J_USERNAME=neo4j
@@ -117,5 +117,5 @@ Azure settings (configured manually via Lab 3 Foundry setup):
 ```
 AZURE_AI_PROJECT_ENDPOINT=<foundry endpoint>
 AZURE_AI_MODEL_NAME=gpt-4o
-AZURE_AI_EMBEDDING_NAME=text-embedding-ada-002
+AZURE_AI_EMBEDDING_NAME=text-embedding-3-small
 ```

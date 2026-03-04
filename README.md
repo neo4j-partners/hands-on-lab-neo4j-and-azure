@@ -114,7 +114,7 @@ You'll need a laptop with a web browser. Your browser will need to be able to ac
     * Building AI agents using Neo4j Aura Agent (no-code)
     * Creating Cypher template tools
     * Adding semantic search and Text2Cypher capabilities
-* [Lab 3 - Microsoft Foundry Agents](Lab_3_Foundry_Agents) (15 min)
+* [Lab 3 - Foundry Setup](Lab_3_Foundry_Setup) (15 min)
     * Access Microsoft Foundry
     * Create a Foundry Project
     * Deploy gpt-4o model
@@ -158,5 +158,4 @@ You'll need a laptop with a web browser. Your browser will need to be able to ac
 * [Lab 9 - Advanced Agents](Lab_9_Advanced_Agents) (30 min)
     * Vector + Graph Agent for Semantic Search with Context
     * Multi-Tool Agent with Text2Cypher
-* [Questions and Next Steps](Questions%20and%20Next%20Steps.md) (5 min)
 

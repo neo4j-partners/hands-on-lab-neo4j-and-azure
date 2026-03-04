@@ -2,7 +2,7 @@
 
 ## 1. Text2Cypher Token Overflow (Intermittent)
 
-**Affects:** Solution 7 (`02_03_text2cypher_retriever.py`), Solution 11 (`03_03_text2cypher_agent.py`), Lab_10 notebooks using Text2Cypher
+**Affects:** Solution 7 (`02_03_text2cypher_retriever.py`), Solution 11 (`03_03_text2cypher_agent.py`)
 
 **Symptom:** `context_length_exceeded` error (318k tokens vs 272k limit) when the LLM generates Cypher that returns `Chunk.embedding` (a 1536-float vector per row).
 
@@ -69,7 +69,7 @@ The following issues were found and fixed during the Cypher review:
 - `FILED` (doesn't exist) replaced with `FROM_CHUNK` traversal pattern
 - `MENTIONS` (doesn't exist) replaced with shared-chunk pattern `(Company)-[:FROM_CHUNK]->(Chunk)<-[:FROM_CHUNK]-(Product)`
 - `OWNS` direction corrected to `(AssetManager)-[:OWNS]->(Company)`
-- Fixed in: Lab_8, Lab_9, Lab_10, Lab_11 notebooks
+- Fixed in: Lab_8, Lab_9 notebooks
 
 ### Old MAF API in solution files and notebooks
 - `async_credential=` replaced with `credential=`

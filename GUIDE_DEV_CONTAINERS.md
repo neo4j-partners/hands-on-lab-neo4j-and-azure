@@ -4,11 +4,7 @@
 
 ## Quick Start: GitHub Codespaces
 
-> **Warning:** It may take several minutes for the Codespace to start. After it starts, please wait an additional couple of minutes for all post-install scripts to finish running.  You can tell when it is finished initializing because the CONFIG.txt will be created in the root directory.
->
-> ![Wait for Environment to Finish Initializing](Lab_4_Start_Codespace/images/wait_finish_env.png)
-
-> **Note:** The Codespace/Dev Container prepopulates the `CONFIG.txt` file in the project root with Neo4j connection settings. Review these values to ensure they are accurate for your environment. If running outside of a Codespace or Dev Container, you must manually set the Neo4j environment variables (`NEO4J_URI`, `NEO4J_USERNAME`, `NEO4J_PASSWORD`) in your `CONFIG.txt` file.
+> **Warning:** It may take several minutes for the Codespace to start. After it starts, please wait a couple of minutes for all post-install scripts to finish running.
 
 ### Setup Steps
 
@@ -17,28 +13,16 @@
    az login --use-device-code
    ```
 
-2. **Get your Foundry project endpoint:**
+2. **Configure CONFIG.txt:**
 
-   You will use the Foundry project you created in Lab 3. To find the project endpoint:
-   - Go to https://ai.azure.com/ and open your project (the one you created in Lab 3)
-   - On the project home page, copy the **Project endpoint** value
+   Edit the `CONFIG.txt` file in the project root and fill in your values:
 
-   ![Foundry Home Page](Lab_4_Start_Codespace/images/Foundry_Home_Page.png)
-
-
-3. **Configure environment variables:**
-
-   Edit the `CONFIG.txt` file in the project root and add the following Azure variables (your Neo4j credentials should already be populated):
-
-   ```
-   AZURE_AI_PROJECT_ENDPOINT=<paste your project endpoint here>
-   AZURE_AI_MODEL_NAME=gpt-4o-mini
-   AZURE_AI_EMBEDDING_NAME=text-embedding-3-small
-   ```
+   - Add your **Neo4j credentials** from Lab 1 (`NEO4J_URI`, `NEO4J_USERNAME`, `NEO4J_PASSWORD`)
+   - Add your **Azure AI Foundry project endpoint** from Lab 3 (`AZURE_AI_PROJECT_ENDPOINT`)
 
    > **Note:** Set `AZURE_AI_MODEL_NAME` to whichever model you deployed in Lab 3 (`gpt-4o-mini` or `gpt-4o`).
 
-4. Move on to Lab 5 - Foundry Agents: [Lab_5_Foundry_Agents/README.md](Lab_5_Foundry_Agents/README.md)
+3. Move on to Lab 5 - Foundry Agents: [Lab_5_Foundry_Agents/README.md](Lab_5_Foundry_Agents/README.md)
 
 ---
 

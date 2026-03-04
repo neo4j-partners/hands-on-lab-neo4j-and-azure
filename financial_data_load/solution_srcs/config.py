@@ -51,7 +51,7 @@ class AgentConfig(BaseSettings):
     )
     model_name: str = Field(default="gpt-4o", validation_alias="AZURE_AI_MODEL_NAME")
     embedding_name: str = Field(
-        default="text-embedding-ada-002",
+        default="text-embedding-3-small",
         validation_alias="AZURE_AI_EMBEDDING_NAME",
     )
 

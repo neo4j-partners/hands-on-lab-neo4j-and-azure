@@ -38,7 +38,16 @@ Click the button below to start your development environment:
 
 ## Setup
 
-Once your Codespace has started, it should open a file with setup instructions. You will be prompted to enter your Neo4j credentials. After that, follow the steps below to configure the Azure connection for the remaining labs.
+Once your Codespace has started, you will see the terminal as it starts up. Eventually it will say:
+
+```
+Use Cmd/Ctrl + Shift + P -> View Creation Log to see full logs
+✔ Finishing up...
+⠼ Running postCreateCommand...
+  › bash scripts/start_dev_container_post_create.sh
+```
+
+Wait for that to complete before proceeding.
 
 For reference, you can also view the complete setup instructions in [GUIDE_DEV_CONTAINERS.md](../GUIDE_DEV_CONTAINERS.md).
 
@@ -50,24 +59,24 @@ In the Codespace terminal, authenticate with Azure:
 az login --use-device-code
 ```
 
-### Step 2: Get Your Foundry Project Endpoint
+### Step 2: Configure CONFIG.txt
 
-You will use the Foundry project you created in Lab 3. To find the project endpoint:
+Edit the `CONFIG.txt` file in the root of the project and fill in your values:
 
-1. Go to https://ai.azure.com/ and open your project (the one you created in Lab 3)
-2. On the project home page, copy the **Project endpoint** value
+1. Add your **Neo4j credentials** from Lab 1:
+   ```
+   NEO4J_URI=neo4j+s://xxxxx.databases.neo4j.io
+   NEO4J_USERNAME=neo4j
+   NEO4J_PASSWORD=your-password-here
+   ```
 
-![Foundry Home Page](images/Foundry_Home_Page.png)
+2. Add your **Azure AI Foundry project endpoint** from Lab 3. To find it, go to https://ai.azure.com/, open your project, and copy the **Project endpoint** value from the project home page:
 
-### Step 3: Configure Environment Variables
+   ![Foundry Home Page](images/Foundry_Home_Page.png)
 
-Edit the `.env` file in the root of the project and add the following Azure variables (your Neo4j credentials should already be populated):
-
-```
-AZURE_AI_PROJECT_ENDPOINT=<paste your project endpoint here>
-AZURE_AI_MODEL_NAME=gpt-4o-mini
-AZURE_AI_EMBEDDING_NAME=text-embedding-3-small
-```
+   ```
+   AZURE_AI_PROJECT_ENDPOINT=<paste your project endpoint here>
+   ```
 
 > **Note:** Set `AZURE_AI_MODEL_NAME` to whichever model you deployed in Lab 3 (`gpt-4o-mini` or `gpt-4o`).
 
@@ -171,11 +180,7 @@ az login
 
 ### Step 7: Configure Environment Variables
 
-1. Copy the sample environment file:
-   ```bash
-   cp .env.sample .env
-   ```
-2. Edit `.env` and add your Neo4j credentials and Azure Foundry endpoint (from Lab 3):
+1. Edit `CONFIG.txt` and add your Neo4j credentials and Azure Foundry endpoint (from Lab 3):
    ```
    NEO4J_URI=neo4j+s://xxxxx.databases.neo4j.io
    NEO4J_USERNAME=neo4j

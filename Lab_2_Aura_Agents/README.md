@@ -105,7 +105,7 @@ Click **Add Tool** and select **Similarity Search** to configure a semantic sear
 
 **Configuration:**
 - **Embedding provider:** `openai`
-- **Embedding model:** `text-embedding-ada-002`
+- **Embedding model:** `text-embedding-3-small`
 - **Vector Index:** `chunkEmbeddings`
 - **Return Properties:** `text`
 - **Top K:** 5
@@ -190,7 +190,7 @@ These same patterns are implemented programmatically in Labs 6 and 7 using Pytho
 
 ## Next Steps
 
-After completing this lab, continue to [Lab 3 - Foundry Agents](../Lab_3_Foundry_Agents) to build an AI agent using Microsoft Foundry.
+After completing this lab, continue to [Lab 3 - Foundry Setup](../Lab_3_Foundry_Setup) to set up your Microsoft Foundry project.
 
 **This completes Part 1 (No-Code Track) of the workshop.** To continue with the coding labs, proceed to [Lab 4 - Start Codespace](../Lab_4_Start_Codespace).
 
