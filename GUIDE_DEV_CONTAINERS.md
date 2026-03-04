@@ -38,3 +38,9 @@ If you have Docker and VS Code installed locally, you can run the workshop in an
 6. Once the build completes, continue with the [Setup Steps](#setup-steps) above
 
 For more details, see the [VS Code Dev Containers documentation](https://code.visualstudio.com/docs/devcontainers/containers#_quick-start-open-a-git-repository-or-github-pr-in-an-isolated-container-volume).
+
+---
+
+## Cleaning Up Codespaces
+
+If you need to start fresh or are running out of resources, you can delete any running Codespaces at [github.com/codespaces](https://github.com/codespaces).

@@ -210,6 +210,10 @@ az login
 | Jupyter kernel not found | Run `uv sync` again and restart VS Code |
 | Import errors in notebooks | Ensure you've selected the correct Python interpreter from `.venv` |
 
+## Cleaning Up Codespaces
+
+If you need to start fresh or are running out of resources, you can delete any running Codespaces at [github.com/codespaces](https://github.com/codespaces).
+
 ## Next Steps
 
 After completing this lab, continue to [Lab 5 - Foundry Agents](../Lab_5_Foundry_Agents) to build your first agent with the Microsoft Agent Framework.

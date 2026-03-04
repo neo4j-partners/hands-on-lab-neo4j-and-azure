@@ -20,6 +20,7 @@ dependencies = [
     "agent-framework-azure-ai>=1.0.0rc2",
     "agent-framework-neo4j>=0.5.4",
     "neo4j-agent-memory[microsoft-agent]>=0.0.4",
+    "agent-framework>=1.0.0rc2",
     "spacy>=3.7.0,<4.0.0",
     "en-core-web-sm",
     "rapidfuzz>=3.0.0",
@@ -29,5 +30,11 @@ dependencies = [
 [tool.uv]
 package = false
 
+# The neo4j-agent-memory[microsoft-agent] extra depends on the `agent-framework`
+# meta-package, which depends on agent-framework-core[all] — pulling in every
+# provider (Claude, Bedrock, Anthropic, etc.) plus ~3GB of dependencies (nvidia,
+# triton, claude_agent_sdk). Replace it with a local shim that only depends on
+# agent-framework-core (without [all]).
 [tool.uv.sources]
+agent-framework = { path = "agent-framework-shim" }
 en-core-web-sm = { url = "https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.8.0/en_core_web_sm-3.8.0-py3-none-any.whl" }

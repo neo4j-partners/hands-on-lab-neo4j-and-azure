@@ -1,0 +1,8 @@
+[project]
+name = "agent-framework"
+version = "1.0.0rc2"
+description = "Shim: replaces the agent-framework meta-package to avoid pulling in agent-framework-core[all] (~3GB of unused providers)"
+requires-python = ">=3.10"
+dependencies = [
+    "agent-framework-core>=1.0.0rc2",
+]
