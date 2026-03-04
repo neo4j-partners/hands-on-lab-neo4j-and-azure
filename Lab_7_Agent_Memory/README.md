@@ -79,6 +79,12 @@ Before running any notebook, make sure you have the correct Python kernel select
 2. Work through each notebook in order
 3. Notebook 2 builds on concepts from Notebook 1
 
+## Entity Extraction Dependencies
+
+The `neo4j-agent-memory` package uses a pipeline of entity extractors that run in order: **spaCy → GLiNER → LLM (OpenAI)**. For this workshop we add `spacy` and the `en_core_web_sm` model as project dependencies in `pyproject.toml` so the first stage succeeds and the pipeline doesn't fall through to the OpenAI-only LLM extractor (which requires `OPENAI_API_KEY`).
+
+GLiNER was excluded because it depends on PyTorch (~400MB), which exceeds devcontainer disk limits. spaCy alone handles entity extraction for the workshop.
+
 ## Key Concepts
 
 - **Short-Term Memory**: Conversation history with message chains and semantic search

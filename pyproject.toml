@@ -22,7 +22,6 @@ dependencies = [
     "neo4j-agent-memory[microsoft-agent]>=0.0.4",
     "spacy>=3.7.0,<4.0.0",
     "en-core-web-sm",
-    "gliner>=0.2.0",
     "rapidfuzz>=3.0.0",
     "nest-asyncio>=1.6.0",
 ]
