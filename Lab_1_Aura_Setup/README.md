@@ -34,37 +34,6 @@ After your Aura instance is running, restore the pre-built knowledge graph:
 
 4. Wait for the restore to complete - your instance will restart with the SEC 10-K filings knowledge graph
 
-5. **Recreate indexes and constraints** - Aura exports are unrecovered backups, so indexes are not preserved. To recreate them:
-
-   1. Go to [console.neo4j.io](https://console.neo4j.io) and click on your instance
-   2. Select **Query** in the left sidebar to open the query console
-   3. Copy and paste the following Cypher and click **Run**:
-
-   ```cypher
-   // Vector index for semantic search over chunk embeddings
-   CREATE VECTOR INDEX chunkEmbeddings IF NOT EXISTS
-   FOR (n:Chunk) ON (n.embedding)
-   OPTIONS {indexConfig: {`vector.dimensions`: 1536, `vector.similarity_function`: 'cosine'}};
-   ```
-
-   ```cypher
-   // Fulltext indexes for keyword search
-   CREATE FULLTEXT INDEX chunkText IF NOT EXISTS FOR (n:Chunk) ON EACH [n.text];
-   CREATE FULLTEXT INDEX search_entities IF NOT EXISTS FOR (n:Company|Product|RiskFactor|Executive|FinancialMetric) ON EACH [n.name];
-   ```
-
-   ```cypher
-   // Uniqueness constraints
-   CREATE CONSTRAINT unique_company_name IF NOT EXISTS FOR (n:Company) REQUIRE n.name IS UNIQUE;
-   CREATE CONSTRAINT unique_asset_manager_name IF NOT EXISTS FOR (n:AssetManager) REQUIRE n.managerName IS UNIQUE;
-   CREATE CONSTRAINT unique_riskfactor_name IF NOT EXISTS FOR (n:RiskFactor) REQUIRE n.name IS UNIQUE;
-   CREATE CONSTRAINT unique_product_name IF NOT EXISTS FOR (n:Product) REQUIRE n.name IS UNIQUE;
-   CREATE CONSTRAINT unique_executive_name IF NOT EXISTS FOR (n:Executive) REQUIRE n.name IS UNIQUE;
-   CREATE CONSTRAINT unique_financialmetric_name IF NOT EXISTS FOR (n:FinancialMetric) REQUIRE n.name IS UNIQUE;
-   ```
-
-6. Verify the indexes are online by running `SHOW INDEXES` in the query console - all indexes should show state `"ONLINE"`
-
 The backup contains:
 - SEC 10-K filing documents from major companies (Apple, Microsoft, NVIDIA, etc.)
 - Extracted entities: Companies, Risk Factors, Products, Executives, Financial Metrics
