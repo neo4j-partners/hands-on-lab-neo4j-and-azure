@@ -23,7 +23,10 @@ wheels/
 *.spec
 pip-log.txt
 pip-delete-this-directory.txt
+
 .env
+.env.gold.copy
+
 !.env.sample
 CONFIG.txt
 !CONFIG.txt.example
