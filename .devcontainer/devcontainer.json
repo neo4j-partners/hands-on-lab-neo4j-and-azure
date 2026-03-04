@@ -4,7 +4,10 @@
     "forwardPorts": [8000],
     "features": {
         "ghcr.io/devcontainers/features/azure-cli:1": {},
-        "ghcr.io/devcontainers/features/github-cli:1": {}
+        "ghcr.io/devcontainers/features/github-cli:1": {},
+        "ghcr.io/devcontainers/features/python:1": {
+            "installJupyterlab": true
+        }
     },
     "customizations": {
         "vscode": {
