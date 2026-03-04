@@ -28,8 +28,6 @@ pip-delete-this-directory.txt
 .env.gold.copy
 
 !.env.sample
-CONFIG.txt
-!CONFIG.txt.example
 .venv
 env/
 venv/

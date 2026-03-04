@@ -36,13 +36,7 @@ Build a multi-tool agent:
 
 ### Running Locally
 
-If you prefer to run the labs from the terminal instead of notebooks, first ensure everything is set up properly:
-
-```bash
-uv run setup_env.py
-```
-
-Then run the workshop menu:
+If you prefer to run the labs from the terminal instead of notebooks, run the workshop menu:
 
 ```bash
 cd financial_data_load && uv run python main.py solutions
@@ -91,6 +85,4 @@ Menu items 9 and 10 correspond to notebooks 2 and 3 respectively.
 - Implement vector and graph-enhanced retrieval strategies
 - Create agents that automatically choose the right tool for each question
 
-For more advanced topics, continue to the **Advanced Labs**:
-- [Lab 10 - Advanced Retrievers](../Lab_10_Retrievers) - Text2Cypher, entity extraction, and full dataset exploration
-- [Lab 11 - Hybrid Search](../Lab_11_Hybrid_Search) - Combining keyword and semantic search
+For the full Python data loading pipeline, see [`financial_data_load/`](../financial_data_load).

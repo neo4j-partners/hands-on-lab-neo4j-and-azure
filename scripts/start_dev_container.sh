@@ -1,11 +1,11 @@
 #!/bin/bash
-# Codespace start script - creates .env and displays setup instructions
+# Codespace start script - creates CONFIG.txt and displays setup instructions
 
-# Create .env with Neo4j secrets if they exist (only if .env doesn't already exist)
-if [ ! -f .env ]; then
+# Create CONFIG.txt with Neo4j secrets if they exist (only if CONFIG.txt doesn't already exist)
+if [ ! -f CONFIG.txt ]; then
     if [ -n "$NEO4J_URI" ] || [ -n "$NEO4J_USERNAME" ] || [ -n "$NEO4J_PASSWORD" ]; then
-        echo "Creating .env with Neo4j configuration..."
-        cat > .env << EOF
+        echo "Creating CONFIG.txt with Neo4j configuration..."
+        cat > CONFIG.txt << EOF
 # Neo4j Connection (from Codespace secrets)
 NEO4J_URI=${NEO4J_URI:-}
 NEO4J_USERNAME=${NEO4J_USERNAME:-}
@@ -22,20 +22,20 @@ AZURE_AI_PROJECT_ENDPOINT=
 AZURE_AI_MODEL_NAME=gpt-4o-mini
 AZURE_AI_EMBEDDING_NAME=text-embedding-3-small
 EOF
-        echo "✅ .env created with Neo4j configuration"
+        echo "✅ CONFIG.txt created with Neo4j configuration"
     else
-        echo "⚠️  No Neo4j secrets found - .env not created"
-        echo "   Set secrets in Codespace settings or create .env manually"
+        echo "⚠️  No Neo4j secrets found - CONFIG.txt not created"
+        echo "   Set secrets in Codespace settings or create CONFIG.txt manually"
     fi
 else
-    echo "✅ .env already exists - preserving existing configuration"
+    echo "✅ CONFIG.txt already exists - preserving existing configuration"
 fi
 
 echo ""
 echo "✅ Ready! Run:"
 echo "   az login --use-device-code"
 echo ""
-echo "Then edit .env and add your Azure Foundry project endpoint from Lab 3:"
+echo "Then edit CONFIG.txt and add your Azure Foundry project endpoint from Lab 3:"
 echo "   AZURE_AI_PROJECT_ENDPOINT=https://<resource-name>.services.ai.azure.com/api/projects/<project-name>"
 echo "   AZURE_AI_MODEL_NAME=gpt-4o-mini"
 echo "   AZURE_AI_EMBEDDING_NAME=text-embedding-3-small"

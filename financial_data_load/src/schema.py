@@ -17,7 +17,7 @@ CONSTRAINTS: list[tuple[str, str, str]] = [
 # Fulltext indexes: (index_name, label_clause, [properties]).
 FULLTEXT_INDEXES: list[tuple[str, str, list[str]]] = [
     ("search_entities", "Company|Product|RiskFactor|Executive|FinancialMetric", ["name"]),
-    ("chunkText", "Chunk", ["text"]),
+    ("search_chunks", "Chunk", ["text"]),
 ]
 
 # Constraints for entity types created by the pipeline.

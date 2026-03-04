@@ -263,7 +263,7 @@ def verify_searches(driver: Driver) -> None:
             HybridRetriever(
                 driver=driver,
                 vector_index_name="chunkEmbeddings",
-                fulltext_index_name="chunkText",
+                fulltext_index_name="search_chunks",
                 embedder=embedder,
                 return_properties=["text"],
             ),

@@ -26,7 +26,7 @@ async def run_agent(query: str):
         uri=neo4j_settings.uri,
         username=neo4j_settings.username,
         password=neo4j_settings.get_password(),
-        index_name="chunkText",
+        index_name=neo4j_settings.fulltext_index_name,
         index_type="fulltext",
         top_k=3,
         context_prompt=(

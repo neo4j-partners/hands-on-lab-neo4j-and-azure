@@ -12,8 +12,8 @@ from neo4j_graphrag.llm import OpenAILLM
 from pydantic import Field, computed_field
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
-# Load configuration from project root .env
-_config_file = Path(__file__).parent.parent / ".env"
+# Load configuration from project root CONFIG.txt
+_config_file = Path(__file__).parent.parent / "CONFIG.txt"
 load_dotenv(_config_file)
 
 

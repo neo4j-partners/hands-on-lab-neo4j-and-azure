@@ -1,6 +1,8 @@
 # Lab 8 - Building a Knowledge Graph
 
-This lab covers the complete pipeline for building a knowledge graph in Neo4j: loading text data, generating embeddings, and implementing retrieval strategies that traverse graph relationships.
+This lab provides background on how the data in Neo4j was loaded and embeddings were created. You'll walk through the pipeline step by step — loading text, generating embeddings, and implementing retrieval strategies that traverse graph relationships.
+
+> **Full Python example:** For the complete data loading pipeline used to populate the workshop's knowledge graph, see [`financial_data_load/`](../financial_data_load).
 
 ## Prerequisites
 

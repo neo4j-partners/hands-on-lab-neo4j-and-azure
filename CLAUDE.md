@@ -11,15 +11,6 @@ A hands-on workshop teaching GraphRAG (Graph Retrieval-Augmented Generation) tec
 ### Setup & Dependencies
 ```bash
 uv sync --prerelease=allow                    # Install dependencies
-uv run setup_env.py                           # Sync azd outputs to .env
-```
-
-### Azure Infrastructure
-```bash
-azd env new                                    # Initialize environment
-azd env set AZURE_LOCATION eastus2             # Set region (eastus2, swedencentral, westus2)
-azd up                                         # Deploy infrastructure
-azd down                                       # Cleanup resources
 ```
 
 ### Running Workshop Solutions
@@ -80,8 +71,9 @@ Uses Microsoft Agent Framework with Azure AI Foundry. Agents combine multiple to
 - Text2Cypher tool
 
 ### Configuration
-- `financial_data_load/src/config.py` - Pydantic settings for Neo4j and Azure (data loader)
-- `financial_data_load/solution_srcs/config.py` - Shared config for workshop solutions
+- `shared/config.py` - Shared config for all lab notebooks (loads `CONFIG.txt` from repo root)
+- `financial_data_load/src/config.py` - Pydantic settings for Neo4j and Azure (data loader, loads `.env`)
+- `financial_data_load/solution_srcs/config.py` - Config for workshop solutions (loads `.env`)
 - Uses `AzureCliCredential` for authentication (run `az login` first)
 
 ## Project Structure
@@ -92,8 +84,6 @@ Lab_6_Context_Providers/   # Jupyter notebooks: MAF context providers
 Lab_7_Agent_Memory/        # Jupyter notebooks: Neo4j Agent Memory
 Lab_8_Knowledge_Graph/     # Jupyter notebooks: KG fundamentals
 Lab_9_Advanced_Agents/     # Jupyter notebooks: Advanced Agents
-Lab_10_Retrievers/         # Jupyter notebooks: Advanced retrievers
-Lab_11_Hybrid_Search/      # Jupyter notebooks: Hybrid search
 financial_data_load/       # Python CLI and data loading
   ├── main.py              # CLI entry point (test, load, verify, clean, samples, solutions)
   ├── src/                 # Data loader modules
@@ -104,7 +94,6 @@ financial_data_load/       # Python CLI and data loading
   │   └── samples.py       # Sample queries showcasing the knowledge graph
   ├── solution_srcs/       # Numbered workshop solution files (01-06_xx)
   └── financial-data/      # SEC 10-K PDFs and CSV metadata
-infra/                     # Bicep templates for Azure deployment
 ```
 
 ## Key Technical Details
@@ -112,19 +101,19 @@ infra/                     # Bicep templates for Azure deployment
 - **Python**: Requires 3.12.x (not 3.13+)
 - **Embeddings**: 1536 dimensions via text-embedding-ada-002
 - **Vector Index**: `chunkEmbeddings` on `Chunk.embedding`
-- **Fulltext Indexes**: `chunkText` (keyword search), `search_entities` (entity lookup)
+- **Fulltext Indexes**: `search_chunks` (keyword search), `search_entities` (entity lookup)
 - **Local Fork**: Uses local `neo4j-graphrag-python` from `~/projects/neo4j-graphrag-python`
 
 ## Environment Variables
 
-Required in `.env`:
+Required in `CONFIG.txt` (lab notebooks) or `.env` (financial_data_load CLI):
 ```
 NEO4J_URI=neo4j+s://xxx.databases.neo4j.io
 NEO4J_USERNAME=neo4j
 NEO4J_PASSWORD=<password>
 ```
 
-Auto-populated by `setup_env.py`:
+Azure settings (configured manually via Lab 3 Foundry setup):
 ```
 AZURE_AI_PROJECT_ENDPOINT=<foundry endpoint>
 AZURE_AI_MODEL_NAME=gpt-4o

@@ -36,7 +36,7 @@ from config import get_neo4j_driver, get_embedder
 # - Vector index: on Chunk.embedding (semantic similarity)
 # - Fulltext index: on Chunk.text (keyword matching)
 VECTOR_INDEX = "chunkEmbeddings"
-FULLTEXT_INDEX = "chunkText"
+FULLTEXT_INDEX = "search_chunks"
 
 # Retrieval query for HybridCypherRetriever
 # This runs AFTER hybrid search finds matching Chunk nodes
