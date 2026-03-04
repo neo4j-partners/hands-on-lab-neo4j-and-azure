@@ -20,9 +20,15 @@ dependencies = [
     "agent-framework-azure-ai>=1.0.0rc2",
     "agent-framework-neo4j>=0.5.4",
     "neo4j-agent-memory[microsoft-agent]>=0.0.4",
+    "spacy>=3.7.0,<4.0.0",
+    "en-core-web-sm",
+    "gliner>=0.2.0",
     "rapidfuzz>=3.0.0",
     "nest-asyncio>=1.6.0",
 ]
 
 [tool.uv]
 package = false
+
+[tool.uv.sources]
+en-core-web-sm = { url = "https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.8.0/en_core_web_sm-3.8.0-py3-none-any.whl" }
