@@ -35,6 +35,7 @@ async def run_agent(query: str):
             "username": neo4j_config.username,
             "password": SecretStr(neo4j_config.password),
         },
+        extraction={"extractor_type": "spacy"},
     )
 
     async with MemoryClient(settings, embedder=get_memory_embedder()) as memory_client:
