@@ -17,6 +17,10 @@ export PATH="$HOME/.local/bin:$PATH"
 echo "Installing project dependencies..."
 uv sync --prerelease=allow
 
+# Install JupyterLab for Codespaces JupyterLab support
+echo "Installing JupyterLab..."
+pip install jupyterlab
+
 # Register the Jupyter kernel
 echo "Registering Jupyter kernel..."
 uv run python -m ipykernel install --user --name neo4j-azure-ai-workshop --display-name "Neo4j Azure AI Workshop"
