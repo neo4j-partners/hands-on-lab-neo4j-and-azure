@@ -33,6 +33,9 @@ async def main():
             "username": neo4j_config.username,
             "password": SecretStr(neo4j_config.password),
         },
+        extraction={
+            "enable_gliner": False,  # GLiNER disabled: downloads ~500MB model from HuggingFace, impractical in a workshop
+        },
     )
 
     async with MemoryClient(settings, embedder=get_memory_embedder()) as memory_client:
