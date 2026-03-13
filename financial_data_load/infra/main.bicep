@@ -23,7 +23,7 @@ param chatModelVersion string = '2025-12-11'
 @description('SKU for the chat deployment')
 param chatDeploymentSku string = 'GlobalStandard'
 @description('Capacity for the chat deployment')
-param chatDeploymentCapacity int = 120
+param chatDeploymentCapacity int = 360
 
 // Embedding model
 @description('Name of the embedding model to deploy')
