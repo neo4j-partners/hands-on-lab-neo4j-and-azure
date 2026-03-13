@@ -32,7 +32,7 @@ async def main():
             "extractor_type": "pipeline",
             "enable_spacy": True,
             "enable_gliner": False,  # Disabled: downloads ~500MB model, impractical in a workshop
-            "enable_llm_fallback": True,
+            "enable_llm_fallback": False,  # LLM extractor requires OPENAI_API_KEY, not available in this workshop
             "confidence_threshold": 0.5,
             "entity_types": [
                 "PERSON", "ORGANIZATION", "LOCATION", "EVENT", "OBJECT"

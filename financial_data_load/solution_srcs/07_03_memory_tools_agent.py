@@ -38,6 +38,7 @@ async def run_agent(query: str):
         },
         extraction={
             "enable_gliner": False,  # GLiNER disabled: downloads ~500MB model from HuggingFace, impractical in a workshop
+            "enable_llm_fallback": False,  # LLM extractor requires OPENAI_API_KEY, not available in this workshop
         },
     )
 
