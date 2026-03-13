@@ -37,8 +37,20 @@ EXTRACTION_CONSTRAINTS: list[tuple[str, str, str]] = [
 # ---------------------------------------------------------------------------
 
 
+def _cleanup_empty_properties(driver: Driver) -> None:
+    """Remove nodes with empty-string properties that would violate uniqueness constraints."""
+    for _name, label, prop in CONSTRAINTS + EXTRACTION_CONSTRAINTS:
+        result = driver.execute_query(
+            f"MATCH (n:{label}) WHERE n.{prop} = '' DETACH DELETE n RETURN count(*) AS removed"
+        )
+        removed = result.records[0]["removed"]
+        if removed:
+            print(f"  [CLEANUP] Deleted {removed} {label} node(s) with empty {prop}")
+
+
 def create_all_constraints(driver: Driver) -> None:
     """Create all uniqueness constraints (metadata + extraction)."""
+    _cleanup_empty_properties(driver)
     for name, label, prop in CONSTRAINTS + EXTRACTION_CONSTRAINTS:
         driver.execute_query(
             f"CREATE CONSTRAINT {name} IF NOT EXISTS FOR (n:{label}) REQUIRE n.{prop} IS UNIQUE"

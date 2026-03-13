@@ -160,7 +160,7 @@ Advanced search patterns:
 | 12 | `05_01_fulltext_search.py` | Full-text search capabilities |
 | 13 | `05_02_hybrid_search.py` | Hybrid vector + keyword search |
 
-### Context Providers (04_xx)
+### Context Providers (06_xx)
 
 Neo4j context providers using agent-framework-neo4j:
 
@@ -170,14 +170,16 @@ Neo4j context providers using agent-framework-neo4j:
 | 15 | `06_02_vector_context_provider.py` | Vector (semantic) search context provider |
 | 16 | `06_03_graph_enriched_provider.py` | Vector search + graph traversal context provider |
 
-### Agent Memory (06_xx)
+### Agent Memory (07_xx)
 
 Persistent agent memory using neo4j-agent-memory:
 
 | # | Solution | Description |
 |---|----------|-------------|
 | 17 | `07_01_memory_context_provider.py` | Memory as a context provider |
-| 18 | `07_02_memory_tools_agent.py` | Agent with explicit memory tools |
+| 18 | `07_02_entity_extraction.py` | Entity extraction pipeline |
+| 19 | `07_03_memory_tools_agent.py` | Agent with explicit memory tools |
+| 20 | `07_04_reasoning_memory.py` | Reasoning memory traces and tool stats |
 
 ## Architecture
 
@@ -229,7 +231,9 @@ financial_data_load/
     ├── 05_02_context_provider.py
     ├── 05_02_hybrid_search.py
     ├── 07_01_memory_context_provider.py
-    └── 07_02_memory_tools_agent.py
+    ├── 07_02_entity_extraction.py
+    ├── 07_03_memory_tools_agent.py
+    └── 07_04_reasoning_memory.py
 ```
 
 ## Environment Variables

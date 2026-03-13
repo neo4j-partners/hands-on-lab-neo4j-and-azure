@@ -119,6 +119,39 @@ def cmd_load(args):
     print(f"\nDone in {_fmt_elapsed(elapsed)}.")
 
 
+def cmd_finalize(args):
+    """Run post-pipeline steps: entity resolution → constraints → indexes → verify."""
+    from src.config import connect
+    from src.loader import (
+        load_asset_managers, create_asset_manager_relationships, verify,
+    )
+    from src.schema import (
+        create_all_constraints, create_fulltext_indexes,
+        create_embedding_indexes,
+    )
+    from src.pipeline import run_entity_resolution, validate_enrichment
+
+    with connect() as driver:
+        run_entity_resolution(driver)
+
+        print("\nCreating constraints...")
+        create_all_constraints(driver)
+
+        print("\nCreating indexes...")
+        create_embedding_indexes(driver)
+        create_fulltext_indexes(driver)
+
+        if ASSET_MANAGER_CSV.exists():
+            print()
+            holdings = load_asset_managers(ASSET_MANAGER_CSV)
+            create_asset_manager_relationships(driver, holdings)
+
+        verify(driver)
+        validate_enrichment(driver)
+
+    print("\nDone.")
+
+
 def cmd_verify(args):
     """Print node/relationship counts and run end-to-end search checks."""
     from src.config import connect
@@ -185,9 +218,10 @@ SOLUTIONS = [
     ("solution_srcs.06_01_fulltext_context_provider", "Fulltext Context Provider", True, "run_agent"),
     ("solution_srcs.06_02_vector_context_provider", "Vector Context Provider", True, "run_agent"),
     ("solution_srcs.06_03_graph_enriched_provider", "Graph-Enriched Provider", True, "run_agent"),
-    ("solution_srcs.07_00_entity_extraction", "Entity Extraction Pipeline", True, "main"),
     ("solution_srcs.07_01_memory_context_provider", "Memory Context Provider", True, "run_agent"),
-    ("solution_srcs.07_02_memory_tools_agent", "Memory Tools Agent", True, "run_agent"),
+    ("solution_srcs.07_02_entity_extraction", "Entity Extraction Pipeline", True, "main"),
+    ("solution_srcs.07_03_memory_tools_agent", "Memory Tools Agent", True, "run_agent"),
+    ("solution_srcs.07_04_reasoning_memory", "Reasoning Memory", True, "main"),
 ]
 
 AGENT_QUERIES = {
@@ -199,7 +233,7 @@ AGENT_QUERIES = {
     "solution_srcs.06_02_vector_context_provider": "What are the main business activities of tech companies?",
     "solution_srcs.06_03_graph_enriched_provider": "What are Apple's main products and what risks does the company face?",
     "solution_srcs.07_01_memory_context_provider": "Hi! I'm interested in learning about Apple's products.",
-    "solution_srcs.07_02_memory_tools_agent": "I prefer concise technical explanations over high-level overviews.",
+    "solution_srcs.07_03_memory_tools_agent": "I prefer concise technical explanations over high-level overviews.",
 }
 
 
@@ -231,9 +265,10 @@ def _print_solutions_menu():
     print(" 15. Vector Context Provider")
     print(" 16. Graph-Enriched Provider")
     print("\nAgent Memory (Lab 7):")
-    print(" 17. Entity Extraction Pipeline")
-    print(" 18. Memory Context Provider")
+    print(" 17. Memory Context Provider")
+    print(" 18. Entity Extraction Pipeline")
     print(" 19. Memory Tools Agent")
+    print(" 20. Reasoning Memory")
     print("\n  A. Run all (from option 4 onwards)")
     print("  0. Exit")
     print("=" * 50)
@@ -295,7 +330,7 @@ def cmd_solutions(args):
     while True:
         _print_solutions_menu()
         try:
-            choice = input("\nSelect solution (0-19, A):").strip()
+            choice = input("\nSelect solution (0-20, A):").strip()
             if not choice:
                 continue
             if choice.upper() == "A":
@@ -348,6 +383,11 @@ def main():
         "--clear", action="store_true", help="Clear database first")
     p_load.set_defaults(func=cmd_load)
 
+    # finalize
+    p_finalize = subparsers.add_parser(
+        "finalize", help="Run post-pipeline steps: entity resolution, constraints, indexes")
+    p_finalize.set_defaults(func=cmd_finalize)
+
     # verify
     p_verify = subparsers.add_parser(
         "verify", help="Print node and relationship counts (read-only)")
@@ -374,7 +414,7 @@ def main():
     p_solutions = subparsers.add_parser(
         "solutions", help="Workshop solution runner")
     p_solutions.add_argument(
-        "choice", nargs="?", help="Solution number (1-19) or A for all")
+        "choice", nargs="?", help="Solution number (1-20) or A for all")
     p_solutions.set_defaults(func=cmd_solutions)
 
     args = parser.parse_args()
