@@ -11,6 +11,7 @@ Usage from financial_data_load directory:
         uv run python main.py restore                # Restore database from backup
         uv run python main.py snapshot               # Export entity snapshot
         uv run python main.py resolve                # LLM entity resolution
+        uv run python main.py compare                # Compare runs, score ground truth
         uv run python main.py apply-merges           # Apply merge plan
         uv run python main.py finalize               # Constraints, indexes, asset managers
 
@@ -153,8 +154,25 @@ def cmd_resolve(args):
             print("No snapshot found. Run 'uv run python main.py snapshot' first.")
             return
 
+    # Build config overrides from CLI args
+    overrides = {}
+    if args.strategy is not None:
+        overrides["pre_filter_strategy"] = args.strategy
+    if args.threshold is not None:
+        overrides["pre_filter_threshold"] = args.threshold
+    if args.confidence is not None:
+        overrides["confidence_mode"] = args.confidence
+    if args.confidence_threshold is not None:
+        overrides["confidence_threshold"] = args.confidence_threshold
+    if args.max_group_size is not None:
+        overrides["max_group_size"] = args.max_group_size
+    if args.batch_size is not None:
+        overrides["batch_size"] = args.batch_size
+
     print(f"Using snapshot: {snapshot_path}")
-    resolve(snapshot_path)
+    if overrides:
+        print(f"CLI overrides: {overrides}")
+    resolve(snapshot_path, config_overrides=overrides or None)
 
 
 def cmd_apply_merges(args):
@@ -173,6 +191,13 @@ def cmd_apply_merges(args):
     print(f"Using merge plan: {plan_path}")
     with connect() as driver:
         apply_merge_plan(driver, plan_path)
+
+
+def cmd_compare(args):
+    """Compare entity resolution runs and score against ground truth."""
+    from src.compare import compare_runs
+
+    compare_runs()
 
 
 def cmd_finalize(args):
@@ -459,6 +484,24 @@ def main():
         "resolve", help="Run LLM entity resolution on a snapshot")
     p_resolve.add_argument(
         "--snapshot", help="Path to snapshot file (default: latest)")
+    p_resolve.add_argument(
+        "--strategy", choices=["fuzzy", "prefix"],
+        help="Pre-filter strategy (default: from .env or 'fuzzy')")
+    p_resolve.add_argument(
+        "--threshold", type=float,
+        help="Pre-filter threshold 0.0-1.0 (default: from .env or 0.6)")
+    p_resolve.add_argument(
+        "--confidence", choices=["binary", "scored"],
+        help="Confidence mode (default: from .env or 'binary')")
+    p_resolve.add_argument(
+        "--confidence-threshold", type=float,
+        help="Confidence threshold for scored mode (default: from .env or 0.8)")
+    p_resolve.add_argument(
+        "--max-group-size", type=int,
+        help="Max merge group size (default: from .env or 10)")
+    p_resolve.add_argument(
+        "--batch-size", type=int,
+        help="Pairs per LLM batch (default: from .env or 10)")
     p_resolve.set_defaults(func=cmd_resolve)
 
     # apply-merges
@@ -467,6 +510,11 @@ def main():
     p_apply.add_argument(
         "--plan", help="Path to merge plan file (default: latest)")
     p_apply.set_defaults(func=cmd_apply_merges)
+
+    # compare
+    p_compare = subparsers.add_parser(
+        "compare", help="Compare entity resolution runs and score against ground truth")
+    p_compare.set_defaults(func=cmd_compare)
 
     # finalize
     p_finalize = subparsers.add_parser(

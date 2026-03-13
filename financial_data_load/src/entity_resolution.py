@@ -431,11 +431,18 @@ def _build_merge_groups(
 # ---------------------------------------------------------------------------
 
 
-def resolve(snapshot_path: Path | str) -> Path:
-    """Run entity resolution on a snapshot file. Returns path to merge plan."""
+def resolve(snapshot_path: Path | str, config_overrides: dict | None = None) -> Path:
+    """Run entity resolution on a snapshot file. Returns path to merge plan.
+
+    Args:
+        snapshot_path: Path to the snapshot JSON file.
+        config_overrides: Optional dict of config fields to override
+            (e.g. {"pre_filter_threshold": 0.5, "confidence_mode": "scored"}).
+            Values not provided fall back to .env, then defaults.
+    """
     snapshot_path = Path(snapshot_path)
     snapshot = EntitySnapshot.model_validate_json(snapshot_path.read_text())
-    config = EntityResolutionConfig()
+    config = EntityResolutionConfig(**(config_overrides or {}))
 
     LOG_DIR.mkdir(exist_ok=True)
 
