@@ -5,7 +5,7 @@ This workshop demonstrates Neo4j Agent Memory as a MAF context provider.
 The memory system provides persistent conversation history, entity extraction,
 and preference learning backed by Neo4j.
 
-Run with: uv run python main.py solutions 18
+Run with: uv run python main.py solutions 17
 """
 
 import asyncio

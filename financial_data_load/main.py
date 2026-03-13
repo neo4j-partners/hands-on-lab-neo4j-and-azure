@@ -338,13 +338,14 @@ def main():
     # load
     p_load = subparsers.add_parser(
         "load", help="Full data load: metadata + PDFs + indexes")
-    p_load.add_argument(
+    pdf_group = p_load.add_mutually_exclusive_group()
+    pdf_group.add_argument(
         "--limit", type=int, help="Limit number of PDFs to process")
-    p_load.add_argument(
-        "--clear", action="store_true", help="Clear database first")
-    p_load.add_argument(
+    pdf_group.add_argument(
         "--files", nargs="+", metavar="PDF",
         help="Process only these specific PDF filenames (e.g. 0001004980-23-000029.pdf)")
+    p_load.add_argument(
+        "--clear", action="store_true", help="Clear database first")
     p_load.set_defaults(func=cmd_load)
 
     # verify

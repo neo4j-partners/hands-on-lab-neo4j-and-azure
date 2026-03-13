@@ -5,7 +5,7 @@ This workshop demonstrates the entity extraction pipeline configuration,
 manual entity addition, deduplication, merge strategies, and resolution
 settings using neo4j-agent-memory.
 
-Run with: uv run python main.py solutions 17
+Run with: uv run python main.py solutions 18
 """
 
 import asyncio

@@ -45,6 +45,7 @@ async def run_agent(query: str):
             session_id="workshop-tools-demo",
             include_short_term=True,
             include_long_term=True,
+            include_reasoning=True,
             extract_entities=True,
         )
 
