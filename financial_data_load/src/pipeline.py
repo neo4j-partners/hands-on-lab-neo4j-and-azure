@@ -88,6 +88,7 @@ def process_all_pdfs(
     Returns a list of processing results for summary reporting.
     """
     from .config import get_llm, get_embedder, AgentConfig
+    from .loader import normalize_company_name
     from .schema import build_extraction_schema
     from neo4j_graphrag.experimental.pipeline.kg_builder import SimpleKGPipeline
 
@@ -130,7 +131,10 @@ def process_all_pdfs(
 
             metadata = {"source": str(pdf_path)}
             if meta:
-                metadata.update(meta)
+                normalized_meta = dict(meta)
+                if "name" in normalized_meta:
+                    normalized_meta["name"] = normalize_company_name(normalized_meta["name"])
+                metadata.update(normalized_meta)
 
             try:
                 await pipeline.run_async(

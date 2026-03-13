@@ -3,17 +3,27 @@
 
 Usage from financial_data_load directory:
 
-    Data loading commands:
-        uv run python main.py test
-        uv run python main.py load [--limit N] [--clear] [--files PDF ...]
-        uv run python main.py verify
-        uv run python main.py clean
-        uv run python main.py samples [--limit N]
+    One-time setup (slow — processes PDFs via LLM):
+        uv run python main.py load --clear           # Load metadata + process PDFs
+        uv run python main.py backup                 # Back up database to JSON
+
+    Entity resolution pipeline (fast — restore and iterate):
+        uv run python main.py restore                # Restore database from backup
+        uv run python main.py snapshot               # Export entity snapshot
+        uv run python main.py resolve                # LLM entity resolution
+        uv run python main.py apply-merges           # Apply merge plan
+        uv run python main.py finalize               # Constraints, indexes, asset managers
+
+    Other commands:
+        uv run python main.py test                   # Test Neo4j and Azure connections
+        uv run python main.py verify                 # Print node/relationship counts
+        uv run python main.py clean                  # Clear all data
+        uv run python main.py samples [--limit N]    # Run sample queries
 
     Workshop solution runner:
-        uv run python main.py solutions          # Interactive menu
-        uv run python main.py solutions 4        # Run solution 4 directly
-        uv run python main.py solutions A        # Run all from option 4 onwards
+        uv run python main.py solutions              # Interactive menu
+        uv run python main.py solutions 4            # Run specific solution
+        uv run python main.py solutions A            # Run all from option 4 onwards
 """
 
 import argparse
@@ -46,17 +56,13 @@ def _fmt_elapsed(seconds: float) -> str:
 
 
 def cmd_load(args):
-    """Full data load: clear → metadata → pipeline → constraints → indexes → verify."""
+    """Load data: clear → company metadata → PDF processing. No entity resolution."""
     from src.config import connect
     from src.loader import (
-        clear_database, create_company_nodes, create_asset_manager_relationships,
-        load_company_metadata, load_asset_managers, verify,
+        clear_database, create_company_nodes,
+        load_company_metadata,
     )
-    from src.schema import (
-        create_all_constraints, create_fulltext_indexes,
-        create_embedding_indexes,
-    )
-    from src.pipeline import process_all_pdfs, run_entity_resolution, validate_enrichment
+    from src.pipeline import process_all_pdfs
 
     start = time.monotonic()
 
@@ -93,34 +99,84 @@ def cmd_load(args):
         print(f"\nProcessing {len(pdf_files)} PDFs...")
         process_all_pdfs(driver, pdf_files, company_meta)
 
-        # Fuzzy-merge near-duplicate entities (e.g. "Apple" vs "Apple Inc.")
-        run_entity_resolution(driver)
-
-        # Constraints are created AFTER the pipeline and entity resolution
-        # because Neo4jWriter uses MERGE which can create temporary duplicates
-        # that the fuzzy resolver then merges.
-        print("\nCreating constraints...")
-        create_all_constraints(driver)
-
-        print("\nCreating indexes...")
-        create_embedding_indexes(driver)
-        create_fulltext_indexes(driver)
-
-        # Asset managers
-        if ASSET_MANAGER_CSV.exists():
-            print()
-            holdings = load_asset_managers(ASSET_MANAGER_CSV)
-            create_asset_manager_relationships(driver, holdings)
-
-        verify(driver)
-        validate_enrichment(driver)
-
     elapsed = time.monotonic() - start
-    print(f"\nDone in {_fmt_elapsed(elapsed)}.")
+    print(f"\nPDF processing done in {_fmt_elapsed(elapsed)}.")
+    print("Next step: backup (then snapshot → resolve → apply-merges → finalize)")
+
+
+def cmd_backup(args):
+    """Back up the full database to a JSON file."""
+    from src.config import connect
+    from src.backup import backup_database
+
+    with connect() as driver:
+        backup_database(driver)
+
+
+def cmd_restore(args):
+    """Restore database from a backup file."""
+    from src.config import connect
+    from src.backup import restore_database, latest_backup
+
+    if args.backup:
+        backup_path = Path(args.backup)
+    else:
+        backup_path = latest_backup()
+        if not backup_path:
+            print("No backup found. Run 'uv run python main.py backup' first.")
+            return
+
+    print(f"Using backup: {backup_path}")
+    with connect() as driver:
+        restore_database(driver, backup_path)
+
+
+def cmd_snapshot(args):
+    """Export entity snapshot from Neo4j for iterative resolution testing."""
+    from src.config import connect
+    from src.snapshot import export_snapshot
+
+    with connect() as driver:
+        export_snapshot(driver, label="Company")
+
+
+def cmd_resolve(args):
+    """Run LLM-based entity resolution on a snapshot file."""
+    from src.entity_resolution import resolve
+    from src.snapshot import latest_snapshot
+
+    if args.snapshot:
+        snapshot_path = Path(args.snapshot)
+    else:
+        snapshot_path = latest_snapshot("Company")
+        if not snapshot_path:
+            print("No snapshot found. Run 'uv run python main.py snapshot' first.")
+            return
+
+    print(f"Using snapshot: {snapshot_path}")
+    resolve(snapshot_path)
+
+
+def cmd_apply_merges(args):
+    """Apply a merge plan to Neo4j."""
+    from src.config import connect
+    from src.entity_resolution import apply_merge_plan, latest_merge_plan
+
+    if args.plan:
+        plan_path = Path(args.plan)
+    else:
+        plan_path = latest_merge_plan()
+        if not plan_path:
+            print("No merge plan found. Run 'uv run python main.py resolve' first.")
+            return
+
+    print(f"Using merge plan: {plan_path}")
+    with connect() as driver:
+        apply_merge_plan(driver, plan_path)
 
 
 def cmd_finalize(args):
-    """Run post-pipeline steps: entity resolution → constraints → indexes → verify."""
+    """Run post-resolution steps: constraints → indexes → asset managers → verify."""
     from src.config import connect
     from src.loader import (
         load_asset_managers, create_asset_manager_relationships, verify,
@@ -129,12 +185,10 @@ def cmd_finalize(args):
         create_all_constraints, create_fulltext_indexes,
         create_embedding_indexes,
     )
-    from src.pipeline import run_entity_resolution, validate_enrichment
+    from src.pipeline import validate_enrichment
 
     with connect() as driver:
-        run_entity_resolution(driver)
-
-        print("\nCreating constraints...")
+        print("Creating constraints...")
         create_all_constraints(driver)
 
         print("\nCreating indexes...")
@@ -372,7 +426,7 @@ def main():
 
     # load
     p_load = subparsers.add_parser(
-        "load", help="Full data load: metadata + PDFs + indexes")
+        "load", help="Load company metadata and process PDFs (no entity resolution)")
     pdf_group = p_load.add_mutually_exclusive_group()
     pdf_group.add_argument(
         "--limit", type=int, help="Limit number of PDFs to process")
@@ -383,9 +437,40 @@ def main():
         "--clear", action="store_true", help="Clear database first")
     p_load.set_defaults(func=cmd_load)
 
+    # backup
+    p_backup = subparsers.add_parser(
+        "backup", help="Back up full database to JSON file")
+    p_backup.set_defaults(func=cmd_backup)
+
+    # restore
+    p_restore = subparsers.add_parser(
+        "restore", help="Restore database from backup file")
+    p_restore.add_argument(
+        "--backup", help="Path to backup file (default: latest)")
+    p_restore.set_defaults(func=cmd_restore)
+
+    # snapshot
+    p_snapshot = subparsers.add_parser(
+        "snapshot", help="Export entity snapshot for iterative resolution testing")
+    p_snapshot.set_defaults(func=cmd_snapshot)
+
+    # resolve
+    p_resolve = subparsers.add_parser(
+        "resolve", help="Run LLM entity resolution on a snapshot")
+    p_resolve.add_argument(
+        "--snapshot", help="Path to snapshot file (default: latest)")
+    p_resolve.set_defaults(func=cmd_resolve)
+
+    # apply-merges
+    p_apply = subparsers.add_parser(
+        "apply-merges", help="Apply merge plan to Neo4j")
+    p_apply.add_argument(
+        "--plan", help="Path to merge plan file (default: latest)")
+    p_apply.set_defaults(func=cmd_apply_merges)
+
     # finalize
     p_finalize = subparsers.add_parser(
-        "finalize", help="Run post-pipeline steps: entity resolution, constraints, indexes")
+        "finalize", help="Post-resolution: constraints, indexes, asset managers, verify")
     p_finalize.set_defaults(func=cmd_finalize)
 
     # verify

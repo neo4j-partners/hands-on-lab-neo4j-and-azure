@@ -56,55 +56,104 @@ uv sync --prerelease=allow
 uv run python main.py test
 ```
 
-### 5. Load Data
+### 5. Load PDFs and Create Backup (one-time)
 
-Load all SEC 10-K filings using the SimpleKGPipeline. Data files are in `financial-data/`:
+This step processes PDFs through the LLM (~25 min for all 8) and creates a backup. You only need to do this once. The `load` command handles both CSV metadata and PDF processing.
 
 ```bash
-# Test with 1 PDF first
+# Test with 1 PDF first (optional)
 uv run python main.py load --limit 1 --clear
 
-# Once that works, load all 8 PDFs
+# Load all 8 PDFs (~25 min)
 uv run python main.py load --clear
+
+# Back up the database — saves all nodes, relationships, and embeddings to JSON
+uv run python main.py backup
 ```
 
-**All data commands:**
+The backup file is saved to `backups/` and contains the full database state after PDF processing. This is your checkpoint — you can always restore to this point without re-processing PDFs.
+
+### 6. Run Entity Resolution Pipeline
+
+Restore the database from backup, then run entity resolution and finalization. This is fast and can be repeated with different settings.
+
+```bash
+# Restore database to post-PDF-processing state
+uv run python main.py restore
+
+# Export entity snapshot for resolution
+uv run python main.py snapshot
+
+# Run LLM entity resolution
+uv run python main.py resolve
+
+# Review the merge plan (optional)
+cat logs/merge_plan_*.json
+
+# Apply merges to Neo4j
+uv run python main.py apply-merges
+
+# Create constraints, indexes, asset managers
+uv run python main.py finalize
+
+# Verify everything
+uv run python main.py verify
+```
+
+**Testing different configurations:**
+
+To iterate on entity resolution with different settings, you don't need to restore every time. The snapshot file captures entity state, so you can re-run just the resolution steps:
+
+```bash
+# Change ER_ settings in .env, then:
+uv run python main.py resolve              # Re-run with new settings
+uv run python main.py apply-merges         # Apply new merge plan
+
+# Or just re-run finalization
+uv run python main.py finalize
+```
+
+To start completely fresh (reset the database to the post-PDF state and re-run everything):
+
+```bash
+uv run python main.py restore              # Reset to backup
+uv run python main.py snapshot             # Fresh snapshot
+uv run python main.py resolve              # Resolve
+uv run python main.py apply-merges         # Apply
+uv run python main.py finalize             # Finalize
+```
+
+### Entity Resolution Configuration
+
+Entity resolution parameters are configured via `.env` with the `ER_` prefix:
+
+```bash
+ER_PRE_FILTER_STRATEGY=fuzzy        # Pre-filter: "fuzzy" or "prefix"
+ER_PRE_FILTER_THRESHOLD=0.6         # Similarity threshold for candidate pairs
+ER_BATCH_SIZE=10                     # Pairs per LLM batch
+ER_CONFIDENCE_MODE=binary            # "binary" or "confidence"
+ER_CONFIDENCE_THRESHOLD=0.8          # Auto-merge threshold (confidence mode only)
+ER_MAX_GROUP_SIZE=10                 # Max entities in a merge group
+ER_MODEL_NAME=gpt-4o                # LLM model for entity resolution
+```
+
+### All Commands
 
 | Command | Description |
 |---------|-------------|
 | `main.py test` | Test Neo4j and Azure AI connections |
-| `main.py load [--limit N] [--clear]` | Full load: metadata + PDFs + constraints + indexes |
+| `main.py load [--limit N] [--files PDF ...] [--clear]` | Load CSV metadata + process PDFs |
+| `main.py backup` | Back up full database to `backups/` |
+| `main.py restore [--backup PATH]` | Restore database from backup |
+| `main.py snapshot` | Export entity snapshot to `snapshots/` |
+| `main.py resolve [--snapshot PATH]` | LLM entity resolution (outputs merge plan to `logs/`) |
+| `main.py apply-merges [--plan PATH]` | Apply merge plan to Neo4j |
+| `main.py finalize` | Constraints, indexes, asset managers, verify |
 | `main.py verify` | Counts + enrichment checks + end-to-end search validation |
 | `main.py clean` | Clear all data |
 | `main.py samples [--limit N]` | Run sample queries showcasing the graph |
 
-**Pipeline Flow:**
-1. Loads company metadata from `financial-data/Company_Filings.csv`
-2. Creates Company nodes from CSV metadata
-3. Processes PDFs through SimpleKGPipeline:
-   - Chunks documents (27 chunks per PDF typical)
-   - Generates embeddings (1536 dimensions via text-embedding-3-small)
-   - Extracts entities using the LLM (RiskFactor, Product, Executive, FinancialMetric)
-   - Creates relationships (FACES_RISK, OFFERS, HAS_EXECUTIVE, etc.)
-4. Runs fuzzy entity resolution (via `FuzzyMatchResolver`) to merge near-duplicate entities (e.g. "Apple" vs "Apple Inc.")
-5. Creates uniqueness constraints, embedding indexes, and fulltext indexes
-6. Creates AssetManager nodes and OWNS relationships from `Asset_Manager_Holdings.csv`
-
-**Expected Output (1 PDF):**
-```
-NODE COUNTS BY LABEL:
-   __KGBuilder__: 170
-   __Entity__: 142
-   RiskFactor: 67
-   Product: 58
-   Chunk: 27
-   Company: 12
-   ...
-
-TOTALS: 505 nodes, 310 relationships
-```
-
-### 6. Run Workshop Solutions
+### 7. Run Workshop Solutions
 
 ```bash
 # Interactive menu
@@ -195,7 +244,7 @@ Persistent agent memory using neo4j-agent-memory:
 ```
 financial_data_load/
 ├── azure.yaml              # azd deployment configuration
-├── main.py                 # CLI entry point (load, enrich, verify, clean, samples, solutions)
+├── main.py                 # CLI entry point (load, snapshot, resolve, apply-merges, finalize, etc.)
 ├── setup_env.py            # Sync azd outputs to .env
 ├── infra/
 │   ├── main.bicep          # Azure AI Foundry infrastructure
@@ -204,11 +253,17 @@ financial_data_load/
 │   ├── Company_Filings.csv
 │   ├── Asset_Manager_Holdings.csv
 │   └── form10k-sample/     # PDF files (8 companies)
+├── backups/               # Full database backups (JSON, git-ignored)
+├── snapshots/              # Entity snapshots (JSON, git-ignored)
+├── logs/                   # Merge plans and processing logs
 ├── src/                    # Data loader modules
 │   ├── config.py           # Settings, Azure auth, Neo4j connection
 │   ├── schema.py           # Graph schema, constraints, indexes
 │   ├── loader.py           # CSV loading, company/asset manager nodes
 │   ├── pipeline.py         # SimpleKGPipeline, PDF processing
+│   ├── snapshot.py         # Entity snapshot export (Neo4j → JSON)
+│   ├── entity_resolution.py # LLM-based entity resolution
+│   ├── backup.py           # Full database backup and restore
 │   └── samples.py          # Sample queries
 └── solution_srcs/          # Workshop solution files
     ├── config.py           # Shared config for solutions
