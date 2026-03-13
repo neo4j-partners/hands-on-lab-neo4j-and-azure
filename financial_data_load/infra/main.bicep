@@ -23,7 +23,7 @@ param chatModelVersion string = '2025-11-13'
 @description('SKU for the chat deployment')
 param chatDeploymentSku string = 'GlobalStandard'
 @description('Capacity for the chat deployment')
-param chatDeploymentCapacity int = 20
+param chatDeploymentCapacity int = 120
 
 // Embedding model
 @description('Name of the embedding model to deploy')
@@ -33,7 +33,7 @@ param embeddingModelVersion string = '1'
 @description('SKU for the embedding deployment')
 param embeddingDeploymentSku string = 'GlobalStandard'
 @description('Capacity for the embedding deployment')
-param embeddingDeploymentCapacity int = 120
+param embeddingDeploymentCapacity int = 720
 
 param templateValidationMode bool = false
 param seed string = newGuid()

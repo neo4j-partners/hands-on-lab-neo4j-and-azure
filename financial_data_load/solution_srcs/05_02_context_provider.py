@@ -89,9 +89,11 @@ class UserInfoMemory(BaseContextProvider):
         try:
             result = await self._chat_client.get_response(
                 messages=request_messages,
-                instructions="Extract the user's name and age from the message if present. "
-                "If not present return nulls.",
-                options={"response_format": UserInfo},
+                options={
+                    "response_format": UserInfo,
+                    "instructions": "Extract the user's name and age from the message if present. "
+                    "If not present return nulls.",
+                },
             )
             extracted = result.value
             if extracted and user_info.name is None and extracted.name:

@@ -67,8 +67,15 @@ This document tracks the specific gaps and their resolution. Labs 0-4 are out of
 
 ### Lab 7: Agent Memory
 
-**Notebook 01: Entity Extraction Pipeline** (`01_entity_extraction.ipynb`) — NEW
-- [x] Created new notebook adapted from GraphAcademy Lab 8
+**Notebook 01: Memory Context Provider** (`01_memory_context_provider.ipynb`)
+- [x] Introduces agent memory basics: three memory types, passive injection, `Neo4jMicrosoftMemory`
+- [x] Added "What you will learn" section with 4 learning objectives
+- [x] Added memory type explanations with retrieval mechanics (short-term = semantic search, long-term = graph nodes, reasoning = task traces)
+- [x] Added extraction timing explanation: "Entity extraction runs after every agent turn via the `after_run()` hook"
+- [x] Added passive/active framing in closing transition
+
+**Notebook 02: Entity Extraction Pipeline** (`02_entity_extraction.ipynb`)
+- [x] Deep dive into the extraction pipeline referenced in Notebook 01
 - [x] Teaches multi-stage extraction pipeline (spaCy, GLiNER, LLM fallback) with SEC 10-K entity types
 - [x] Covers manual entity addition via `add_entity()` with deduplication test
 - [x] Documents merge strategies (confidence, union, intersection, cascade)
@@ -76,19 +83,20 @@ This document tracks the specific gaps and their resolution. Labs 0-4 are out of
 - [x] Uses Azure credentials via shared config modules
 - [x] Created corresponding solution file `solution_srcs/07_00_entity_extraction.py`
 
-**Notebook 02: Memory Context Provider** (`02_memory_context_provider.ipynb`) — was 01
-- [x] Added "What you will learn" section with 4 learning objectives
-- [x] Added reference to entity extraction lab: "In the previous notebook, you explored the extraction pipeline"
-- [x] Added memory type explanations with retrieval mechanics (short-term = semantic search, long-term = graph nodes, reasoning = task traces)
-- [x] Added extraction timing explanation: "Entity extraction runs after every agent turn via the `after_run()` hook"
-- [x] Added passive/active framing in closing transition
-
-**Notebook 03: Memory Tools Agent** (`03_memory_tools_agent.ipynb`) — was 02
+**Notebook 03: Memory Tools Agent** (`03_memory_tools_agent.ipynb`)
 - [x] Added "What you will learn" section with 4 learning objectives
 - [x] Added "The Combined Pattern: Passive + Active Memory" framing at opening
 - [x] Strengthened agent instructions with imperative language ("You MUST call the remember_preference tool") and concrete parameter examples
 - [x] Added "Experiment" section with specific testing suggestions
 - [x] Updated corresponding solution file `07_02_memory_tools_agent.py` with matching imperative instructions
+
+**Notebook 04: Reasoning Memory** (`04_reasoning_memory.ipynb`) — NEW
+- [x] Created new notebook adapted from GraphAcademy Lab 10
+- [x] Teaches recording agent execution traces with `record_agent_trace()`
+- [x] Demonstrates semantic search over past traces with `get_similar_traces()`
+- [x] Covers tool usage statistics with `get_tool_stats()`
+- [x] Includes both successful and failed trace examples
+- [x] Uses Azure credentials via shared config modules
 
 ---
 

@@ -34,7 +34,7 @@ Beyond automatic context injection, the package provides six callable tools via 
 | `remember_fact` | Store a factual relationship as a Subject-Predicate-Object triple |
 | `find_similar_tasks` | Retrieve similar past reasoning traces to learn from experience |
 
-In Notebook 01, you'll use the **context provider** for automatic memory. In Notebook 02, you'll combine context providers with **memory tools** so the agent can both passively recall and actively manage its memory.
+In Notebook 01, you'll use the **context provider** for automatic memory. Notebook 02 explores the entity extraction pipeline under the hood. In Notebook 03, you'll combine context providers with **memory tools** so the agent can both passively recall and actively manage its memory. Notebook 04 covers **reasoning memory** — recording and learning from past agent executions.
 
 ### Context Provider vs Memory Tools
 
@@ -60,7 +60,7 @@ Before starting, make sure you have:
 
 ## Lab Overview
 
-This lab consists of two notebooks that demonstrate persistent agent memory:
+This lab consists of four notebooks that demonstrate persistent agent memory:
 
 ### 01_memory_context_provider.ipynb - Memory Context Provider
 Use Neo4j Agent Memory as a MAF context provider:
@@ -70,12 +70,26 @@ Use Neo4j Agent Memory as a MAF context provider:
 - See how conversation history persists across interactions
 - Watch entities get extracted from conversations automatically
 
-### 02_memory_tools_agent.ipynb - Agent with Memory Tools
+### 02_entity_extraction.ipynb - Entity Extraction Pipeline
+Explore how entity extraction works under the hood:
+- Learn the multi-stage extraction pipeline (spaCy, GLiNER, LLM fallback)
+- Configure `MemorySettings` with extraction pipeline options
+- Manually add entities and test deduplication with embedding similarity
+- Understand merge strategies and resolution thresholds
+
+### 03_memory_tools_agent.ipynb - Agent with Memory Tools
 Build an agent with explicit memory tools:
 - Create callable memory tools with `create_memory_tools()`
 - Let the agent search memory, save preferences, and recall facts
 - Combine context providers with memory tools for full capability
 - Build a conversational agent that learns and remembers
+
+### 04_reasoning_memory.ipynb - Reasoning Memory
+Record and learn from past agent executions:
+- Record agent execution traces with `record_agent_trace()`
+- Find similar past traces with `get_similar_traces()`
+- View tool usage statistics with `get_tool_stats()`
+- Enable the agent to reuse successful strategies and avoid failed approaches
 
 ## Getting Started
 
@@ -90,7 +104,7 @@ Before running any notebook, make sure you have the correct Python kernel select
 
 1. Open the first notebook: `01_memory_context_provider.ipynb`
 2. Work through each notebook in order
-3. Notebook 2 builds on concepts from Notebook 1
+3. Each notebook builds on concepts from the previous one
 
 ## Entity Extraction Dependencies
 

@@ -9,6 +9,7 @@ dependencies = [
     "azure-ai-projects>=1.0.0",
     "azure-ai-inference>=1.0.0b9",
     "python-dotenv",
+    "pydantic>=2.0.0,<2.13.0a0",
     "pydantic-settings>=2.13.1",
     "neo4j>=6.1.0",
     "neo4j-graphrag>=1.13.1",
