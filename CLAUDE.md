@@ -96,6 +96,10 @@ financial_data_load/       # Python CLI and data loading
   └── financial-data/      # SEC 10-K PDFs and CSV metadata
 ```
 
+## Important: agent-framework-shim
+
+**Do not delete the `agent-framework-shim/` directory.** It is a local shim package that overrides the upstream `agent-framework` meta-package. Without it, `neo4j-agent-memory[microsoft-agent]` pulls in `agent-framework-core[all]`, which installs ~3GB of unused providers. The shim provides a minimal `agent-framework` that only depends on `agent-framework-core` (without `[all]`). It is referenced in the root `pyproject.toml` as a path dependency.
+
 ## Key Technical Details
 
 - **Python**: Requires 3.12.x (not 3.13+)
