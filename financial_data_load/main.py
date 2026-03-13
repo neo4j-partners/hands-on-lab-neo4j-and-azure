@@ -5,7 +5,7 @@ Usage from financial_data_load directory:
 
     Data loading commands:
         uv run python main.py test
-        uv run python main.py load [--limit N] [--clear]
+        uv run python main.py load [--limit N] [--clear] [--files PDF ...]
         uv run python main.py verify
         uv run python main.py clean
         uv run python main.py samples [--limit N]
@@ -77,7 +77,16 @@ def cmd_load(args):
             print(f"No PDF files found in: {PDF_DIR}")
             return
 
-        if args.limit:
+        if args.files:
+            requested = set(args.files)
+            pdf_files = [p for p in pdf_files if p.name in requested]
+            missing = requested - {p.name for p in pdf_files}
+            if missing:
+                print(f"Warning: PDFs not found: {', '.join(sorted(missing))}")
+            if not pdf_files:
+                print("No matching PDFs found.")
+                return
+        elif args.limit:
             pdf_files = pdf_files[:args.limit]
 
         # Run pipeline
@@ -333,6 +342,9 @@ def main():
         "--limit", type=int, help="Limit number of PDFs to process")
     p_load.add_argument(
         "--clear", action="store_true", help="Clear database first")
+    p_load.add_argument(
+        "--files", nargs="+", metavar="PDF",
+        help="Process only these specific PDF filenames (e.g. 0001004980-23-000029.pdf)")
     p_load.set_defaults(func=cmd_load)
 
     # verify

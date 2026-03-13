@@ -15,9 +15,10 @@ This document tracks the specific gaps and their resolution. Labs 0-4 are out of
 | Vector Context Provider | Lab 3 | Lab 6, Notebook 01 | DONE |
 | Graph-Enriched Provider | Lab 4 | Lab 6, Notebook 02 | DONE |
 | Fulltext Context Provider | Lab 5 | Lab 6, Notebook 03 | DONE |
-| Entity Extraction Pipeline | Lab 8 | Lab 7, Notebook 01 | DONE (new) |
-| Memory Context Provider | Lab 7 | Lab 7, Notebook 02 | DONE |
+| Memory Context Provider | Lab 7 | Lab 7, Notebook 01 | DONE |
+| Entity Extraction Pipeline | Lab 8 | Lab 7, Notebook 02 | DONE |
 | Memory Tools Agent | Lab 9 | Lab 7, Notebook 03 | DONE |
+| Reasoning Memory | Lab 10 | Lab 7, Notebook 04 | DONE (new) |
 | Knowledge Graph Fundamentals | N/A | Lab 8 | DONE |
 | Advanced Agents | N/A | Lab 9 | DONE |
 
