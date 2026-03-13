@@ -17,9 +17,9 @@ param skipRoleAssignments bool = false
 
 // Chat completion model
 @description('Name of the chat model to deploy')
-param chatModelName string = 'gpt-4o'
+param chatModelName string = 'gpt-5.1-chat'
 @description('Version of the chat model to deploy')
-param chatModelVersion string = '2025-12-11'
+param chatModelVersion string = '2025-11-13'
 @description('SKU for the chat deployment')
 param chatDeploymentSku string = 'GlobalStandard'
 @description('Capacity for the chat deployment')
@@ -29,7 +29,7 @@ param chatDeploymentCapacity int = 20
 @description('Name of the embedding model to deploy')
 param embeddingModelName string = 'text-embedding-3-small'
 @description('Version of the embedding model to deploy')
-param embeddingModelVersion string = '2'
+param embeddingModelVersion string = '1'
 @description('SKU for the embedding deployment')
 param embeddingDeploymentSku string = 'GlobalStandard'
 @description('Capacity for the embedding deployment')

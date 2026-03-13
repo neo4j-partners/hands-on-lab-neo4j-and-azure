@@ -30,6 +30,19 @@ When the agent receives a query, the provider's `before_run()` hook:
 
 The LLM then sees this context alongside the user's question and can ground its answer in real knowledge graph data.
 
+### Key Parameters
+
+| Parameter | Required | Description |
+|-----------|----------|-------------|
+| `index_name` | Yes | Neo4j index to search |
+| `index_type` | Yes | `"vector"`, `"fulltext"`, or `"hybrid"` |
+| `top_k` | No | Number of results (default 5) |
+| `embedder` | Vector/hybrid | Embedder instance for query embedding |
+| `context_prompt` | No | Text prepended to results to guide the LLM |
+| `message_history_count` | No | Recent messages used as search query (default 10) |
+| `retrieval_query` | No | Cypher for graph traversal after index search |
+| `uri`, `username`, `password` | No | Neo4j connection (falls back to env vars) |
+
 ### Search Modes
 
 The provider supports three search modes via the `index_type` parameter:
@@ -43,6 +56,28 @@ The provider supports three search modes via the `index_type` parameter:
 ### Graph Enrichment
 
 The provider's most distinctive capability is **graph enrichment** via the `retrieval_query` parameter. After the initial index search finds matching nodes, a custom Cypher query traverses the graph to pull in related entities — company names, products, risk factors, executives — giving the LLM structured context alongside the matched text.
+
+For example, this retrieval query traverses from matched chunks to companies and their risk factors and products:
+
+```cypher
+OPTIONAL MATCH (company:Company)-[:FROM_CHUNK]->(node)
+OPTIONAL MATCH (company)-[:FACES_RISK]->(risk:RiskFactor)
+WITH node, score, company,
+     collect(DISTINCT risk.name)[0..5] AS risks
+OPTIONAL MATCH (company)-[:OFFERS]->(product:Product)
+WITH node, score, company, risks,
+     collect(DISTINCT product.name)[0..5] AS products
+RETURN
+    node.text AS text,
+    score,
+    company.name AS company,
+    company.ticker AS ticker,
+    risks,
+    products
+ORDER BY score DESC
+```
+
+The query receives `node` (the matched Chunk) and `score` (similarity score) from the index search, then traverses relationships to collect structured metadata.
 
 The provider automatically selects the right underlying retriever based on your configuration:
 
@@ -72,6 +107,8 @@ Add semantic search capabilities using embeddings:
 - Configure the provider with vector search (`index_type="vector"`)
 - Understand how semantic similarity finds conceptually related content
 
+> **Note:** Data must be embedded with the same model and dimensions as the query embedder. Mismatched models or dimensions return poor or no results.
+
 ### 02_graph_enriched_provider.ipynb - Graph-Enriched Provider
 Combine vector search with graph traversal for rich context:
 - Define a `retrieval_query` that traverses graph relationships
@@ -85,6 +122,8 @@ Use keyword-based search to automatically inject context:
 - Create a `Neo4jContextProvider` with fulltext search
 - See how context is automatically injected before each agent response
 - Compare agent responses with and without context
+
+> **Note:** The provider's `filter_stop_words` parameter (default `True`) strips common words like "what", "the", "is" from queries before searching — so "what companies face risk factors?" becomes "companies face risk factors".
 
 ## Getting Started
 

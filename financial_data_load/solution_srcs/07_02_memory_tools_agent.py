@@ -5,7 +5,7 @@ This workshop demonstrates an agent with explicit memory tools alongside
 the context provider. The agent can actively search, save, and recall
 information using callable FunctionTool instances.
 
-Run with: uv run python main.py solutions 18
+Run with: uv run python main.py solutions 19
 """
 
 import asyncio
@@ -66,7 +66,15 @@ async def run_agent(query: str):
                         "3. Recall preferences to personalize your responses\n"
                         "4. Search the knowledge graph for entities\n"
                         "5. Remember important facts for future reference\n\n"
-                        "Always use the appropriate memory tools to provide personalized assistance."
+                        "IMPORTANT: You MUST call the remember_preference tool every time "
+                        "a user states a preference, favorite, or interest. Do NOT just "
+                        "acknowledge it verbally — you must actually invoke the tool to "
+                        "persist it. For example, if a user says they prefer concise "
+                        "explanations, call remember_preference with "
+                        "category='communication' and preference='prefers concise "
+                        "technical explanations'.\n\n"
+                        "When making recommendations or answering questions, use "
+                        "recall_preferences to check what the user likes before responding."
                     ),
                     tools=tools,
                     context_providers=[memory.context_provider],

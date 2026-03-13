@@ -176,6 +176,7 @@ SOLUTIONS = [
     ("solution_srcs.06_01_fulltext_context_provider", "Fulltext Context Provider", True, "run_agent"),
     ("solution_srcs.06_02_vector_context_provider", "Vector Context Provider", True, "run_agent"),
     ("solution_srcs.06_03_graph_enriched_provider", "Graph-Enriched Provider", True, "run_agent"),
+    ("solution_srcs.07_00_entity_extraction", "Entity Extraction Pipeline", True, "main"),
     ("solution_srcs.07_01_memory_context_provider", "Memory Context Provider", True, "run_agent"),
     ("solution_srcs.07_02_memory_tools_agent", "Memory Tools Agent", True, "run_agent"),
 ]
@@ -221,8 +222,9 @@ def _print_solutions_menu():
     print(" 15. Vector Context Provider")
     print(" 16. Graph-Enriched Provider")
     print("\nAgent Memory (Lab 7):")
-    print(" 17. Memory Context Provider")
-    print(" 18. Memory Tools Agent")
+    print(" 17. Entity Extraction Pipeline")
+    print(" 18. Memory Context Provider")
+    print(" 19. Memory Tools Agent")
     print("\n  A. Run all (from option 4 onwards)")
     print("  0. Exit")
     print("=" * 50)
@@ -284,7 +286,7 @@ def cmd_solutions(args):
     while True:
         _print_solutions_menu()
         try:
-            choice = input("\nSelect solution (0-18, A):").strip()
+            choice = input("\nSelect solution (0-19, A):").strip()
             if not choice:
                 continue
             if choice.upper() == "A":
@@ -359,7 +361,7 @@ def main():
     p_solutions = subparsers.add_parser(
         "solutions", help="Workshop solution runner")
     p_solutions.add_argument(
-        "choice", nargs="?", help="Solution number (1-18) or A for all")
+        "choice", nargs="?", help="Solution number (1-19) or A for all")
     p_solutions.set_defaults(func=cmd_solutions)
 
     args = parser.parse_args()

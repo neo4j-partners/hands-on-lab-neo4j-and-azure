@@ -4,7 +4,7 @@ In this lab, you'll build your first agents using the **Microsoft Agent Framewor
 
 ## What is the Microsoft Agent Framework?
 
-The [Microsoft Agent Framework](https://github.com/microsoft/agent-framework) is a framework for building AI agents that can reason, use tools, and maintain context across conversations. At its core, it solves a fundamental problem: LLMs are stateless. Every time you send a message, the model has no memory of previous interactions and no access to your data. The agent framework bridges this gap by orchestrating a lifecycle around each LLM invocation — injecting relevant knowledge before the call (via context providers), giving the model the ability to take actions (via tools), and extracting useful information from the response afterward. This turns a bare LLM into an agent that can retrieve, reason, and act.
+The [Microsoft Agent Framework](https://github.com/microsoft/agent-framework) is the successor to both Semantic Kernel and AutoGen, built by the same Microsoft teams. It's a framework for building AI agents that can reason, use tools, and maintain context across conversations. At its core, it solves a fundamental problem: LLMs are stateless. Every time you send a message, the model has no memory of previous interactions and no access to your data. The agent framework bridges this gap by orchestrating a lifecycle around each LLM invocation — injecting relevant knowledge before the call (via context providers), giving the model the ability to take actions (via tools), and extracting useful information from the response afterward. This turns a bare LLM into an agent that can retrieve, reason, and act.
 
 The framework provides:
 
@@ -24,6 +24,18 @@ Each provider extends `BaseContextProvider` and implements two lifecycle hooks:
 - **`after_run()`** — Called after each model invocation. Process the response — extract data, store memories, update state.
 
 Providers are **composable**: you register multiple providers when creating an agent, each identified by a unique `source_id`. The framework runs all `before_run()` hooks in order, invokes the model, then runs all `after_run()` hooks in reverse order. Each provider's contributions are tracked by source, so providers can filter or build on each other's context. The framework ships with several built-in providers (Azure AI Search, Mem0 memory, Neo4j graph), but writing your own is straightforward.
+
+> **Note:** A single provider instance is shared across all sessions. Store session-specific data in `session.state` (using `state.setdefault()`) rather than instance variables — otherwise state will leak between users.
+
+### Why Context Providers?
+
+LLMs have three fundamental limitations that context providers address:
+
+- **Hallucination** — LLMs generate statistically probable continuations, not verified facts. Without grounding, they confidently produce plausible but incorrect answers.
+- **Knowledge cutoff** — LLMs have no access to private data, real-time information, or domain-specific knowledge outside their training data.
+- **Relationship blindness** — LLMs can't traverse connections across entities. Questions like "Which asset managers own companies facing cybersecurity risks?" require structured graph traversal, not text generation.
+
+Context providers solve this by automatically injecting relevant, verified information from external sources (knowledge graphs, memory stores, search indexes) before every LLM call — a pattern called **self-grounding**. A self-grounding agent receives relevant knowledge on every interaction without relying on tool decisions, ensuring the LLM always has accurate context to work with.
 
 ### Tools vs Context Providers
 

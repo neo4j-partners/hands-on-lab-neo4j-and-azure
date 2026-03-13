@@ -10,9 +10,9 @@ While the `agent-framework-neo4j` provider in Lab 6 retrieves from a static know
 
 **Short-Term Memory** stores conversation history as `Message` nodes with embeddings. This lets the agent semantically search past messages — not just replay them in order, but find the most relevant past exchanges for the current question. Messages are grouped into conversations by session, and entities are automatically extracted during ingestion.
 
-**Long-Term Memory** stores structured knowledge as entities, facts, and preferences. Entities (people, organizations, locations, etc.) are deduplicated using configurable strategies (exact, fuzzy, semantic, or composite matching). Facts are stored as Subject-Predicate-Object triples (e.g., "Apple → manufactures → iPhone"). Preferences capture user-specific information with category and context.
+**Long-Term Memory** stores structured knowledge as entities, facts, and preferences. Entities follow the **POLE+O** classification — **P**erson, **O**bject, **L**ocation, **E**vent, **O**rganization — and are deduplicated using configurable strategies (exact, fuzzy, semantic, or composite matching). Facts are stored as Subject-Predicate-Object triples (e.g., "Apple → manufactures → iPhone"). Preferences capture user-specific information with category and context.
 
-**Reasoning Memory** captures traces of past agent behavior — what tasks were attempted, what tools were called, whether they succeeded or failed, and how long they took. When the agent encounters a similar task later, it can retrieve these traces to learn from its own experience.
+**Reasoning Memory** captures traces of the agent's ReAct cycle (Reason → Act → Observe). Each trace records the task description, steps taken, tools called, outcome, and success/failure status. When the agent encounters a similar task later, it can retrieve these traces to reuse successful strategies or avoid repeating failures.
 
 ### Memory Context Provider
 
@@ -35,6 +35,19 @@ Beyond automatic context injection, the package provides six callable tools via 
 | `find_similar_tasks` | Retrieve similar past reasoning traces to learn from experience |
 
 In Notebook 01, you'll use the **context provider** for automatic memory. In Notebook 02, you'll combine context providers with **memory tools** so the agent can both passively recall and actively manage its memory.
+
+### Context Provider vs Memory Tools
+
+| Aspect | Context Provider (Passive) | Memory Tools (Active) |
+|--------|---------------------------|----------------------|
+| **Invocation** | Automatic every turn | Agent decides when |
+| **Direction** | Recall on entry, store on exit | Search, save, recall on demand |
+| **Visibility** | Transparent to user | Visible in agent reasoning |
+| **Control** | Framework-managed | Agent-managed |
+
+The most effective pattern is using **both** together: the context provider handles automatic recall and storage on every turn, while memory tools give the agent explicit control for targeted operations like saving preferences or searching past reasoning traces.
+
+> **Note:** Memory tools require explicit, prescriptive agent instructions (e.g., "You MUST call `remember_preference` when a user states a preference"). Without this, the LLM may acknowledge preferences verbally but skip the tool call.
 
 ## Prerequisites
 

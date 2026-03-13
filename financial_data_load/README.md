@@ -25,9 +25,6 @@ cd financial_data_load
 az login --use-device-code
 azd auth login --use-device-code
 
-# Configure region and initialize azd
-./scripts/setup_azure.sh
-
 # Deploy infrastructure (AI Services + model deployments)
 azd up
 
@@ -51,12 +48,6 @@ From the **project root**:
 
 ```bash
 uv sync --prerelease=allow
-```
-
-This project uses a local fork of `neo4j-graphrag-python`. After making changes to the library, force reinstall to pick them up:
-
-```bash
-uv pip install --force-reinstall ~/projects/neo4j-graphrag-python
 ```
 
 ### 4. Test Connections
@@ -207,10 +198,6 @@ financial_data_load/
 ├── infra/
 │   ├── main.bicep          # Azure AI Foundry infrastructure
 │   └── main.parameters.json
-├── scripts/
-│   ├── setup_azure.sh      # Azure region configuration
-│   ├── check_status.sh     # Report Azure project and resource status
-│   └── cleanup_azure.sh    # Tear down resources and remove azd state
 ├── financial-data/         # SEC 10-K data files
 │   ├── Company_Filings.csv
 │   ├── Asset_Manager_Holdings.csv
@@ -269,11 +256,5 @@ NEO4J_PASSWORD=your-password
 To remove deployed Azure resources and local azd state:
 
 ```bash
-bash scripts/cleanup_azure.sh
-```
-
-This runs `azd down --force --purge` to delete all deployed resources, then removes the `.azure` directory. To check what's deployed before cleaning up:
-
-```bash
-bash scripts/check_status.sh
+azd down --force --purge
 ```
