@@ -17,9 +17,9 @@ param skipRoleAssignments bool = false
 
 // Chat completion model
 @description('Name of the chat model to deploy')
-param chatModelName string = 'gpt-5.1-chat'
+param chatModelName string = 'gpt-4o'
 @description('Version of the chat model to deploy')
-param chatModelVersion string = '2025-11-13'
+param chatModelVersion string = '2025-12-11'
 @description('SKU for the chat deployment')
 param chatDeploymentSku string = 'GlobalStandard'
 @description('Capacity for the chat deployment')
