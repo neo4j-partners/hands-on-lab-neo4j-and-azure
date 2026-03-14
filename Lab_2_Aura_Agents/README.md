@@ -63,7 +63,7 @@ The generated tools fall into three categories:
 
 | Tool Type | Generated Tools |
 |-----------|----------------|
-| **Cypher Templates** | Company Details, Company Risk Factors, Companies Owned by Asset Manager, Company Financial Metrics, Company Products Offered, Documents by Company Identifier, Company Executives, Company Partners, Company Competitors |
+| **Cypher Templates** | Company Details, Company Risk Factors, Companies Owned by Asset Manager, Company Financial Metrics, Company Products Offered, Documents by Company Identifier, Company Executives |
 | **Similarity Search** | Search Chunks |
 | **Text2Cypher** | Natural Language to Cypher Tool |
 
@@ -78,7 +78,7 @@ Test your agent with the sample questions below. After each test, observe:
 
 ### Cypher Template Questions
 
-Try asking: **"Tell me about Apple's SEC filing and their major investors"**
+Try asking: **"Tell me about Apple Inc. including their risk factors, products, and major institutional investors"**
 
 The agent recognizes this as a company lookup, selects the appropriate Cypher Template tool, and executes a graph traversal to retrieve Apple's filing details, risk factors, and institutional owners.
 
@@ -88,7 +88,10 @@ The reasoning panel shows the agent's decision process: it identified the questi
 
 Other Cypher Template questions to try:
 - "What risks do Apple Inc. and Microsoft Corporation share?" - Compares risk factor nodes connected to both companies.
-- "Which companies does BlackRock own?" - Traverses the OWNS relationships from the AssetManager node.
+- "Which companies does BlackRock Inc. own shares in?" - Traverses the OWNS relationships from the AssetManager node.
+- "What products does NVIDIA Corporation offer?" - Retrieves Product nodes linked to NVIDIA, returning GPU architectures, platforms, and software services.
+- "Who are the executives at NVIDIA Corporation?" - Traverses HAS_EXECUTIVE relationships to list leadership names and titles.
+- "Show me the documents filed by Apple Inc." - Uses the Documents by Company Identifier tool to retrieve SEC filing metadata.
 
 ### Semantic Search Questions
 
@@ -99,16 +102,16 @@ The agent uses the Similarity Search tool to find semantically relevant passages
 Other semantic search questions to try:
 - "Find content about supply chain risks" - Searches for passages discussing supply chain challenges and dependencies.
 - "What do companies say about climate change?" - Finds relevant environmental risk disclosures across filings.
+- "Find content about cybersecurity risks and data breaches" - Searches for passages about cyberattacks, ransomware, and data protection across filings.
 
 ### Text2Cypher Questions
 
-Try asking: **"Which company has the most risk factors?"**
+Try asking: **"How many products does NVIDIA Corporation mention?"**
 
-The agent translates this natural language question into a Cypher query that counts risk factors per company and returns the highest.
+The agent translates this natural language question into a Cypher query that counts Product nodes linked to NVIDIA and returns the result.
 
 Other Text2Cypher questions to try:
-- "How many products does NVIDIA Corporation mention?" - Generates a query to count Product nodes linked to NVIDIA.
-- "What executives are mentioned by Apple Inc.?" - Creates a query to find Executive nodes associated with Apple.
+- "What executives does NVIDIA Corporation have?" - Generates a query to find Executive nodes and their titles associated with NVIDIA.
 
 ## Step 6: (Optional) Deploy to API
 

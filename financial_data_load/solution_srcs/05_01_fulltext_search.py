@@ -171,7 +171,7 @@ def main() -> None:
         wildcard_search(driver, "Micro*")
         boolean_search(driver, "supply NOT chain")
         search_with_graph_traversal(driver, "Nvidia")
-        hybrid_search(driver, "Amazon")
+        hybrid_search(driver, "Alphabet")
 
 
 if __name__ == "__main__":
