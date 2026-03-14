@@ -120,6 +120,19 @@ Deploy your agent to a production endpoint:
 2. Copy the authenticated API endpoint
 3. Use the endpoint in your applications
 
+## Step 7: (Optional) Connect as an MCP Server
+
+You can connect your Aura Agent to MCP-compatible clients like Claude Code, Claude Desktop, VS Code, or Cursor. This gives the client direct access to all the agent tools you just tested, without writing any code.
+
+See the full setup guide: **[MCP Server Setup](mcp_setup.md)**
+
+The quick version:
+
+1. **Enable External access and MCP server** on your agent (see [Configure](images/6_option_mcp_setup.png))
+2. **Copy the MCP server endpoint URL** from the agent menu (see [Copy Endpoint](images/7_option_mcp.png))
+3. **Get your API credentials** from Account Settings → API Keys
+4. **Configure your client** using the `.env.example` and `.mcp.json.template` files in this directory
+
 ## Summary
 
 The "Create with AI" workflow generated an agent with three retrieval patterns, each suited to different question types:

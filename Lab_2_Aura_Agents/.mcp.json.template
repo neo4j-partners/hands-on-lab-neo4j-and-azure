@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "neo4j-aura-agent": {
+      "type": "http",
+      "url": "${AURA_AGENT_MCP_SERVER}"
+    }
+  }
+}
