@@ -170,7 +170,7 @@ RETURN labels(n) AS nodeType, count(n) AS count
 ORDER BY count DESC
 
 // Explore a company's connections
-MATCH (c:Company {name: 'APPLE INC'})-[r]->(related)
+MATCH (c:Company {name: 'Apple Inc.'})-[r]->(related)
 RETURN type(r) AS relationship, labels(related)[0] AS relatedType, count(*) AS count
 ```
 

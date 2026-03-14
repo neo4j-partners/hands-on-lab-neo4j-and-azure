@@ -73,7 +73,7 @@ RETURN c.name AS company,
 ```
 
 **User asks:** "Tell me about Apple's risks"
-**Agent:** Extracts "APPLE INC", executes template, returns structured answer
+**Agent:** Extracts "Apple Inc.", executes template, returns structured answer
 
 ---
 

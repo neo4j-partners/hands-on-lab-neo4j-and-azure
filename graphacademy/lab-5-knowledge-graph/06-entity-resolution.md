@@ -12,11 +12,11 @@ Without resolution, your graph contains multiple nodes representing the same thi
 
 ```cypher
 // This might miss risks if Apple appears under different names
-MATCH (c:Company {name: 'Apple Inc'})-[:FACES_RISK]->(r:RiskFactor)
+MATCH (c:Company {name: 'Apple Inc.'})-[:FACES_RISK]->(r:RiskFactor)
 RETURN r.name
 ```
 
-If some risks are connected to "Apple" and others to "APPLE INC", your query returns incomplete results.
+If some risks are connected to "Apple" and others to "Apple Inc.", your query returns incomplete results.
 
 ## Why Entity Resolution Matters
 
@@ -36,9 +36,9 @@ By default, `SimpleKGPipeline` performs basic resolution:
 - "Company: Apple Inc" + "Company: Apple Inc" = one node
 
 This catches exact duplicates but misses variations:
-- "Apple Inc" and "APPLE INC" (case difference)
 - "Apple Inc" and "Apple Inc." (punctuation)
-- "Apple" and "Apple Inc" (name variation)
+- "Apple" and "Apple Inc." (name variation)
+- "Microsoft" and "Microsoft Corporation" (abbreviation)
 
 ## Disabling Resolution
 
@@ -83,7 +83,7 @@ Entity resolution involves a fundamental trade-off:
 - Relationships become meaningless
 
 **Too Conservative:**
-- "Apple Inc" and "APPLE INC" remain separate
+- "Apple" and "Apple Inc." remain separate
 - Queries miss connections
 - Aggregations are wrong
 
@@ -98,8 +98,8 @@ Handle resolution during extraction by guiding the LLM:
 ```python
 prompt_template = """
 When extracting company names, normalize to official names:
-- "Apple", "Apple Inc", "Apple Inc.", "the Company" → "APPLE INC"
-- Use uppercase for company names
+- "Apple", "Apple Inc", "the Company" → "Apple Inc."
+- "Microsoft", "MSFT" → "Microsoft Corporation"
 - Use the full legal name when known
 """
 ```
@@ -113,9 +113,9 @@ Provide a canonical list of entities:
 ```python
 prompt_template = """
 Only extract companies from this approved list:
-- APPLE INC
-- MICROSOFT CORP
-- ALPHABET INC
+- Apple Inc.
+- Microsoft Corporation
+- NVIDIA Corporation
 
 Match variations to the canonical name.
 """
@@ -154,7 +154,7 @@ RETURN name, size(nodes) AS duplicates
 
 // Check company name variations
 MATCH (c:Company)
-WHERE c.name CONTAINS 'Apple' OR c.name CONTAINS 'APPLE'
+WHERE c.name CONTAINS 'Apple'
 RETURN c.name, count{(c)-[:FACES_RISK]->()}  AS risks
 ```
 

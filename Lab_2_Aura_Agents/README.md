@@ -50,7 +50,7 @@ Click **Add Tool** and select **Cypher Template** for each of the following tool
 
 **Description:** Get an overview of a company including their SEC filing, risk factors, and major institutional owners.
 
-**Parameters:** `company_name` (string) - The company name to look up (e.g., "APPLE INC", "NVIDIA CORPORATION")
+**Parameters:** `company_name` (string) - The company name to look up (e.g., "Apple Inc.", "NVIDIA Corporation", "Microsoft Corporation")
 
 **Cypher Query:**
 ```cypher
@@ -134,7 +134,7 @@ Test your agent with the sample questions below. After each test, observe:
 
 Try asking: **"Tell me about Apple's SEC filing and their major investors"**
 
-The agent recognizes this matches the `get_company_overview` template and executes the pre-defined Cypher query with "APPLE INC" as the parameter.
+The agent recognizes this matches the `get_company_overview` template and executes the pre-defined Cypher query with "Apple Inc." as the parameter.
 
 ![Apple Query Agent](images/apple_query_agent.png)
 
@@ -143,7 +143,7 @@ We can see the agent's reasoning for selecting the `get_company_overview` tool a
 ![Apple Agent Reasoning](images/apple_agent_reasoning.png)
 
 Other Cypher template questions to try:
-- "What risks do Apple and Microsoft share?" - Uses the `find_shared_risks` template to compare risk factors between two companies.
+- "What risks do Apple Inc. and Microsoft Corporation share?" - Uses the `find_shared_risks` template to compare risk factors between two companies.
 
 ### Semantic Search Questions
 
@@ -166,8 +166,8 @@ The agent translates this natural language question into a Cypher query that cou
 ![Company Risk Factors](images/company_risk_factors.png)
 
 Other Text2Cypher questions to try:
-- "How many products does NVIDIA mention?" - Generates a query to count Product nodes linked to NVIDIA.
-- "What executives are mentioned by Apple?" - Creates a query to find Executive nodes associated with Apple.
+- "How many products does NVIDIA Corporation mention?" - Generates a query to count Product nodes linked to NVIDIA.
+- "What executives are mentioned by Apple Inc.?" - Creates a query to find Executive nodes associated with Apple.
 
 ## Step 7: (Optional) Deploy to API
 

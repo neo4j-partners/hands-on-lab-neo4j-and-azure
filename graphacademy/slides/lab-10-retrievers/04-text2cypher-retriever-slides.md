@@ -44,7 +44,7 @@ ol > li {
 
 **Example:**
 - Question: "How many risk factors does Apple face?"
-- Generated: `MATCH (c:Company {name:'APPLE INC'})-[:FACES_RISK]->(r) RETURN count(r)`
+- Generated: `MATCH (c:Company {name:'Apple Inc.'})-[:FACES_RISK]->(r) RETURN count(r)`
 - Result: `45`
 
 ---

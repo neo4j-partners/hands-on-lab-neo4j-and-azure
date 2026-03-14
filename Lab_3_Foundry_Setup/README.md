@@ -157,9 +157,9 @@ Ground your responses in the actual data from SEC filings.
 * **Credential Key**: Authorization
 * **Credential Value** - the value needs to be the word Bearer followed by the actual token: Bearer bearer_token....===
 
-6. Click **Save** at the top of the dialog. The agent is now set up. Test it by entering a query like "What risks does the database say that Microsoft face?"
+6. Click **Save** at the top of the dialog. The agent is now set up. Test it by entering a query like "What risks does Apple face?"
 
-   We need to use "Microsoft" because it does an exact string match for the company name.
+   The MCP server will resolve the company name to its canonical form (e.g., "Apple Inc.") when querying the graph.
 
 You will see the agent ask you for approval to run the MCP request - click yes. Then you will see the MCP call in the context that it runs along with the results. Also try things like "What is the schema?"
 

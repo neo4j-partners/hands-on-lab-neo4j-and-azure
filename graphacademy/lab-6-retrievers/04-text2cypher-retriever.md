@@ -37,7 +37,7 @@ The Text2Cypher Retriever converts natural language questions directly into Cyph
 | Question | Generated Cypher |
 |----------|-----------------|
 | "How many companies?" | `MATCH (c:Company) RETURN count(c)` |
-| "Who owns Apple?" | `MATCH (am:AssetManager)-[:OWNS]->(c:Company {name:'APPLE INC'}) RETURN am.managerName` |
+| "Who owns Apple?" | `MATCH (am:AssetManager)-[:OWNS]->(c:Company {name:'Apple Inc.'}) RETURN am.managerName` |
 | "Which company has the most risks?" | `MATCH (c:Company)-[:FACES_RISK]->(r) RETURN c.name, count(r) ORDER BY count(r) DESC LIMIT 1` |
 | "List all products" | `MATCH (p:Product) RETURN p.name LIMIT 20` |
 
