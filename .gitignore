@@ -106,6 +106,7 @@ atlassian-ide-plugin.xml
 
 # Claude Code
 .claude/
+.mcp.json
 
 # Data loading artifacts
 logs/
