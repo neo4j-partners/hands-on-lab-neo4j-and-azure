@@ -72,8 +72,8 @@ Menu items 9 and 10 correspond to notebooks 2 and 3 respectively.
 
 **Text2Cypher queries:**
 - "Which company faces the most risk factors?"
-- "What products does NVIDIA Corporation mention?"
-- "How many risk factors does Apple Inc. face?"
+- "What products does NVIDIA mention?"
+- "How many risk factors does Apple face?"
 
 ## Next Steps
 
