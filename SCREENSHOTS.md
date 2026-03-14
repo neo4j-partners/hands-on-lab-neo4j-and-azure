@@ -36,6 +36,12 @@ After the entity resolution rebuild, company names changed from CSV uppercase (e
 - **Issue**: Binary Neo4j backup contains old entity names
 - **Fix**: After the rebuild pipeline completes on your Aura instance, go to Aura Console → instance → ... menu → Backup & restore → create a new backup and download it. Replace this file.
 
+## Lab 2 — README Query Examples
+
+### `Lab_2_Aura_Agents/README.md` line 146
+- **Issue**: Suggested query uses formal names "What risks do Apple Inc. and Microsoft Corporation share?" — need to verify the Aura Agent resolves informal names like "Apple" and "Microsoft" to canonical names in the Cypher template
+- **Test**: Try both formal ("Apple Inc.") and informal ("Apple") company names with the `find_shared_risks` Cypher template tool and confirm the agent handles name resolution correctly. If not, the Cypher template may need a `CONTAINS` or `toLower()` match instead of exact `{name: $company_name}`
+
 ## How to Retake Screenshots
 
 1. Restore the new `finance_data.backup` to your Aura instance

@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Run all 10 entity resolution configs from OPTIMAL.md and compare results.
+# Run all 10 entity resolution configs and compare results.
 # Usage: ./run_all_configs.sh
 #
 # Prereqs: snapshot already exists (uv run python main.py snapshot)
