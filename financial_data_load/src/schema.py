@@ -48,9 +48,40 @@ def _cleanup_empty_properties(driver: Driver) -> None:
             print(f"  [CLEANUP] Deleted {removed} {label} node(s) with empty {prop}")
 
 
+def _dedup_exact_names(driver: Driver) -> None:
+    """Merge nodes with identical names for extraction entity types.
+
+    Uses apoc.refactor.mergeNodes to collapse duplicates, keeping the node
+    with the most properties and relationships as the survivor.
+    """
+    for _name, label, prop in EXTRACTION_CONSTRAINTS:
+        result = driver.execute_query(
+            f"MATCH (n:{label}) WHERE n.{prop} IS NOT NULL "
+            f"WITH n.{prop} AS name, collect(n) AS nodes "
+            f"WHERE size(nodes) > 1 "
+            f"RETURN name, size(nodes) AS cnt ORDER BY cnt DESC"
+        )
+        dup_count = len(result.records)
+        if not dup_count:
+            continue
+
+        total_merged = 0
+        driver.execute_query(
+            f"MATCH (n:{label}) WHERE n.{prop} IS NOT NULL "
+            f"WITH n.{prop} AS name, collect(n) AS nodes "
+            f"WHERE size(nodes) > 1 "
+            f"CALL apoc.refactor.mergeNodes(nodes, "
+            f"  {{properties: 'combine', mergeRels: true}}) YIELD node "
+            f"RETURN count(*) AS merged"
+        )
+        total_merged = sum(r["cnt"] - 1 for r in result.records)
+        print(f"  [DEDUP] {label}: merged {total_merged} duplicate nodes ({dup_count} groups)")
+
+
 def create_all_constraints(driver: Driver) -> None:
     """Create all uniqueness constraints (metadata + extraction)."""
     _cleanup_empty_properties(driver)
+    _dedup_exact_names(driver)
     for name, label, prop in CONSTRAINTS + EXTRACTION_CONSTRAINTS:
         driver.execute_query(
             f"CREATE CONSTRAINT {name} IF NOT EXISTS FOR (n:{label}) REQUIRE n.{prop} IS UNIQUE"

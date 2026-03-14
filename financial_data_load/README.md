@@ -102,25 +102,33 @@ uv run python main.py verify
 
 **Testing different configurations:**
 
-To iterate on entity resolution with different settings, you don't need to restore every time. The snapshot file captures entity state, so you can re-run just the resolution steps:
+The `resolve` command accepts CLI overrides so you can test different configs without editing `.env`. Each run writes a separate merge plan to `logs/`. The `compare` command scores all runs against ground truth.
 
 ```bash
-# Change ER_ settings in .env, then:
-uv run python main.py resolve              # Re-run with new settings
-uv run python main.py apply-merges         # Apply new merge plan
+# Run with different pre-filter thresholds
+uv run python main.py resolve --strategy fuzzy --threshold 0.5
+uv run python main.py resolve --strategy fuzzy --threshold 0.7
+uv run python main.py resolve --strategy prefix --threshold 0.3
 
-# Or just re-run finalization
-uv run python main.py finalize
+# Run with scored confidence mode
+uv run python main.py resolve --confidence scored --confidence-threshold 0.9
+
+# Compare all runs side by side with ground truth scoring
+uv run python main.py compare
+
+# Or run all 10 predefined configs at once (~25 min total)
+./run_all_configs.sh
 ```
 
-To start completely fresh (reset the database to the post-PDF state and re-run everything):
+`resolve` reads from the snapshot file and writes a merge plan — it never touches Neo4j. So you can run as many configs as you want without restoring between runs.
+
+To apply your chosen config and finish the pipeline:
 
 ```bash
-uv run python main.py restore              # Reset to backup
-uv run python main.py snapshot             # Fresh snapshot
-uv run python main.py resolve              # Resolve
-uv run python main.py apply-merges         # Apply
-uv run python main.py finalize             # Finalize
+uv run python main.py restore                                  # Reset to backup
+uv run python main.py apply-merges --plan logs/<chosen>.json   # Apply the winning plan
+uv run python main.py finalize                                 # Constraints, indexes, asset managers
+uv run python main.py verify                                   # Check results
 ```
 
 ### Entity Resolution Configuration
@@ -146,7 +154,8 @@ ER_MODEL_NAME=gpt-4o                # LLM model for entity resolution
 | `main.py backup` | Back up full database to `backups/` |
 | `main.py restore [--backup PATH]` | Restore database from backup |
 | `main.py snapshot` | Export entity snapshot to `snapshots/` |
-| `main.py resolve [--snapshot PATH]` | LLM entity resolution (outputs merge plan to `logs/`) |
+| `main.py resolve [--snapshot PATH] [--strategy ...] [--threshold ...]` | LLM entity resolution (outputs merge plan to `logs/`) |
+| `main.py compare` | Compare all resolution runs and score against ground truth |
 | `main.py apply-merges [--plan PATH]` | Apply merge plan to Neo4j |
 | `main.py finalize` | Constraints, indexes, asset managers, verify |
 | `main.py verify` | Counts + enrichment checks + end-to-end search validation |
@@ -263,6 +272,7 @@ financial_data_load/
 │   ├── pipeline.py         # SimpleKGPipeline, PDF processing
 │   ├── snapshot.py         # Entity snapshot export (Neo4j → JSON)
 │   ├── entity_resolution.py # LLM-based entity resolution
+│   ├── compare.py          # Compare resolution runs, ground truth scoring
 │   ├── backup.py           # Full database backup and restore
 │   └── samples.py          # Sample queries
 └── solution_srcs/          # Workshop solution files
@@ -308,6 +318,44 @@ AZURE_TENANT_ID=...
 NEO4J_URI=neo4j+s://xxx.databases.neo4j.io
 NEO4J_USERNAME=neo4j
 NEO4J_PASSWORD=your-password
+```
+
+## Entity Resolution Experimentation Results
+
+We tested 10 entity resolution configs across 4 groups against a ground truth of 6 expected merges and 5 forbidden merges (11 checks total). The dataset is 618 Company entities (181 unique names) extracted from 8 SEC 10-K filings.
+
+### Config Comparison
+
+| Config | Strategy | Threshold | Confidence | Candidates | LLM Merges | Score |
+|--------|----------|-----------|------------|----------:|----------:|---------:|
+| baseline | fuzzy | 0.6 | binary | 914 | 29 | **11/11** |
+| wide-net | fuzzy | 0.5 | binary | 1,689 | 34 | **11/11** |
+| tight-filter | fuzzy | 0.7 | binary | 604 | 26 | **11/11** |
+| scored-standard | fuzzy | 0.6 | scored@0.8 | 914 | 28 | **11/11** |
+| wide-scored | fuzzy | 0.5 | scored@0.8 | 1,689 | 32 | **11/11** |
+| **prefix-loose** | **prefix** | **0.3** | **binary** | **28** | **19** | **11/11** |
+| scored-strict | fuzzy | 0.6 | scored@0.9 | 914 | 24 | 10/11 |
+| prefix-standard | prefix | 0.5 | binary | 18 | 13 | 8/11 |
+| very-wide | fuzzy | 0.4 | binary | 5,602 | 13 | 7/11 |
+
+### Findings
+
+**Winner: `prefix` strategy at threshold 0.3.** Scored 11/11 with only 28 candidate pairs — roughly 3% of what the baseline fuzzy config generates. This means ~30x fewer LLM calls for the same ground truth result. It found 14 LLM merge groups (vs 18 for fuzzy), so it misses 4 lower-value matches, but all 6 expected merges passed and all 5 forbidden merges were correctly avoided.
+
+**Key observations:**
+
+- **The LLM is the quality gate, not the pre-filter.** All fuzzy configs from 0.5-0.7 scored identically despite 3x difference in candidate volume. The LLM correctly rejected noise regardless of how much the pre-filter sent.
+- **Too wide hurts.** Fuzzy at 0.4 generated 5,602 candidates and paradoxically found fewer merges (13 vs 29). The LLM appears to degrade when batches are dominated by obvious non-matches.
+- **Scored mode at 0.9 is too strict.** It dropped Amazon (a correct merge the LLM confirmed with <0.9 confidence). The 0.8 threshold worked identically to binary mode.
+- **Prefix at 0.5 is too strict.** "Microsoft" is a prefix of "Microsoft Corporation", but the length ratio (9/23 = 0.39) fails the 0.5 threshold. The 0.3 threshold captures these.
+
+### Recommended Pipeline
+
+```bash
+uv run python main.py restore
+uv run python main.py apply-merges --plan logs/merge_plan_20260313_180114.json
+uv run python main.py finalize
+uv run python main.py verify
 ```
 
 ## Cleanup

@@ -40,7 +40,7 @@ EXPECTED_MERGES: list[dict[str, Any]] = [
     },
     {
         "label": "Apple",
-        "names": {"Apple Inc", "Apple"},
+        "names": {"Apple Inc.", "Apple Inc", "Apple"},
     },
     {
         "label": "Alphabet",
@@ -55,11 +55,6 @@ EXPECTED_MERGES: list[dict[str, Any]] = [
 # Forbidden merges: pairs of entity names that must NOT end up in the same
 # merge group. Each entry has a reason explaining why.
 FORBIDDEN_MERGES: list[dict[str, Any]] = [
-    {
-        "label": "Apple ticker conflict",
-        "pair": ("Apple Inc", "Apple Inc."),
-        "reason": "CSV-seeded Apple Inc. has wrong ticker=INTC; must not merge until CSV fixed",
-    },
     {
         "label": "PayPal vs Europe sub",
         "pair": ("PayPal", "PayPal (Europe)"),

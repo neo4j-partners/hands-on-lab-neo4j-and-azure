@@ -323,6 +323,100 @@ def verify_searches(driver: Driver) -> None:
 
 _SAMPLE_SIZE = 5
 
+# Companies that must exist as exactly one node after entity resolution.
+# (display_name, list of name variants that should have been merged into it)
+_EXPECTED_UNIQUE_COMPANIES = [
+    ("Apple", ["Apple", "Apple Inc", "Apple Inc."]),
+    ("Microsoft", ["Microsoft", "Microsoft Corporation"]),
+    ("NVIDIA", ["NVIDIA", "NVIDIA Corporation"]),
+    ("Amazon", ["Amazon", "Amazon, Inc.", "Amazon.com", "Amazon.com, Inc."]),
+    ("Alphabet", ["Alphabet", "Alphabet Inc."]),
+    ("Google", ["Google", "Google Inc."]),
+    ("Intel", ["Intel Corporation"]),
+    ("PG&E", ["PG&E Corporation"]),
+    ("McDonald's", ["McDonald's Corporation"]),
+    ("AIG", ["American International Group, Inc."]),
+    ("PayPal", ["PayPal Holdings, Inc."]),
+]
+
+# Entities that must NOT have been merged together.
+_EXPECTED_SEPARATE = [
+    ("PayPal Holdings, Inc.", "PayPal (Europe)"),
+    ("PayPal Holdings, Inc.", "PayPal Pte. Ltd."),
+    ("Microsoft Corporation", "Microsoft Mobile Oy"),
+    ("Microsoft Corporation", "Microsoft's Bing"),
+]
+
+
+def _verify_entity_resolution(driver: Driver) -> None:
+    """Verify entity resolution results against expected outcomes."""
+    print(f"\n  Entity Resolution Checks:")
+
+    passed = 0
+    failed = 0
+
+    # Check each expected company is exactly one node
+    for display, variants in _EXPECTED_UNIQUE_COMPANIES:
+        rows, _, _ = driver.execute_query(
+            "MATCH (c:Company) WHERE c.name IN $names RETURN c.name AS name",
+            names=variants,
+        )
+        names_found = [r["name"] for r in rows]
+        if len(names_found) == 1:
+            print(f"    [PASS] {display}: 1 node ({names_found[0]})")
+            passed += 1
+        elif len(names_found) == 0:
+            print(f"    [FAIL] {display}: no node found (searched: {variants})")
+            failed += 1
+        else:
+            print(f"    [FAIL] {display}: {len(names_found)} nodes — not fully merged: {names_found}")
+            failed += 1
+
+    # Check entities that should be separate
+    for name_a, name_b in _EXPECTED_SEPARATE:
+        rows, _, _ = driver.execute_query(
+            "MATCH (a:Company {name: $a}), (b:Company {name: $b}) "
+            "RETURN a.name AS a, b.name AS b",
+            a=name_a, b=name_b,
+        )
+        if rows:
+            print(f"    [PASS] Separate: {name_a} / {name_b}")
+            passed += 1
+        else:
+            # Could be merged (bad) or one doesn't exist (check which)
+            a_exists, _, _ = driver.execute_query(
+                "MATCH (c:Company {name: $name}) RETURN c.name AS name",
+                name=name_a,
+            )
+            b_exists, _, _ = driver.execute_query(
+                "MATCH (c:Company {name: $name}) RETURN c.name AS name",
+                name=name_b,
+            )
+            if not a_exists or not b_exists:
+                missing = name_a if not a_exists else name_b
+                print(f"    [SKIP] Separate: {name_a} / {name_b} — {missing!r} not in graph")
+            else:
+                print(f"    [FAIL] Separate: {name_a} and {name_b} were wrongly merged")
+                failed += 1
+
+    # Check no duplicate Company names exist at all
+    dup_rows, _, _ = driver.execute_query(
+        "MATCH (c:Company) WHERE c.name IS NOT NULL "
+        "WITH c.name AS name, count(*) AS cnt "
+        "WHERE cnt > 1 "
+        "RETURN name, cnt ORDER BY cnt DESC LIMIT 10"
+    )
+    if dup_rows:
+        print(f"    [FAIL] Duplicate Company names still exist:")
+        for r in dup_rows:
+            print(f"           {r['name']!r} x{r['cnt']}")
+        failed += 1
+    else:
+        print(f"    [PASS] No duplicate Company names")
+        passed += 1
+
+    print(f"\n  Entity resolution: {passed} passed, {failed} failed")
+
 
 def validate_enrichment(driver: Driver) -> None:
     """Run sample queries to verify embeddings, entities, and provenance."""
@@ -379,3 +473,6 @@ def validate_enrichment(driver: Driver) -> None:
     if rows:
         r = rows[0]
         print(f"\n  Provenance: {r['entities']} entities -> {r['chunks']} chunks -> {r['docs']} documents")
+
+    # 5. Entity resolution verification
+    _verify_entity_resolution(driver)
