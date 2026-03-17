@@ -18,14 +18,16 @@ In the Marketplace, search for "neo4j". From the results, locate and select **Ne
 
 ## Step 3: Subscribe to Neo4j AuraDB Professional
 
-Click **Subscribe** on the Neo4j AuraDB Professional (pay-as-you-go) listing. Fill out the subscription form:
+Click **Subscribe** on the "Aura PAYG" listing. Fill out the subscription form:
 
-- **Subscription**: Select your Azure subscription
+- **Subscription**: Select "Neo4j Workshops" 
 - **Resource group**: Select the resource group from the previous lab (it will match your username)
-- **Name**: Enter a name for your SaaS resource
-- **Plan**: Neo4j Aura Professional - 1-month subscription
+- **Name**: Enter a memorable name for your SaaS resource
+- **Plan**: Aura PAYG - 1-month subscription
 
-![](images/Neo4j_Paygo.png)
+Once you've filled these in, click "Review + subscribe" in the lower left corner.
+
+![](images/Neo4j_Paygo2.png)
 
 ## Step 4: Configure Your Account
 
@@ -39,7 +41,10 @@ You will be redirected to the Neo4j Aura login page. **Important: Do NOT use the
 
 Instead, click **Sign up** and create a new account using your work email address. This ensures proper account linking with the Azure Marketplace subscription.
 
-![](images/sign-up-aura.png)
+**NOTE: If you already have a Neo4j Aura account on your work email address, then select the "Log in" link below instead and log in using your normal procedure.**
+
+![](images/sign-up-aura2.png)
+
 
 ## Step 6: Select New Project
 

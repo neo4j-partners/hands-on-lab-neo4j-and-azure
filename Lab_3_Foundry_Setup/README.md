@@ -86,12 +86,13 @@ Review your settings and click **Create** to provision the Foundry resource. Wai
 
 ![Deploy Model](images/foundry_deploy_model.png)
 
-4. Click the **Deploy** button dropdown
+4. Click the **Deploy** dropdown menu
 5. Select **Custom settings** (Global settings will not work)
 
 ![Deploy with Default Settings](images/deply_default_settings.png)
 
 6. Change the deployment type to **Standard** deployment and reduce the Tokens per Minute Rate Limit to 20000 to avoid quota issues.
+7. Click **Deploy**
 
 ![Standard Deployment](images/Standard_Deployment.png)
 
@@ -105,9 +106,10 @@ The coding labs in Part 2 require an embedding model for vector search. Deploy *
 1. Click on **Discover** in the top navigation
 2. Search for `text-embedding-3-small` in the Models section
 3. Select the model
-4. Click the **Deploy** button dropdown
+4. Click the **Deploy** dropdown menu
 5. Select **Custom settings**
 6. Change the deployment type to **Standard** deployment and set the Tokens per Minute Rate Limit to 5000
+7. Click **Deploy**
 
 ---
 
