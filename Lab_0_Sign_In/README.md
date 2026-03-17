@@ -26,15 +26,23 @@ As you work through these labs, we'd really appreciate your feedback.  One way t
 
 ## Sign into Azure
 We're going to sign into a new Azure account.  You may already have other Azure accounts.  If you use Chrome, you might consider using a guest profile for these exercises.  That's not mandatory though and other browsers work fine too.
+
+You will also need to use an authenticator app on your phone as part of the login process. You can use either the Microsoft Authenticator app for this process, but we recommend using the Google Authenticator app as it requires far fewer steps. It is available from either [Google Play](https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2&hl=nl) and the [Apple App Store](https://apps.apple.com/us/app/google-authenticator/id388497605). 
+
 Our next step is to open the Azure portal [here](https://portal.azure.com/). 
 
 Enter the email address you were given for this lab and click "Next."
 
 ![](images/01.png)
 
-Now enter the password you were given and click "Sign in."
+Now enter the password you were given and click "Sign in." 
+If you are prompted to change your password, change it to something you will remember later on.
 
 ![](images/02.png)
+
+At this stage you may be prompted to install the Microsoft Authenticator app to secure your account. Select "Set up a different authenticator app"
+
+![width="100"](images/02a.png)
 
 Check the box for "Don't show this again" and click yes to continue sign in.
 
