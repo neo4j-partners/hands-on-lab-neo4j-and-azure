@@ -28,7 +28,7 @@ As you work through these labs, we'd really appreciate your feedback.  One way t
 We're going to sign into a new Azure account.  You may already have other Azure accounts.  If you use Chrome, you might consider using a guest profile for these exercises.  That's not mandatory though and other browsers work fine too.
 
 ### Two-Factor Authentication
-New Azure accounts require 2-factor authentication, so you will also need to use an authenticator app on your phone as part of the login process. You can use either the Microsoft Authenticator app for this process, but we recommend using the **Google Authenticator** app as it requires fewer steps. It is available from either [Google Play](https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2&hl=nl) and the [Apple App Store](https://apps.apple.com/us/app/google-authenticator/id388497605). 
+New Azure accounts require 2-factor authentication, so you will also need to use an authenticator app on your phone as part of the login process. You can use any 2FA app for this process, but we recommend using the **Google Authenticator** app as it requires the least steps. It is available from either [Google Play](https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2&hl=nl) and the [Apple App Store](https://apps.apple.com/us/app/google-authenticator/id388497605). 
 
 Our next step is to open the Azure portal [here](https://portal.azure.com/). 
 
