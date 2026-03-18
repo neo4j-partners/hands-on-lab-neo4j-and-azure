@@ -27,7 +27,7 @@ Click **Subscribe** on the "Aura PAYG" listing. Fill out the subscription form:
 
 Once you've filled these in, click "Review + subscribe" in the lower left corner.
 
-![](images/Neo4j_Paygo2.png)
+![](images/neo4j_paygo2.png)
 
 ## Step 4: Configure Your Account
 
