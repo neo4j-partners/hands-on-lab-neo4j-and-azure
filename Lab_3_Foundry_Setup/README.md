@@ -151,13 +151,17 @@ Ground your responses in the actual data from SEC filings.
 
 ![Agent MCP Tool](images/agent-mcp-tool.png)
 
-5. In the "Add Model Context Protocol Tool" Dialog enter the mcp server information that your workshop administrator setup for you.  Set the following values:
+5. In the "Add Model Context Protocol Tool" Dialog enter the mcp server information that your workshop administrator setup for you. You'll need to use the MCP server endpoint and API key from the credentials you received at the beginning of the lab.
+
+![MCP Credentials](images/mcp-creds.png)
+
+  Set the following values:
 
 * **Name**: `mcp-server-finance-agent`
 * **Remote MCP Server endpoint**: _Get this from the credentials sheet you received at the beginning of the lab_ 
-* **Authentication**: Key based
-* **Credential Key**: Authorization
-* **Credential Value**:  _Use the MCP server API key from the credentials document_ **Important:** the value needs to be the word Bearer followed by the actual token: Bearer bearer_token....===
+* **Authentication**: `Key based`
+* **Credential Key**: `Authorization`
+* **Credential Value**:  _Use the MCP server API key from the credentials document_ **Important:** the value needs to be the word Bearer followed by the MCP server API key, see example in screenshot below
 
 6. Click **Save** at the top of the dialog. The agent is now set up. Test it by entering a query like "What risks does Apple face?"
 
