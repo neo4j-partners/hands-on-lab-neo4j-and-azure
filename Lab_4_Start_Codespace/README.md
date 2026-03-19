@@ -84,11 +84,15 @@ Edit the `CONFIG.txt` file in the root of the project and fill in your values:
 
 To run the Jupyter notebooks in the labs, you need to select the correct Python kernel:
 
-1. Click **Select Kernel** in the top right of the notebook, then select **Python Environments...**
+1. Select a notebook from the left pane and find the **Select Kernel** button on the upper right
 
-   ![Select Kernel](images/select%20kernel.png)
+   ![Select Kernel](images/select_kernel1.png)
+   
+2. Click **Select Kernel** in the top right of the notebook, then select **Python Environments...**
 
-2. Select the **neo4j-azure-ai-workshop** environment (marked as Recommended)
+   ![Select Kernel](images/select_kernel2.png)
+
+3. Select the **neo4j-azure-ai-workshop** environment (marked as Recommended)
 
    ![Select neo4j-azure-ai-workshop](images/neo4j-azure-ai-workshop.png)
 
