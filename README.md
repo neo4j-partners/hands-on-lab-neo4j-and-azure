@@ -1,4 +1,4 @@
-# hands-on-lab-neo4j-and-azure
+# hands-on-lab-neo4j-and-microsoft
 Neo4j is the [leading graph database](https://db-engines.com/en/ranking/graph+dbms) vendor.  We’ve worked closely with Microsoft engineering for years.  Our SaaS database, Neo4j Aura, is offered as a managed service on Azure.  This is available through the [Azure Marketplace](https://marketplace.microsoft.com/en-us/product/neo4j.neo4j-aura).
 
 In this hands on lab, you’ll get to learn about [Neo4j](https://neo4j.com/) and [Microsoft Foundry](https://azure.microsoft.com/en-us/products/ai-foundry).  The lab is intended for data scientists and data engineers.  We’ll walk through deploying Neo4j and Foundry in a Microsoft Azure account.  Then we’ll get hands on with a real world dataset.  First we'll use AI to parse and load data.  Then we'll show how to layer an AI agent over the knowledge graph.  You’ll come out of this lab with enough knowledge to apply graph AI to your own datasets.
